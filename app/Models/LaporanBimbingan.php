@@ -23,4 +23,9 @@ class LaporanBimbingan extends Model
     {
         return $this->belongsTo(JadwalBimbingan::class, 'jadwal_id');
     }
+
+    public function dibuatOleh(): BelongsTo
+{
+    return $this->belongsTo(User::class, 'dibuat_oleh');
+}
 }

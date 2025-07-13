@@ -38,4 +38,17 @@ class Siswa extends Model
     {
         return $this->hasMany(PelanggaranSiswa::class);
     }
+
+    public function totalPoin()
+    {
+        // Method ini akan menjumlahkan poin dari semua pelanggaran yang dimiliki siswa.
+        // Kita menggunakan relasi 'pelanggaran' yang sudah ada dan mengambil kolom 'poin' dari tabel 'jenis_pelanggaran' yang terhubung.
+        return $this->pelanggaran()->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+            ->sum('jenis_pelanggaran.poin');
+    }
+
+    public function jadwalBimbingan(): HasMany
+    {
+        return $this->hasMany(JadwalBimbingan::class);
+    }
 }

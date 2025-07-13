@@ -16,42 +16,38 @@ class PelanggaranSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil data user admin dan siswa untuk relasi
-        $adminBk = User::where('email', 'admin.bk@smansa.go.id')->first();
-        $guruBk1 = User::where('email', 'gurubk1@smansa.go.id')->first();
-        $siswa1 = Siswa::where('nis', '12345')->first();
-        $siswa2 = Siswa::where('nis', '12347')->first();
+        $adminBk = User::where('role', 'admin_bk')->first();
+        $guruBk = User::where('role', 'guru_bk')->first();
+        $semuaSiswa = Siswa::all();
 
-        // =================================================================
-        // 1. BUAT DATA MASTER JENIS PELANGGARAN
-        // =================================================================
-        $p1 = JenisPelanggaran::create(['nama_pelanggaran' => 'Terlambat masuk sekolah', 'poin' => 5, 'dibuat_oleh' => $adminBk->id]);
-        $p2 = JenisPelanggaran::create(['nama_pelanggaran' => 'Tidak memakai atribut lengkap', 'poin' => 10, 'dibuat_oleh' => $adminBk->id]);
-        $p3 = JenisPelanggaran::create(['nama_pelanggaran' => 'Merokok di area sekolah', 'poin' => 50, 'dibuat_oleh' => $adminBk->id]);
-        $p4 = JenisPelanggaran::create(['nama_pelanggaran' => 'Berkelahi', 'poin' => 75, 'dibuat_oleh' => $adminBk->id]);
+        // Data Master Jenis Pelanggaran
+        $jenisPelanggaranData = [
+            ['nama_pelanggaran' => 'Terlambat masuk sekolah', 'poin' => 5],
+            ['nama_pelanggaran' => 'Tidak memakai atribut lengkap', 'poin' => 10],
+            ['nama_pelanggaran' => 'Baju tidak dimasukkan', 'poin' => 5],
+            ['nama_pelanggaran' => 'Rambut gondrong (pria)', 'poin' => 15],
+            ['nama_pelanggaran' => 'Membuang sampah sembarangan', 'poin' => 10],
+            ['nama_pelanggaran' => 'Merokok di area sekolah', 'poin' => 50],
+            ['nama_pelanggaran' => 'Berkelahi', 'poin' => 75],
+            ['nama_pelanggaran' => 'Membawa senjata tajam', 'poin' => 100],
+        ];
 
-        // =================================================================
-        // 2. BUAT CONTOH PELANGGARAN YANG DILAKUKAN SISWA
-        // =================================================================
-        PelanggaranSiswa::create([
-            'siswa_id' => $siswa1->id,
-            'jenis_pelanggaran_id' => $p1->id,
-            'catatan' => 'Terlambat 15 menit.',
-            'dilaporkan_oleh' => $guruBk1->id,
-        ]);
-        
-        PelanggaranSiswa::create([
-            'siswa_id' => $siswa1->id,
-            'jenis_pelanggaran_id' => $p2->id,
-            'catatan' => 'Tidak memakai dasi saat upacara.',
-            'dilaporkan_oleh' => $guruBk1->id,
-        ]);
+        $jenisPelanggaran = collect($jenisPelanggaranData)->map(fn($jp) => 
+            JenisPelanggaran::create(array_merge($jp, ['dibuat_oleh' => $adminBk->id]))
+        );
 
-        PelanggaranSiswa::create([
-            'siswa_id' => $siswa2->id,
-            'jenis_pelanggaran_id' => $p3->id,
-            'catatan' => 'Ditemukan merokok di kantin belakang.',
-            'dilaporkan_oleh' => $guruBk1->id,
-        ]);
+        // Catat Pelanggaran ke Siswa secara acak
+        foreach ($semuaSiswa as $siswa) {
+            // Setiap siswa punya 1 sampai 3 pelanggaran acak
+            for ($i = 0; $i < rand(1, 3); $i++) {
+                PelanggaranSiswa::create([
+                    'siswa_id' => $siswa->id,
+                    'jenis_pelanggaran_id' => $jenisPelanggaran->random()->id,
+                    'catatan' => 'Kejadian tercatat saat sidak rutin.',
+                    'dilaporkan_oleh' => $guruBk->id,
+                    'tanggal_pelanggaran' => now()->subDays(rand(1, 30)),
+                ]);
+            }
+        }
     }
 }

@@ -18,70 +18,40 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        // Ambil data Wali Kelas yang sudah dibuat sebelumnya
-        $waliKelas1 = Guru::where('nip', '198907202014022003')->first();
-        $waliKelas2 = Guru::where('nip', '198711112013011004')->first();
+        $waliKelas = Guru::whereNotIn('nip', ['196508171990031007', '198801012010011001', '199005102015032001', '199203152016041002'])->get();
 
-        // Data siswa untuk kelas XII IPA 1
-        $siswaIpa = [
-            ['nama' => 'Ahmad Fathoni', 'nis' => '12345'],
-            ['nama' => 'Bunga Citra', 'nis' => '12346'],
+        $kelasData = [
+            'XII IPA 1' => [['nama' => 'Ahmad Fathoni', 'nis' => '12345'], ['nama' => 'Bunga Citra', 'nis' => '12346'], ['nama' => 'Chandra Darmawan', 'nis' => '12349']],
+            'XII IPS 2' => [['nama' => 'Putri Ayu', 'nis' => '12347'], ['nama' => 'Rian Ardiansyah', 'nis' => '12348'], ['nama' => 'Sarah Larasati', 'nis' => '12350']],
+            'XI IPA 3' => [['nama' => 'Kevin Sanjaya', 'nis' => '12351'], ['nama' => 'Lia Amelia', 'nis' => '12352']],
+            'X-A' => [['nama' => 'Muhammad Zidan', 'nis' => '12353'], ['nama' => 'Nabila Putri', 'nis' => '12354']],
         ];
 
-        foreach ($siswaIpa as $s) {
-            $siswa = Siswa::create([
-                'nama' => $s['nama'],
-                'nis' => $s['nis'],
-                'kelas' => 'XII IPA 1',
-                'wali_kelas_id' => $waliKelas1->id,
-            ]);
+        $waliIndex = 0;
+        foreach ($kelasData as $kelas => $siswaList) {
+            foreach ($siswaList as $dataSiswa) {
+                $siswa = Siswa::create([
+                    'nama' => $dataSiswa['nama'],
+                    'nis' => $dataSiswa['nis'],
+                    'kelas' => $kelas,
+                    'wali_kelas_id' => $waliKelas[$waliIndex]->id,
+                ]);
 
-            // Buat data Wali Murid untuk setiap siswa
-            $wali = WaliMurid::create([
-                'siswa_id' => $siswa->id,
-                'nama' => 'Bapak ' . explode(' ', $s['nama'])[0],
-                'nomor_telepon' => '081234567890',
-            ]);
+                $wali = WaliMurid::create([
+                    'siswa_id' => $siswa->id,
+                    'nama' => (rand(0, 1) ? 'Bapak ' : 'Ibu ') . explode(' ', $dataSiswa['nama'])[0],
+                    'nomor_telepon' => '0812' . rand(10000000, 99999999),
+                ]);
 
-            // Buat akun User untuk Wali Murid
-            User::create([
-                'name' => $wali->nama,
-                'email' => Str::slug($wali->nama, '.') . '@email.com',
-                'password' => Hash::make('password'),
-                'role' => 'orang_tua',
-                'wali_id' => $wali->id,
-            ]);
-        }
-
-        // Data siswa untuk kelas XII IPS 2
-        $siswaIps = [
-            ['nama' => 'Putri Ayu', 'nis' => '12347'],
-            ['nama' => 'Rian Ardiansyah', 'nis' => '12348'],
-        ];
-
-        foreach ($siswaIps as $s) {
-            $siswa = Siswa::create([
-                'nama' => $s['nama'],
-                'nis' => $s['nis'],
-                'kelas' => 'XII IPS 2',
-                'wali_kelas_id' => $waliKelas2->id,
-            ]);
-
-            // Buat data Wali Murid untuk setiap siswa
-            $wali = WaliMurid::create([
-                'siswa_id' => $siswa->id,
-                'nama' => 'Ibu ' . explode(' ', $s['nama'])[0],
-                'nomor_telepon' => '081209876543',
-            ]);
-
-            // Buat akun User untuk Wali Murid
-            User::create([
-                'name' => $wali->nama,
-                'email' => Str::slug($wali->nama, '.') . '@email.com',
-                'password' => Hash::make('password'),
-                'role' => 'orang_tua',
-                'wali_id' => $wali->id,
-            ]);
+                User::create([
+                    'name' => $wali->nama,
+                    'email' => strtolower(str_replace(' ', '.', $wali->nama)) . '@email.com',
+                    'password' => Hash::make('password'),
+                    'role' => 'orang_tua',
+                    'wali_id' => $wali->id,
+                ]);
+            }
+            $waliIndex = ($waliIndex + 1) % count($waliKelas);
         }
     }
 }
