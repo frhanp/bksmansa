@@ -267,7 +267,7 @@
                 <div x-show="loaded" x-transition:enter="transition ease-out duration-1000"
                     x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0"
                     class="z-10">
-                    <h1 class="hero-heading text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+                    <h1 class="hero-heading text-5xl md:text-7xl font-bold tracking-tight leading-snug pb-4">
                         Bimbingan Konseling Digital
                     </h1>
                     <p class="mt-6 max-w-2xl mx-auto text-lg text-slate-600 leading-relaxed">
