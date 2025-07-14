@@ -39,9 +39,19 @@ class RolesAndUsersSeeder extends Seeder
         $roles = ['kepala_sekolah', 'admin_bk', 'guru_bk', 'guru_bk', 'wali_kelas', 'wali_kelas', 'wali_kelas', 'wali_kelas'];
 
         foreach ($guruList as $index => $guru) {
+            // Logika baru untuk membuat email yang aman
+            $namaSimple = preg_replace('/[.,]/', '', $guru->nama); // Hapus titik dan koma
+            $namaDepan = strtolower(explode(' ', $namaSimple)[0]); // Ambil nama depan
+            $email = $namaDepan . '@gmail.com';
+
+            // Cek jika email sudah ada, tambahkan angka
+            if (User::where('email', $email)->exists()) {
+                $email = $namaDepan . rand(1, 99) . '@gmail.com';
+            }
+
             User::create([
                 'name' => $guru->nama,
-                'email' => strtolower(explode(' ', $guru->nama)[0]) . '@smansa.go.id',
+                'email' => $email,
                 'password' => Hash::make('password'),
                 'role' => $roles[$index],
                 'guru_id' => $guru->id,
