@@ -16,9 +16,9 @@
                         </a>
                     </div>
 
-                    @if (session('success'))
+                    {{-- @if (session('success'))
                         <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">{{ session('success') }}</div>
-                    @endif
+                    @endif --}}
 
                     <div class="overflow-x-auto border-t border-slate-200">
                         <table class="min-w-full divide-y divide-slate-200">

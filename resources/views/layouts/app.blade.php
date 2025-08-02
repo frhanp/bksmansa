@@ -11,8 +11,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>[x-cloak] { display: none !important; }</style>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -21,20 +27,14 @@
     <div class="min-h-screen flex">
 
         <!-- Sidebar -->
-        <div
-            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="fixed inset-y-0 left-0 w-64 z-30 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:z-auto"
-        >
+        <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 w-64 z-30 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:z-auto">
             @include('layouts.navigation')
         </div>
 
         <!-- Overlay -->
-        <div
-            x-show="sidebarOpen"
-            @click="sidebarOpen = false"
-            x-cloak
-            class="fixed inset-0 bg-black bg-opacity-25 z-20 md:hidden"
-        ></div>
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak
+            class="fixed inset-0 bg-black bg-opacity-25 z-20 md:hidden"></div>
 
         <!-- Main content -->
         <div class="flex-1 flex flex-col w-full">
@@ -43,19 +43,17 @@
             <header class="bg-white border-b px-4 py-3 flex items-center justify-between md:hidden relative">
                 <!-- Tombol hamburger -->
                 <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none z-10">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                         viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M4 6h16M4 12h16M4 18h16"/>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-            
+
                 <!-- Judul di tengah -->
                 <div class="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold text-gray-800">
                     {{ config('app.name', 'MY APP') }}
                 </div>
             </header>
-            
+
 
             <!-- Optional header (desktop only) -->
             @isset($header)
@@ -72,6 +70,46 @@
             </main>
         </div>
     </div>
+
+
+    @if (session('success') || session('error') || session('info'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                @if (session('success'))
+                    Toast.fire({
+                        icon: 'success',
+                        title: '{{ session('success') }}'
+                    });
+                @endif
+
+                @if (session('error'))
+                    Toast.fire({
+                        icon: 'error',
+                        title: '{{ session('error') }}'
+                    });
+                @endif
+
+                @if (session('info'))
+                    Toast.fire({
+                        icon: 'info',
+                        title: '{{ session('info') }}'
+                    });
+                @endif
+            });
+        </script>
+    @endif
 </body>
 
 </html>
