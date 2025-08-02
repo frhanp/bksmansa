@@ -70,7 +70,7 @@
                                         <tr>
                                             <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase">Tanggal Jadwal</th>
                                             <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase">Konselor</th>
-                                            <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase">Status</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-200">
@@ -79,17 +79,13 @@
                                                 <td class="px-4 py-3 text-sm text-slate-800">{{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('D MMM YYYY') }}</td>
                                                 <td class="px-4 py-3 text-sm text-slate-500">{{ $jadwal->konselor->name }}</td>
                                                 <td class="px-4 py-3 text-sm">
-                                                     @php
-                                                        $statusClass = [
-                                                            'menunggu_verifikasi' => 'bg-amber-100 text-amber-800',
-                                                            'terverifikasi' => 'bg-blue-100 text-blue-800',
-                                                            'selesai' => 'bg-green-100 text-green-800',
-                                                            'dibatalkan' => 'bg-red-100 text-red-800',
-                                                        ][$jadwal->status] ?? 'bg-slate-100 text-slate-800';
-                                                    @endphp
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
-                                                        {{ str_replace('_', ' ', Str::title($jadwal->status)) }}
-                                                    </span>
+                                                    @if($jadwal->laporan)
+                                                        <a href="{{ route('walikelas.laporan.show', $jadwal->laporan->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">
+                                                            Lihat Laporan
+                                                        </a>
+                                                    @else
+                                                        <span class="text-xs text-slate-400 italic">Belum ada laporan</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @empty

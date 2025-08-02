@@ -56,6 +56,20 @@
                             <x-input-label for="nomor_telepon_wali" :value="__('Nomor Telepon Wali (Opsional)')" />
                             <x-text-input id="nomor_telepon_wali" name="nomor_telepon_wali" type="text" class="mt-1 block w-full" :value="old('nomor_telepon_wali', $siswa->waliMurid->nomor_telepon)" />
                         </div>
+                        <div class="mt-6 border-t border-slate-200 pt-6">
+                            <p class="text-sm text-slate-500 mb-4">Kosongkan password jika tidak ingin mengubahnya.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <x-input-label for="password" :value="__('Password Baru Wali')" />
+                                    <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('password')" />
+                                </div>
+                                <div>
+                                    <x-input-label for="password_confirmation" :value="__('Konfirmasi Password Baru')" />
+                                    <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">

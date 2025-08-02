@@ -11,16 +11,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Mengambil ID wali dari user yang sedang login
         $waliId = Auth::user()->wali_id;
-
-        // Mengambil data siswa yang terhubung dengan wali tersebut
-        // Kita juga memuat relasi pelanggaran dan jenis pelanggarannya untuk ditampilkan
-        $siswa = Siswa::whereHas('waliMurid', function ($query) use ($waliId) {
-                        $query->where('id', $waliId);
-                    })
-                    ->with(['pelanggaran.jenisPelanggaran'])
-                    ->firstOrFail(); // Ambil data siswa atau gagal jika tidak ditemukan
+        $siswa = Siswa::whereHas('waliMurid', fn($q) => $q->where('id', $waliId))
+            ->with([
+                'pelanggaran.jenisPelanggaran',
+                'jadwalBimbingan.laporan' // <-- Tambahkan ini
+            ])
+            ->firstOrFail();
 
         return view('ortu.dashboard', compact('siswa'));
     }

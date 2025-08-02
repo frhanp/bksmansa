@@ -19,6 +19,9 @@ use App\Http\Controllers\OrangTua\DashboardController as OrangTuaDashboardContro
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\JadwalBimbinganController as AdminJadwalController;
 use App\Http\Controllers\KepalaSekolah\LaporanController as KepsekLaporanController;
+use App\Http\Controllers\WaliKelas\LaporanController as WaliKelasLaporanController;
+use App\Http\Controllers\OrangTua\LaporanController as OrtuLaporanController;
+
 
 
 
@@ -80,6 +83,7 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
 Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
     Route::get('/siswa/{siswa}', [WaliKelasSiswaController::class, 'show'])->name('siswa.show');
+    Route::get('/laporan/{laporanBimbingan}', [WaliKelasLaporanController::class, 'show'])->name('laporan.show');
 });
 
 // --- KEPALA SEKOLAH ---
@@ -91,6 +95,7 @@ Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name
 // --- ORANG TUA ---
 Route::middleware(['auth', 'check.role:orang_tua'])->prefix('ortu')->name('ortu.')->group(function () {
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/laporan/{laporanBimbingan}', [OrtuLaporanController::class, 'show'])->name('laporan.show');
 });
 
 // Memuat route otentikasi

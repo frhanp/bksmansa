@@ -13,45 +13,45 @@ use App\Models\Guru;
 class SiswaController extends Controller
 {
     public function index(Request $request)
-{
-    // Mengambil data untuk filter dropdown
-    $kelasFilter = Siswa::select('kelas')->distinct()->orderBy('kelas')->pluck('kelas');
-    $waliKelasFilter = Guru::whereIn('id', function($query) {
-        $query->select('wali_kelas_id')->from('siswa');
-    })->orderBy('nama')->get();
+    {
+        // Mengambil data untuk filter dropdown
+        $kelasFilter = Siswa::select('kelas')->distinct()->orderBy('kelas')->pluck('kelas');
+        $waliKelasFilter = Guru::whereIn('id', function ($query) {
+            $query->select('wali_kelas_id')->from('siswa');
+        })->orderBy('nama')->get();
 
-    // Memulai query dasar
-    $query = Siswa::with('waliKelas');
+        // Memulai query dasar
+        $query = Siswa::with('waliKelas');
 
-    // Filter berdasarkan pencarian nama/NIS
-    if ($request->filled('search')) {
-        $search = $request->input('search');
-        $query->where(function ($q) use ($search) {
-            $q->where('nama', 'like', "%{$search}%")
-              ->orWhere('nis', 'like', "%{$search}%");
-        });
+        // Filter berdasarkan pencarian nama/NIS
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nis', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter berdasarkan kelas
+        if ($request->filled('filter_kelas')) {
+            $query->where('kelas', $request->input('filter_kelas'));
+        }
+
+        // Filter berdasarkan wali kelas
+        if ($request->filled('filter_wali_kelas')) {
+            $query->where('wali_kelas_id', $request->input('filter_wali_kelas'));
+        }
+
+        // Paginate hasil query
+        $siswa = $query->latest()->paginate(10)->withQueryString();
+
+        return view('guru.siswa.index', [
+            'siswa' => $siswa,
+            'kelasFilter' => $kelasFilter,
+            'waliKelasFilter' => $waliKelasFilter,
+            'request' => $request // Mengirim semua input request ke view
+        ]);
     }
-
-    // Filter berdasarkan kelas
-    if ($request->filled('filter_kelas')) {
-        $query->where('kelas', $request->input('filter_kelas'));
-    }
-
-    // Filter berdasarkan wali kelas
-    if ($request->filled('filter_wali_kelas')) {
-        $query->where('wali_kelas_id', $request->input('filter_wali_kelas'));
-    }
-
-    // Paginate hasil query
-    $siswa = $query->latest()->paginate(10)->withQueryString();
-
-    return view('guru.siswa.index', [
-        'siswa' => $siswa,
-        'kelasFilter' => $kelasFilter,
-        'waliKelasFilter' => $waliKelasFilter,
-        'request' => $request // Mengirim semua input request ke view
-    ]);
-}
 
 
     public function create()
@@ -116,6 +116,8 @@ class SiswaController extends Controller
             'nama_wali' => 'required|string|max:255',
             'email_wali' => 'required|email|max:255|unique:users,email,' . $siswa->waliMurid->user->id,
             'nomor_telepon_wali' => 'nullable|string|max:20',
+            // --- VALIDASI BARU UNTUK PASSWORD ---
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         $siswa->update($request->only('nama', 'nis', 'kelas', 'wali_kelas_id'));
@@ -123,10 +125,19 @@ class SiswaController extends Controller
             'nama' => $request->nama_wali,
             'nomor_telepon' => $request->nomor_telepon_wali,
         ]);
-        $siswa->waliMurid->user->update([
-            'name' => $request->nama_wali,
-            'email' => $request->email_wali,
-        ]);
+
+        // Ambil user wali
+        $userWali = $siswa->waliMurid->user;
+        $userWali->name = $request->nama_wali;
+        $userWali->email = $request->email_wali;
+
+        // --- LOGIKA BARU UNTUK UPDATE PASSWORD ---
+        // Update password hanya jika kolomnya diisi
+        if ($request->filled('password')) {
+            $userWali->password = Hash::make($request->password);
+        }
+        $userWali->save();
+        // --- AKHIR LOGIKA BARU ---
 
         return redirect()->route('guru.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
