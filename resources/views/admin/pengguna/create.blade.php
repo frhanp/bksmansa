@@ -13,11 +13,12 @@
                         @csrf
                         <div class="space-y-6">
                             <div>
-                                <x-input-label for="guru_id" :value="__('Pilih Guru (Nama akan diambil otomatis)')" />
-                                <select id="guru_id" name="guru_id" class="block mt-1 w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>
+                                <x-input-label for="select-guru" :value="__('Pilih Guru (Ketik untuk mencari)')" />
+                                {{-- ID baru ditambahkan di sini --}}
+                                <select id="select-guru" name="guru_id" placeholder="Pilih guru..." required>
                                     <option value="">-- Pilih Guru --</option>
                                     @foreach($guru as $g)
-                                        <option value="{{ $g->id }}" {{ old('guru_id') == $g->id ? 'selected' : '' }}>{{ $g->nama }} - (NIP: {{ $g->nip ?? 'Tidak ada' }})</option>
+                                        <option value="{{ $g->id }}">{{ $g->nama }} - (NIP: {{ $g->nip ?? 'Tidak ada' }})</option>
                                     @endforeach
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('guru_id')" />
@@ -29,13 +30,13 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
                             </div>
 
-                             <div>
+                            <div>
                                 <x-input-label for="role" :value="__('Peran (Role)')" />
                                 <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>
-                                    <option value="guru_bk" @selected(old('role') == 'guru_bk')>Guru BK</option>
-                                    <option value="wali_kelas" @selected(old('role') == 'wali_kelas')>Wali Kelas</option>
-                                    <option value="kepala_sekolah" @selected(old('role') == 'kepala_sekolah')>Kepala Sekolah</option>
-                                    <option value="admin_bk" @selected(old('role') == 'admin_bk')>Admin BK</option>
+                                    <option value="guru_bk">Guru BK</option>
+                                    <option value="wali_kelas">Wali Kelas</option>
+                                    <option value="kepala_sekolah">Kepala Sekolah</option>
+                                    <option value="admin_bk">Admin BK</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
@@ -63,4 +64,19 @@
             </div>
         </div>
     </div>
+    
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new TomSelect('#select-guru',{
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

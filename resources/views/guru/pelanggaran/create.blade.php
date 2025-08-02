@@ -15,10 +15,11 @@
                             <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Kejadian</h3>
                             <p class="mt-1 text-sm text-slate-500">Pilih siswa dan jenis pelanggaran yang dilakukan.</p>
                         </div>
-                        
+
                         <div>
-                            <x-input-label for="siswa_id" :value="__('Pilih Siswa')" />
-                            <select id="siswa_id" name="siswa_id" class="mt-1 block w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>
+                            <x-input-label for="select-siswa" :value="__('Pilih Siswa (Ketik untuk mencari)')" />
+                            {{-- ID baru ditambahkan di sini --}}
+                            <select id="select-siswa" name="siswa_id" placeholder="Pilih siswa..." required>
                                 <option value="">-- Pilih Siswa --</option>
                                 @foreach($siswa as $s)
                                     <option value="{{ $s->id }}" {{ old('siswa_id') == $s->id ? 'selected' : '' }}>{{ $s->nama }} (Kelas: {{ $s->kelas }})</option>
@@ -26,10 +27,11 @@
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('siswa_id')" />
                         </div>
-                        
+
                         <div>
-                            <x-input-label for="jenis_pelanggaran_id" :value="__('Jenis Pelanggaran')" />
-                            <select id="jenis_pelanggaran_id" name="jenis_pelanggaran_id" class="mt-1 block w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>
+                            <x-input-label for="select-pelanggaran" :value="__('Jenis Pelanggaran (Ketik untuk mencari)')" />
+                             {{-- ID baru ditambahkan di sini --}}
+                            <select id="select-pelanggaran" name="jenis_pelanggaran_id" placeholder="Pilih pelanggaran..." required>
                                 <option value="">-- Pilih Jenis Pelanggaran --</option>
                                 @foreach($jenisPelanggaran as $jp)
                                     <option value="{{ $jp->id }}" {{ old('jenis_pelanggaran_id') == $jp->id ? 'selected' : '' }}>{{ $jp->nama_pelanggaran }} ({{$jp->poin}} Poin)</option>
@@ -55,4 +57,27 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new TomSelect('#select-siswa',{
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+
+            new TomSelect('#select-pelanggaran',{
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

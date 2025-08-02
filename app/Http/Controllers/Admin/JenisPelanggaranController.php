@@ -12,10 +12,36 @@ class JenisPelanggaranController extends Controller
     /**
      * Menampilkan daftar jenis pelanggaran.
      */
-    public function index()
+    public function index(Request $request) // <-- Tambahkan Request $request
     {
-        $pelanggaran = JenisPelanggaran::latest()->paginate(10);
-        return view('admin.jenis-pelanggaran.index', compact('pelanggaran'));
+        // Memulai query dasar
+        $query = JenisPelanggaran::query();
+
+        // Filter berdasarkan pencarian nama pelanggaran
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('nama_pelanggaran', 'like', "%{$search}%");
+        }
+
+        // Filter berdasarkan poin
+        if ($request->filled('filter_poin')) {
+            $poin = $request->input('filter_poin');
+            if ($poin == 'ringan') {
+                $query->where('poin', '<=', 25);
+            } elseif ($poin == 'sedang') {
+                $query->whereBetween('poin', [26, 75]);
+            } elseif ($poin == 'berat') {
+                $query->where('poin', '>', 75);
+            }
+        }
+
+        // Paginate hasil query
+        $pelanggaran = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.jenis-pelanggaran.index', [
+            'pelanggaran' => $pelanggaran,
+            'request' => $request
+        ]);
     }
 
     /**
@@ -43,7 +69,7 @@ class JenisPelanggaranController extends Controller
         ]);
 
         return redirect()->route('admin.jenis-pelanggaran.index')
-                         ->with('success', 'Jenis pelanggaran berhasil ditambahkan.');
+            ->with('success', 'Jenis pelanggaran berhasil ditambahkan.');
     }
 
     /**
@@ -67,7 +93,7 @@ class JenisPelanggaranController extends Controller
         $jenisPelanggaran->update($request->all());
 
         return redirect()->route('admin.jenis-pelanggaran.index')
-                         ->with('success', 'Jenis pelanggaran berhasil diperbarui.');
+            ->with('success', 'Jenis pelanggaran berhasil diperbarui.');
     }
 
     /**
@@ -78,6 +104,6 @@ class JenisPelanggaranController extends Controller
         $jenisPelanggaran->delete();
 
         return redirect()->route('admin.jenis-pelanggaran.index')
-                         ->with('success', 'Jenis pelanggaran berhasil dihapus.');
+            ->with('success', 'Jenis pelanggaran berhasil dihapus.');
     }
 }

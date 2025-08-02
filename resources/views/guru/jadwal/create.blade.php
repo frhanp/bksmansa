@@ -17,11 +17,11 @@
                         </div>
 
                         <div>
-                            <x-input-label for="siswa_id" :value="__('Pilih Siswa')" />
-                            <select id="siswa_id" name="siswa_id" class="mt-1 block w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>
+                            <x-input-label for="select-siswa" :value="__('Pilih Siswa (Ketik untuk mencari)')" />
+                            <select id="select-siswa" name="siswa_id" placeholder="Pilih siswa..." required>
                                 <option value="">-- Pilih Siswa --</option>
                                 @foreach($siswa as $s)
-                                    <option value="{{ $s->id }}" {{ old('siswa_id') == $s->id ? 'selected' : '' }}>{{ $s->nama }} (Kelas: {{ $s->kelas }})</option>
+                                    <option value="{{ $s->id }}" {{ old('siswa_id', request('siswa_id')) == $s->id ? 'selected' : '' }}>{{ $s->nama }} (Kelas: {{ $s->kelas }})</option>
                                 @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('siswa_id')" />
@@ -32,8 +32,6 @@
                             <x-text-input id="tanggal_jadwal" name="tanggal_jadwal" type="datetime-local" class="mt-1 block w-full" :value="old('tanggal_jadwal')" required />
                             <x-input-error class="mt-2" :messages="$errors->get('tanggal_jadwal')" />
                         </div>
-                        
-                        <input type="hidden" name="status" value="menunggu_verifikasi">
                     </div>
 
                     <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">
@@ -46,4 +44,19 @@
             </div>
         </div>
     </div>
+    
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new TomSelect('#select-siswa',{
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

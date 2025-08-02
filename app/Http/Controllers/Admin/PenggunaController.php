@@ -12,11 +12,33 @@ use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
 {
-    public function index()
+    public function index(Request $request) // <-- Tambahkan Request $request
     {
-        $pengguna = User::with('guru')->latest()->paginate(10);
-        return view('admin.pengguna.index', compact('pengguna'));
-    }
+        // Memulai query dasar
+        $query = User::with('guru');
+
+        // Filter berdasarkan pencarian nama atau email
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter berdasarkan peran (role)
+        if ($request->filled('filter_role')) {
+            $query->where('role', $request->input('filter_role'));
+        }
+
+        // Paginate hasil query
+        $pengguna = $query->latest()->paginate(10)->withQueryString();
+
+        return view('admin.pengguna.index', [
+            'pengguna' => $pengguna,
+            'request' => $request,
+        ]);
+    }   
 
     public function create()
     {
