@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-09-02 08:43:03_
+_Generated: 2025-09-12 10:11:22_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -93,7 +93,6 @@ app\View\Components\GuestLayout.php
 bootstrap\cache
 bootstrap\app.php
 bootstrap\providers.php
-bootstrap\cache\.gitignore
 bootstrap\cache\packages.php
 bootstrap\cache\services.php
 config\app.php
@@ -341,11 +340,11 @@ Branch:
 main
 
 Last 5 commits:
+761cd35 install phpword
 7ed2c9b perbaiki error ortu
 9566ee8 password ortu
 cb84430 tambah filter dan search
 8608044 deploy 1
-d8616c7 ubah seeder
 ```
 
 
@@ -546,88 +545,88 @@ require __DIR__.'/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ........................................................................................................................ 
-  GET|HEAD        _debugbar/assets/javascript .................................. debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ............................... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} ......................... debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
-  GET|HEAD        _debugbar/clockwork/{id} ........................ debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open ................................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain ....................... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
-  GET|HEAD        admin/dashboard ........................................................ admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/jenis-pelanggaran ........................... admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
-  POST            admin/jenis-pelanggaran ........................... admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
-  GET|HEAD        admin/jenis-pelanggaran/create .................. admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} ......... admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranController@show
-  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} ..... admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranController@update
-  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} ... admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranController@destroy
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit .... admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranController@edit
-  GET|HEAD        admin/pengguna ..................................................... admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
-  POST            admin/pengguna ..................................................... admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
-  GET|HEAD        admin/pengguna/create ............................................ admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
-  GET|HEAD        admin/pengguna/{pengguna} ............................................ admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
-  PUT|PATCH       admin/pengguna/{pengguna} ........................................ admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
-  DELETE          admin/pengguna/{pengguna} ...................................... admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
-  GET|HEAD        admin/pengguna/{pengguna}/edit ....................................... admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
-  GET|HEAD        admin/verifikasi-jadwal ....................................... admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
-  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} ................... admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
-  GET|HEAD        confirm-password .............................................. password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password ................................................................ Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard ...................................................................................................... dashboard
-  POST            email/verification-notification ................... verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
-  GET|HEAD        forgot-password ............................................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password .................................................. password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        guru/dashboard ........................................................... guru.dashboard ΓÇ║ Guru\DashboardController@index
-  GET|HEAD        guru/jadwal-bimbingan ................................. guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
-  POST            guru/jadwal-bimbingan ................................. guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/create ........................ guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
-  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan ............... guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create ...... guru.laporan.create ΓÇ║ Guru\LaporanBimbinganController@create
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} ................ guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@show
-  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} ............ guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@update
-  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} .......... guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@destroy
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit ........... guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@edit
-  GET|HEAD        guru/laporan/{laporanBimbingan} ................................. guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
-  PUT             guru/laporan/{laporanBimbingan} ............................. guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
-  GET|HEAD        guru/laporan/{laporanBimbingan}/download ............. guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
-  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ............................ guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
-  GET|HEAD        guru/pelanggaran-siswa .............................. guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
-  POST            guru/pelanggaran-siswa .............................. guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
-  GET|HEAD        guru/pelanggaran-siswa/create ..................... guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} ............ guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaController@show
-  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} ........ guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaController@update
-  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} ...... guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaController@destroy
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit ....... guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaController@edit
-  GET|HEAD        guru/siswa ................................................................. guru.siswa.index ΓÇ║ Guru\SiswaController@index
-  POST            guru/siswa ................................................................. guru.siswa.store ΓÇ║ Guru\SiswaController@store
-  GET|HEAD        guru/siswa/create ........................................................ guru.siswa.create ΓÇ║ Guru\SiswaController@create
-  GET|HEAD        guru/siswa/{siswa} ........................................................... guru.siswa.show ΓÇ║ Guru\SiswaController@show
-  PUT|PATCH       guru/siswa/{siswa} ....................................................... guru.siswa.update ΓÇ║ Guru\SiswaController@update
-  DELETE          guru/siswa/{siswa} ..................................................... guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
-  GET|HEAD        guru/siswa/{siswa}/edit ...................................................... guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
-  GET|HEAD        kepsek/dashboard .............................................. kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
-  GET|HEAD        kepsek/laporan/{laporanBimbingan} ............................. kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
-  GET|HEAD        login ................................................................. login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login .......................................................................... Auth\AuthenticatedSessionController@store
-  POST            logout .............................................................. logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        ortu/dashboard ....................................................... ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
-  GET|HEAD        ortu/laporan/{laporanBimbingan} ...................................... ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
-  PUT             password ................................................................ password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile ............................................................................ profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ........................................................................ profile.update ΓÇ║ ProfileController@update
-  DELETE          profile ...................................................................... profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ................................................................. register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register ............................................................................. Auth\RegisteredUserController@store
-  POST            reset-password ......................................................... password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} ................................................ password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} ............................................................................................. storage.local
-  GET|HEAD        up ....................................................................................................................... 
-  GET|HEAD        verify-email ................................................ verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} ................................................ verification.verify ΓÇ║ Auth\VerifyEmailController
-  GET|HEAD        walikelas/dashboard ............................................ walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
-  GET|HEAD        walikelas/laporan/{laporanBimbingan} ........................... walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
-  GET|HEAD        walikelas/siswa/{siswa} ............................................ walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  GET|HEAD        / ............................................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript ......................... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ...................... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} ................ debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} ............... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
+  GET|HEAD        _debugbar/open .......................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain .............. debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
+  GET|HEAD        admin/dashboard ............................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/jenis-pelanggaran .................. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
+  POST            admin/jenis-pelanggaran .................. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
+  GET|HEAD        admin/jenis-pelanggaran/create ......... admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranController@show
+  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranController@upΓÇª
+  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranController@dΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranControllerΓÇª
+  GET|HEAD        admin/pengguna ............................................ admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
+  POST            admin/pengguna ............................................ admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
+  GET|HEAD        admin/pengguna/create ................................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
+  GET|HEAD        admin/pengguna/{pengguna} ................................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
+  PUT|PATCH       admin/pengguna/{pengguna} ............................... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
+  DELETE          admin/pengguna/{pengguna} ............................. admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
+  GET|HEAD        admin/pengguna/{pengguna}/edit .............................. admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
+  GET|HEAD        admin/verifikasi-jadwal .............................. admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
+  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} .......... admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
+  GET|HEAD        confirm-password ..................................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password ....................................................... Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ............................................................................................. dashboard
+  POST            email/verification-notification .......... verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
+  GET|HEAD        forgot-password ...................................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password ......................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        guru/dashboard .................................................. guru.dashboard ΓÇ║ Guru\DashboardController@index
+  GET|HEAD        guru/jadwal-bimbingan ........................ guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
+  POST            guru/jadwal-bimbingan ........................ guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/create ............... guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
+  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan ...... guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbinganController@creΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} ....... guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@show
+  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} ... guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@update
+  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} . guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@destroy
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit .. guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@edit
+  GET|HEAD        guru/laporan/{laporanBimbingan} ........................ guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
+  PUT             guru/laporan/{laporanBimbingan} .................... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
+  GET|HEAD        guru/laporan/{laporanBimbingan}/download .... guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
+  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ................... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
+  GET|HEAD        guru/pelanggaran-siswa ..................... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
+  POST            guru/pelanggaran-siswa ..................... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
+  GET|HEAD        guru/pelanggaran-siswa/create ............ guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} ... guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaController@show
+  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaController@update
+  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaController@destΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaController@edΓÇª
+  GET|HEAD        guru/siswa ........................................................ guru.siswa.index ΓÇ║ Guru\SiswaController@index
+  POST            guru/siswa ........................................................ guru.siswa.store ΓÇ║ Guru\SiswaController@store
+  GET|HEAD        guru/siswa/create ............................................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
+  GET|HEAD        guru/siswa/{siswa} .................................................. guru.siswa.show ΓÇ║ Guru\SiswaController@show
+  PUT|PATCH       guru/siswa/{siswa} .............................................. guru.siswa.update ΓÇ║ Guru\SiswaController@update
+  DELETE          guru/siswa/{siswa} ............................................ guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
+  GET|HEAD        guru/siswa/{siswa}/edit ............................................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
+  GET|HEAD        kepsek/dashboard ..................................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
+  GET|HEAD        kepsek/laporan/{laporanBimbingan} .................... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
+  GET|HEAD        login ........................................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ................................................................. Auth\AuthenticatedSessionController@store
+  POST            logout ..................................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        ortu/dashboard .............................................. ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
+  GET|HEAD        ortu/laporan/{laporanBimbingan} ............................. ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
+  PUT             password ....................................................... password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile ................................................................... profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile ............................................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ............................................................. profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ........................................................ register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register .................................................................... Auth\RegisteredUserController@store
+  POST            reset-password ................................................ password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ....................................... password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} .................................................................................... storage.local
+  GET|HEAD        up .............................................................................................................. 
+  GET|HEAD        verify-email ....................................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} ....................................... verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        walikelas/dashboard ................................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/{laporanBimbingan} .................. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
+  GET|HEAD        walikelas/siswa/{siswa} ................................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                                         Showing [80] routes
+                                                                                                                Showing [80] routes
 
 ```
 

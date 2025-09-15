@@ -81,18 +81,19 @@ class PelanggaranSiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // Lakukan validasi data yang masuk
+        $validatedData = $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'jenis_pelanggaran_id' => 'required|exists:jenis_pelanggaran,id',
             'catatan' => 'nullable|string',
         ]);
 
         PelanggaranSiswa::create([
-            'siswa_id' => 'required|exists:siswa,id',
-            'jenis_pelanggaran_id' => 'required|exists:jenis_pelanggaran,id',
-            'catatan' => 'nullable|string',
+            'siswa_id' => $validatedData['siswa_id'],
+            'jenis_pelanggaran_id' => $validatedData['jenis_pelanggaran_id'],
+            'catatan' => $validatedData['catatan'],
             'dilaporkan_oleh' => Auth::id(), // ID Guru yang login otomatis tersimpan
-            'tanggal_pelanggaran' => now(),
+            // tanggal_pelanggaran akan diisi otomatis oleh model
         ]);
 
         return redirect()->route('guru.pelanggaran-siswa.index')->with('success', 'Pelanggaran siswa berhasil dicatat.');
