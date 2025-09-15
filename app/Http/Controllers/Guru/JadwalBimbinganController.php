@@ -7,9 +7,11 @@ use App\Models\JadwalBimbingan;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class JadwalBimbinganController extends Controller
 {
+
     public function index(Request $request)
     {
         // Data untuk dropdown filter
@@ -82,9 +84,19 @@ class JadwalBimbinganController extends Controller
             abort(403);
         }
         $siswa = Siswa::orderBy('nama')->get();
-        return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa'));
+
+        // Siapkan daftar status yang hanya boleh diakses oleh Guru BK
+        $statuses = [
+            'selesai' => 'Selesai',
+            'dibatalkan' => 'Dibatalkan',
+        ];
+
+        return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa', 'statuses'));
     }
 
+    /**
+     * PERBAIKAN LOGIKA VALIDASI PADA METHOD UPDATE
+     */
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
@@ -93,9 +105,12 @@ class JadwalBimbinganController extends Controller
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'tanggal_jadwal' => 'required|date',
-            'status' => 'required|in:menunggu_verifikasi,terverifikasi,selesai,dibatalkan',
+            // Validasi hanya mengizinkan status 'selesai' atau 'dibatalkan'
+            'status' => ['required', Rule::in(['selesai', 'dibatalkan'])],
         ]);
+        
         $jadwalBimbingan->update($request->all());
+
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil diperbarui.');
     }
 

@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-09-12 10:11:22_
+_Generated: 2025-09-15 10:56:39_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -281,6 +281,7 @@ storage\framework\views\7d99483c6b72cda8cc6a4a204cad7e82.php
 storage\framework\views\7da44973b2641ed9e5aff54b1da9ec7e.php
 storage\framework\views\83950d5769b0dee58cb3e04ddb1c1df6.php
 storage\framework\views\853305f88810516cf1af9fea98e845e3.php
+storage\framework\views\8865ecb9ccb6c0dee8b9f8c77eec02c0.php
 storage\framework\views\893166689e0ba16f0e1a581c0ee3513e.php
 storage\framework\views\91f2ea225e35578614afd3d3ea2730f0.php
 storage\framework\views\9931b3eb46bfdb6e5ed46b04338ce657.php
@@ -340,11 +341,11 @@ Branch:
 main
 
 Last 5 commits:
+69f35a3 test
 761cd35 install phpword
 7ed2c9b perbaiki error ortu
 9566ee8 password ortu
 cb84430 tambah filter dan search
-8608044 deploy 1
 ```
 
 
@@ -873,77 +874,113 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\WaliMurid;
 
 class PenggunaController extends Controller
 {
-    public function index(Request $request) // <-- Tambahkan Request $request
+    public function index(Request $request)
     {
-        // Memulai query dasar
-        $query = User::with('guru');
+        // ... (Tidak ada perubahan di sini)
+        $query = User::with(['guru', 'waliMurid']);
 
-        // Filter berdasarkan pencarian nama atau email
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+                  ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
-        // Filter berdasarkan peran (role)
         if ($request->filled('filter_role')) {
             $query->where('role', $request->input('filter_role'));
         }
 
-        // Paginate hasil query
         $pengguna = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.pengguna.index', [
             'pengguna' => $pengguna,
             'request' => $request,
         ]);
-    }   
+    }
 
     public function create()
     {
-        $guru = Guru::all();
-        return view('admin.pengguna.create', compact('guru'));
+        // ... (Tidak ada perubahan di sini, asumsikan sudah benar)
+        $guru = Guru::orderBy('nama')->get();
+        $waliMurid = WaliMurid::orderBy('nama')->get();
+        $roles = [
+            'admin_bk' => 'Admin BK',
+            'guru_bk' => 'Guru BK',
+            'wali_kelas' => 'Wali Kelas',
+            'kepala_sekolah' => 'Kepala Sekolah',
+            'orang_tua' => 'Orang Tua',
+        ];
+
+        return view('admin.pengguna.create', compact('guru', 'waliMurid', 'roles'));
     }
 
     public function store(Request $request)
     {
+        // ... (Tidak ada perubahan di sini, asumsikan sudah benar)
         $request->validate([
-            'guru_id' => 'required|exists:guru,id|unique:users,guru_id',
+            'guru_id' => 'required_if:role,admin_bk,guru_bk,wali_kelas,kepala_sekolah|nullable|exists:guru,id|unique:users,guru_id',
+            'wali_id' => 'required_if:role,orang_tua|nullable|exists:wali_murid,id|unique:users,wali_id',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah'])],
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
         ]);
 
-        $guru = Guru::find($request->guru_id);
+        $name = '';
+        if ($request->role === 'orang_tua') {
+            $wali = WaliMurid::find($request->wali_id);
+            $name = $wali->nama;
+        } else {
+            $guru = Guru::find($request->guru_id);
+            $name = $guru->nama;
+        }
 
         User::create([
-            'name' => $guru->nama,
+            'name' => $name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'guru_id' => $request->guru_id,
+            'guru_id' => $request->role !== 'orang_tua' ? $request->guru_id : null,
+            'wali_id' => $request->role === 'orang_tua' ? $request->wali_id : null,
         ]);
 
         return redirect()->route('admin.pengguna.index')->with('success', 'Akun pengguna berhasil dibuat.');
     }
 
+    /**
+     * MODIFIKASI PADA METHOD EDIT
+     */
     public function edit(User $pengguna)
     {
-        // Untuk form edit, kita tidak perlu mengirim data guru lagi
-        return view('admin.pengguna.edit', compact('pengguna'));
+        // Siapkan data yang dibutuhkan untuk dropdown di view
+        $guru = Guru::orderBy('nama')->get();
+        $waliMurid = WaliMurid::orderBy('nama')->get();
+        $roles = [
+            'admin_bk' => 'Admin BK',
+            'guru_bk' => 'Guru BK',
+            'wali_kelas' => 'Wali Kelas',
+            'kepala_sekolah' => 'Kepala Sekolah',
+            'orang_tua' => 'Orang Tua', // Tambahkan 'orang_tua'
+        ];
+
+        // Kirim semua data yang diperlukan ke view
+        return view('admin.pengguna.edit', compact('pengguna', 'guru', 'waliMurid', 'roles'));
     }
 
+    /**
+     * MODIFIKASI PADA METHOD UPDATE
+     */
     public function update(Request $request, User $pengguna)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $pengguna->id,
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah'])],
+            // Tambahkan 'orang_tua' pada aturan validasi
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
@@ -960,12 +997,10 @@ class PenggunaController extends Controller
 
     public function destroy(User $pengguna)
     {
-        // Jangan hapus diri sendiri atau pengguna lain yang penting
+        // ... (Tidak ada perubahan di sini)
         if ($pengguna->id === Auth::id()) {
             return back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
         }
-
-        // Logika untuk mencegah penghapusan akun penting lainnya bisa ditambahkan di sini
 
         $pengguna->delete();
         return redirect()->route('admin.pengguna.index')->with('success', 'Akun pengguna berhasil dihapus.');
@@ -1671,18 +1706,19 @@ class PelanggaranSiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // Lakukan validasi data yang masuk
+        $validatedData = $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'jenis_pelanggaran_id' => 'required|exists:jenis_pelanggaran,id',
             'catatan' => 'nullable|string',
         ]);
 
         PelanggaranSiswa::create([
-            'siswa_id' => 'required|exists:siswa,id',
-            'jenis_pelanggaran_id' => 'required|exists:jenis_pelanggaran,id',
-            'catatan' => 'nullable|string',
+            'siswa_id' => $validatedData['siswa_id'],
+            'jenis_pelanggaran_id' => $validatedData['jenis_pelanggaran_id'],
+            'catatan' => $validatedData['catatan'],
             'dilaporkan_oleh' => Auth::id(), // ID Guru yang login otomatis tersimpan
-            'tanggal_pelanggaran' => now(),
+            // tanggal_pelanggaran akan diisi otomatis oleh model
         ]);
 
         return redirect()->route('guru.pelanggaran-siswa.index')->with('success', 'Pelanggaran siswa berhasil dicatat.');
@@ -2890,6 +2926,7 @@ class WaliMurid extends Model
                                     <option value="wali_kelas" @selected($pengguna->role == 'wali_kelas')>Wali Kelas</option>
                                     <option value="kepala_sekolah" @selected($pengguna->role == 'kepala_sekolah')>Kepala Sekolah</option>
                                     <option value="admin_bk" @selected($pengguna->role == 'admin_bk')>Admin BK</option>
+                                    <option value="orang_tua" @selected($pengguna->role == 'orang_tua')>Orang Tua</option>  
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
