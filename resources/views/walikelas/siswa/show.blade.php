@@ -12,7 +12,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
+                {{-- KOLOM KIRI --}}
                 <div class="lg:col-span-1 space-y-6">
+                    
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                         <div class="p-6">
                             <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4">Profil Siswa</h3>
@@ -23,6 +25,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4">Aksi Cepat</h3>
+                            <div class="mt-4 space-y-2">
+                                @if($siswa->waliMurid && $siswa->waliMurid->nomor_telepon)
+                                    @php
+                                        // Menggunakan 'nomor_telepon' sesuai digest
+                                        $nomorWhatsapp = preg_replace('/^0/', '62', $siswa->waliMurid->nomor_telepon);
+                                        $pesan = urlencode("Selamat pagi/siang Bapak/Ibu " . $siswa->waliMurid->nama . ", saya selaku wali kelas ananda " . $siswa->nama . " ingin berdiskusi.");
+                                    @endphp
+                                    <a href="https://wa.me/{{ $nomorWhatsapp }}?text={{ $pesan }}" target="_blank" class="block w-full text-center px-4 py-2 bg-green-50 text-green-700 rounded-lg text-sm font-semibold hover:bg-green-100">Hubungi Ortu (WA)</a>
+                                @else
+                                    <p class="text-xs text-center text-slate-400 italic">Nomor telepon orang tua tidak tersedia.</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                         <div class="p-6 text-center">
                             <p class="text-sm font-medium text-slate-500">Total Poin Pelanggaran</p>
@@ -31,10 +52,13 @@
                             </p>
                         </div>
                     </div>
+
                 </div>
 
+                {{-- KOLOM KANAN --}}
                 <div class="lg:col-span-2 space-y-6">
-                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                    
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                         <div class="p-6">
                              <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4 mb-4">Riwayat Pelanggaran</h3>
                             <div class="overflow-x-auto">
@@ -61,6 +85,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                         <div class="p-6">
                             <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4 mb-4">Riwayat Bimbingan</h3>

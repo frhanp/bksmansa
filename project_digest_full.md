@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-09-15 10:56:39_
+_Generated: 2025-09-17 09:37:11_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -122,11 +122,14 @@ database\migrations\2025_07_12_162418_create_jenis_pelanggaran_table.php
 database\migrations\2025_07_12_162418_create_pelanggaran_siswa_table.php
 database\migrations\2025_07_12_162420_create_laporan_bimbingan_table.php
 database\migrations\2025_07_12_163011_add_foreign_keys_to_users_table.php
+database\migrations\2025_09_15_032320_add_jenis_surat_to_laporan_bimbingan_table.php
+database\migrations\2025_09_17_013145_add_file_pendukung_to_laporan_bimbingan_table.php
 database\seeders\DatabaseSeeder.php
 database\seeders\PelanggaranSeeder.php
 database\seeders\RolesAndUsersSeeder.php
 database\seeders\SiswaSeeder.php
 public\build
+public\storage
 public\.htaccess
 public\favicon.ico
 public\hot
@@ -227,9 +230,13 @@ storage\framework
 storage\logs
 storage\app\private
 storage\app\public
+storage\app\templates
 storage\app\.gitignore
 storage\app\private\.gitignore
+storage\app\public\laporan_word
 storage\app\public\.gitignore
+storage\app\public\laporan_word\laporan_surat_peringatan_1_12349_1758072946.docx
+storage\app\templates\surat_peringatan_1.docx
 storage\framework\cache
 storage\framework\sessions
 storage\framework\testing
@@ -341,11 +348,11 @@ Branch:
 main
 
 Last 5 commits:
+2efa1b5 fix role guru bk di jadwal bimbingan
 69f35a3 test
 761cd35 install phpword
 7ed2c9b perbaiki error ortu
 9566ee8 password ortu
-cb84430 tambah filter dan search
 ```
 
 
@@ -546,88 +553,88 @@ require __DIR__.'/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ............................................................................................................... 
-  GET|HEAD        _debugbar/assets/javascript ......................... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ...................... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} ................ debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
-  GET|HEAD        _debugbar/clockwork/{id} ............... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open .......................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain .............. debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
-  GET|HEAD        admin/dashboard ............................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/jenis-pelanggaran .................. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
-  POST            admin/jenis-pelanggaran .................. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
-  GET|HEAD        admin/jenis-pelanggaran/create ......... admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranController@show
-  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranController@upΓÇª
-  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranController@dΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranControllerΓÇª
-  GET|HEAD        admin/pengguna ............................................ admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
-  POST            admin/pengguna ............................................ admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
-  GET|HEAD        admin/pengguna/create ................................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
-  GET|HEAD        admin/pengguna/{pengguna} ................................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
-  PUT|PATCH       admin/pengguna/{pengguna} ............................... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
-  DELETE          admin/pengguna/{pengguna} ............................. admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
-  GET|HEAD        admin/pengguna/{pengguna}/edit .............................. admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
-  GET|HEAD        admin/verifikasi-jadwal .............................. admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
-  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} .......... admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
-  GET|HEAD        confirm-password ..................................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password ....................................................... Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard ............................................................................................. dashboard
-  POST            email/verification-notification .......... verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
-  GET|HEAD        forgot-password ...................................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password ......................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        guru/dashboard .................................................. guru.dashboard ΓÇ║ Guru\DashboardController@index
-  GET|HEAD        guru/jadwal-bimbingan ........................ guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
-  POST            guru/jadwal-bimbingan ........................ guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/create ............... guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
-  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan ...... guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbinganController@creΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} ....... guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@show
-  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} ... guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@update
-  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} . guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@destroy
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit .. guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@edit
-  GET|HEAD        guru/laporan/{laporanBimbingan} ........................ guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
-  PUT             guru/laporan/{laporanBimbingan} .................... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
-  GET|HEAD        guru/laporan/{laporanBimbingan}/download .... guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
-  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ................... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
-  GET|HEAD        guru/pelanggaran-siswa ..................... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
-  POST            guru/pelanggaran-siswa ..................... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
-  GET|HEAD        guru/pelanggaran-siswa/create ............ guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} ... guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaController@show
-  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaController@update
-  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaController@destΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaController@edΓÇª
-  GET|HEAD        guru/siswa ........................................................ guru.siswa.index ΓÇ║ Guru\SiswaController@index
-  POST            guru/siswa ........................................................ guru.siswa.store ΓÇ║ Guru\SiswaController@store
-  GET|HEAD        guru/siswa/create ............................................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
-  GET|HEAD        guru/siswa/{siswa} .................................................. guru.siswa.show ΓÇ║ Guru\SiswaController@show
-  PUT|PATCH       guru/siswa/{siswa} .............................................. guru.siswa.update ΓÇ║ Guru\SiswaController@update
-  DELETE          guru/siswa/{siswa} ............................................ guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
-  GET|HEAD        guru/siswa/{siswa}/edit ............................................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
-  GET|HEAD        kepsek/dashboard ..................................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
-  GET|HEAD        kepsek/laporan/{laporanBimbingan} .................... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
-  GET|HEAD        login ........................................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login ................................................................. Auth\AuthenticatedSessionController@store
-  POST            logout ..................................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        ortu/dashboard .............................................. ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
-  GET|HEAD        ortu/laporan/{laporanBimbingan} ............................. ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
-  PUT             password ....................................................... password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile ................................................................... profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ............................................................... profile.update ΓÇ║ ProfileController@update
-  DELETE          profile ............................................................. profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ........................................................ register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register .................................................................... Auth\RegisteredUserController@store
-  POST            reset-password ................................................ password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} ....................................... password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} .................................................................................... storage.local
-  GET|HEAD        up .............................................................................................................. 
-  GET|HEAD        verify-email ....................................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} ....................................... verification.verify ΓÇ║ Auth\VerifyEmailController
-  GET|HEAD        walikelas/dashboard ................................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
-  GET|HEAD        walikelas/laporan/{laporanBimbingan} .................. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
-  GET|HEAD        walikelas/siswa/{siswa} ................................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  GET|HEAD        / ................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetControllerΓÇª
+  GET|HEAD        _debugbar/assets/stylesheets debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetControllΓÇª
+  DELETE          _debugbar/cache/{key}/{tags?} debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheContrΓÇª
+  GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerControlΓÇª
+  GET|HEAD        _debugbar/open debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handΓÇª
+  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesContΓÇª
+  GET|HEAD        admin/dashboard ................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/jenis-pelanggaran admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranControΓÇª
+  POST            admin/jenis-pelanggaran admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranControΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/create admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggarΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenΓÇª
+  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JΓÇª
+  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\ΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ AdmiΓÇª
+  GET|HEAD        admin/pengguna ................ admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
+  POST            admin/pengguna ................ admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
+  GET|HEAD        admin/pengguna/create ....... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
+  GET|HEAD        admin/pengguna/{pengguna} ....... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
+  PUT|PATCH       admin/pengguna/{pengguna} ... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
+  DELETE          admin/pengguna/{pengguna} . admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
+  GET|HEAD        admin/pengguna/{pengguna}/edit .. admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
+  GET|HEAD        admin/verifikasi-jadwal .. admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
+  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} admin.jadwal.update ΓÇ║ Admin\JadwalBimbingaΓÇª
+  GET|HEAD        confirm-password ......... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password ........................... Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ................................................................. dashboard
+  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificatiΓÇª
+  GET|HEAD        forgot-password .......... password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password ............. password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        guru/dashboard ...................... guru.dashboard ΓÇ║ Guru\DashboardController@index
+  GET|HEAD        guru/jadwal-bimbingan guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@iΓÇª
+  POST            guru/jadwal-bimbingan guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@sΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/create guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganContΓÇª
+  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan guru.laporan.store ΓÇ║ Guru\LaporanBimΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimΓÇª
+  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBΓÇª
+  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan} guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@ΓÇª
+  PUT             guru/laporan/{laporanBimbingan} guru.laporan.update ΓÇ║ Guru\LaporanBimbinganControlleΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbingΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan}/edit guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganControΓÇª
+  GET|HEAD        guru/pelanggaran-siswa guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaControlleΓÇª
+  POST            guru/pelanggaran-siswa guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaControlleΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/create guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaCΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelangΓÇª
+  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelaΓÇª
+  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PΓÇª
+  GET|HEAD        guru/siswa ............................ guru.siswa.index ΓÇ║ Guru\SiswaController@index
+  POST            guru/siswa ............................ guru.siswa.store ΓÇ║ Guru\SiswaController@store
+  GET|HEAD        guru/siswa/create ................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
+  GET|HEAD        guru/siswa/{siswa} ...................... guru.siswa.show ΓÇ║ Guru\SiswaController@show
+  PUT|PATCH       guru/siswa/{siswa} .................. guru.siswa.update ΓÇ║ Guru\SiswaController@update
+  DELETE          guru/siswa/{siswa} ................ guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
+  GET|HEAD        guru/siswa/{siswa}/edit ................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
+  GET|HEAD        kepsek/dashboard ......... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
+  GET|HEAD        kepsek/laporan/{laporanBimbingan} kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanControlΓÇª
+  GET|HEAD        login ............................ login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ..................................... Auth\AuthenticatedSessionController@store
+  POST            logout ......................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        ortu/dashboard .................. ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
+  GET|HEAD        ortu/laporan/{laporanBimbingan} . ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
+  PUT             password ........................... password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile ....................................... profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile ................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ................................. profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ............................ register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register ........................................ Auth\RegisteredUserController@store
+  POST            reset-password .................... password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ........... password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} ........................................................ storage.local
+  GET|HEAD        up .................................................................................. 
+  GET|HEAD        verify-email ........... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} ........... verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        walikelas/dashboard ....... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/{laporanBimbingan} walikelas.laporan.show ΓÇ║ WaliKelas\LaporanContrΓÇª
+  GET|HEAD        walikelas/siswa/{siswa} ....... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                                Showing [80] routes
+                                                                                    Showing [80] routes
 
 ```
 
@@ -737,17 +744,23 @@ class JadwalBimbinganController extends Controller
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         $request->validate([
-            'status' => 'required|in:terverifikasi,dibatalkan'
+            'status' => 'required|in:menunggu_verifikasi,terverifikasi,selesai,dibatalkan',
         ]);
+        // Tampilkan data SEBELUM diubah
+        
 
-        $jadwalBimbingan->update([
-            'status' => $request->status,
-            'diverifikasi_oleh' => Auth::id(),
-        ]);
+        $jadwalBimbingan->status = $request->status;
 
-        $pesan = $request->status == 'terverifikasi' ? 'Jadwal berhasil diverifikasi.' : 'Jadwal telah dibatalkan.';
+        // PERBAIKAN: Tambahkan ID admin saat status diubah menjadi 'terverifikasi'
+        if ($request->status == 'terverifikasi') {
+            $jadwalBimbingan->diverifikasi_oleh = Auth::id();
+        }
+       // TAMBAHKAN DD DI SINI
+       
 
-        return back()->with('success', $pesan);
+        $jadwalBimbingan->save();
+
+        return redirect()->back()->with('success', 'Status jadwal berhasil diperbarui.');
     }
 }
 
@@ -1415,9 +1428,11 @@ use App\Models\JadwalBimbingan;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class JadwalBimbinganController extends Controller
 {
+
     public function index(Request $request)
     {
         // Data untuk dropdown filter
@@ -1457,7 +1472,6 @@ class JadwalBimbinganController extends Controller
 
         // Paginate hasil query
         $jadwal = $query->latest()->paginate(10)->withQueryString();
-            
         return view('guru.jadwal.index', compact('jadwal', 'siswaFilter', 'kelasFilter', 'request'));
     }
 
@@ -1480,6 +1494,7 @@ class JadwalBimbinganController extends Controller
             'tanggal_jadwal' => $request->tanggal_jadwal,
             'status' => 'menunggu_verifikasi', // Status default
         ]);
+        // HAPUS dd($jadwalBaru); DARI SINI
 
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil dibuat dan menunggu verifikasi.');
     }
@@ -1490,9 +1505,19 @@ class JadwalBimbinganController extends Controller
             abort(403);
         }
         $siswa = Siswa::orderBy('nama')->get();
-        return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa'));
+
+        // Siapkan daftar status yang hanya boleh diakses oleh Guru BK
+        $statuses = [
+            'selesai' => 'Selesai',
+            'dibatalkan' => 'Dibatalkan',
+        ];
+
+        return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa', 'statuses'));
     }
 
+    /**
+     * PERBAIKAN LOGIKA VALIDASI PADA METHOD UPDATE
+     */
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
@@ -1501,9 +1526,12 @@ class JadwalBimbinganController extends Controller
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'tanggal_jadwal' => 'required|date',
-            'status' => 'required|in:menunggu_verifikasi,terverifikasi,selesai,dibatalkan',
+            // Validasi hanya mengizinkan status 'selesai' atau 'dibatalkan'
+            'status' => ['required', Rule::in(['selesai', 'dibatalkan'])],
         ]);
+        
         $jadwalBimbingan->update($request->all());
+
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil diperbarui.');
     }
 
@@ -1529,55 +1557,124 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\LaporanBimbingan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 
 class LaporanBimbinganController extends Controller
 {
-    public function create(JadwalBimbingan $jadwalBimbingan)
+    // Daftar template yang tersedia
+    private $templateSurat = [
+        'surat_panggilan_ortu' => 'Surat Panggilan Orang Tua',
+        'surat_peringatan_1' => 'Surat Peringatan Pertama (SP 1)',
+        'laporan_standar' => 'Laporan Bimbingan Standar',
+    ];
+
+    public function create($jadwalId)
     {
-        // Pastikan guru hanya bisa membuat laporan untuk jadwalnya sendiri
-        if ($jadwalBimbingan->konselor_id !== Auth::id()) {
-            abort(403);
-        }
-        // Pastikan laporan belum ada
-        if ($jadwalBimbingan->laporan) {
-            return redirect()->route('guru.laporan.show', $jadwalBimbingan->laporan->id)->with('info', 'Laporan untuk jadwal ini sudah ada.');
+        $jadwal = JadwalBimbingan::find($jadwalId);
+        if (!$jadwal) {
+            abort(404, 'Jadwal bimbingan tidak ditemukan.');
         }
 
-        return view('guru.laporan.create', compact('jadwalBimbingan'));
+        if ($jadwal->konselor_id !== Auth::id()) {
+            abort(403, 'Anda tidak berhak membuat laporan untuk jadwal ini.');
+        }
+
+        return view('guru.laporan.create', [
+            'jadwal' => $jadwal,
+            'templateSurat' => $this->templateSurat,
+        ]);
     }
 
-    public function store(Request $request, JadwalBimbingan $jadwalBimbingan)
+    /**
+     * PERBAIKAN: Mengambil data jadwal secara manual pada method store.
+     */
+    public function store(Request $request, $jadwalId) // Menerima ID mentah
     {
-        if ($jadwalBimbingan->konselor_id !== Auth::id()) {
-            abort(403);
+
+        // 1. Cari data jadwal secara manual
+        $jadwal = JadwalBimbingan::find($jadwalId);
+        if (!$jadwal) {
+            abort(404, 'Jadwal bimbingan tidak ditemukan.');
+        }
+
+        // 2. Lakukan pengecekan keamanan
+        if ($jadwal->konselor_id !== Auth::id()) {
+            abort(403, 'Anda tidak berhak menyimpan laporan untuk jadwal ini.');
         }
 
         $request->validate([
-            'isi_laporan' => 'required|string',
+            'jenis_surat' => 'required|in:' . implode(',', array_keys($this->templateSurat)),
+            'isi_laporan' => 'nullable|string',
             'rencana_tindak_lanjut' => 'nullable|string',
         ]);
 
-        LaporanBimbingan::create([
-            'jadwal_id' => $jadwalBimbingan->id,
+        $templateName = $request->jenis_surat;
+        $templatePath = storage_path("app/templates/{$templateName}.docx");
+
+        if (!file_exists($templatePath)) {
+            return back()->with('error', 'Template surat tidak ditemukan.');
+        }
+
+        $templateProcessor = new TemplateProcessor($templatePath);
+        $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
+
+        $data = [
+            'nama_siswa' => $siswa->nama,
+            'nis' => $siswa->nis,
+            'kelas' => $siswa->kelas,
+            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
+            'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
+            'nama_konselor' => Auth::user()->name,
+            'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
+            'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
+            'isi_laporan' => $request->isi_laporan ?? 'Tidak ada catatan tambahan.',
+            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? 'Tidak ada rencana tindak lanjut spesifik.',
+            'dibuat_oleh' => Auth::id(),
+
+        ];
+
+        $templateProcessor->setValues($data);
+
+        $fileName = "laporan_{$templateName}_" . $siswa->nis . '_' . time() . '.docx';
+        $path = "laporan_word/{$fileName}";
+
+        if (!Storage::disk('public')->exists('laporan_word')) {
+            Storage::disk('public')->makeDirectory('laporan_word');
+        }
+        $templateProcessor->saveAs(storage_path("app/public/{$path}"));
+
+        // Siapkan semua data dalam sebuah array
+        $dataToSave = [
+            'jadwal_id' => $jadwal->id,
+            'jenis_surat' => $request->jenis_surat,
             'isi_laporan' => $request->isi_laporan,
             'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
+            'file_pendukung' => $path,
             'dibuat_oleh' => Auth::id(),
-        ]);
+        ];
 
-        // Otomatis ubah status jadwal menjadi 'selesai' setelah laporan dibuat
-        $jadwalBimbingan->update(['status' => 'selesai']);
+     
+        $jadwal->update(['status' => 'selesai']);
+        
+        // Simpan data ke database
+        LaporanBimbingan::create($dataToSave);
 
-        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan bimbingan berhasil disimpan.');
+        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan file surat telah digenerate.');
     }
 
     public function show(LaporanBimbingan $laporanBimbingan)
     {
+        
         // Pastikan guru hanya bisa melihat laporannya sendiri
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
 
-        $laporanBimbingan->load('jadwalBimbingan.siswa');
+        // PERBAIKAN: Gunakan nama relasi 'jadwal.siswa' yang benar.
+        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
 
@@ -1613,9 +1710,9 @@ class LaporanBimbinganController extends Controller
         }
 
         $laporanBimbingan->load('jadwalBimbingan.siswa', 'dibuatOleh.guru');
-        
+
         $pdf = Pdf::loadView('guru.laporan.pdf', compact('laporanBimbingan'));
-        
+
         $namaFile = 'laporan-bimbingan-' . Str::slug($laporanBimbingan->jadwalBimbingan->siswa->nama) . '.pdf';
 
         return $pdf->download($namaFile);
@@ -2305,8 +2402,12 @@ class LaporanBimbingan extends Model
 
     protected $fillable = [
         'jadwal_id',
+        'jenis_surat',
+        'file_pendukung',
         'isi_laporan',
         'rencana_tindak_lanjut',
+        'jenis_surat',
+        'file_pendukung',
         'dibuat_oleh',
     ];
 
@@ -2319,6 +2420,11 @@ class LaporanBimbingan extends Model
 {
     return $this->belongsTo(User::class, 'dibuat_oleh');
 }
+
+public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
 }
 
 ===== app\Models\PelanggaranSiswa.php =====
@@ -3669,16 +3775,15 @@ $classes = ($active ?? false)
                     <div class="p-8 space-y-6">
                         <div class="border-b border-slate-200 pb-6">
                             <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Jadwal</h3>
+                            <p class="mt-1 text-sm text-slate-500">
+                                Harap diperhatikan: Anda hanya dapat mengubah status menjadi "Selesai" atau "Dibatalkan".
+                            </p>
                         </div>
 
                         <div>
-                            <x-input-label for="siswa_id" :value="__('Siswa')" />
-                            <select id="siswa_id" name="siswa_id" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                                @foreach($siswa as $s)
-                                    <option value="{{ $s->id }}" @selected(old('siswa_id', $jadwalBimbingan->siswa_id) == $s->id)>{{ $s->nama }} (Kelas: {{ $s->kelas }})</option>
-                                @endforeach
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('siswa_id')" />
+                            <x-input-label for="siswa_id" :value="__('Siswa (Tidak dapat diubah)')" />
+                            <x-text-input id="siswa_id" name="siswa_id_disabled" type="text" class="mt-1 block w-full bg-slate-100" :value="$jadwalBimbingan->siswa->nama . ' (Kelas: ' . $jadwalBimbingan->siswa->kelas . ')'" disabled />
+                            <input type="hidden" name="siswa_id" value="{{ $jadwalBimbingan->siswa_id }}">
                         </div>
                         
                         <div>
@@ -3687,13 +3792,23 @@ $classes = ($active ?? false)
                             <x-input-error class="mt-2" :messages="$errors->get('tanggal_jadwal')" />
                         </div>
 
+                        {{-- PERBAIKAN: Dropdown status yang sudah dibatasi --}}
                         <div>
-                            <x-input-label for="status" :value="__('Status Jadwal')" />
+                            <x-input-label for="status" :value="__('Ubah Status Jadwal')" />
                             <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md" required>
-                                <option value="menunggu_verifikasi" @selected($jadwalBimbingan->status == 'menunggu_verifikasi')>Menunggu Verifikasi</option>
-                                <option value="terverifikasi" @selected($jadwalBimbingan->status == 'terverifikasi')>Terverifikasi</option>
-                                <option value="selesai" @selected($jadwalBimbingan->status == 'selesai')>Selesai</option>
-                                <option value="dibatalkan" @selected($jadwalBimbingan->status == 'dibatalkan')>Dibatalkan</option>
+                                {{-- Menampilkan status saat ini jika bukan pilihan default --}}
+                                @if(!in_array($jadwalBimbingan->status, ['selesai', 'dibatalkan']))
+                                    <option value="{{ $jadwalBimbingan->status }}" selected disabled>
+                                        {{ str_replace('_', ' ', Str::title($jadwalBimbingan->status)) }} (Status Saat Ini)
+                                    </option>
+                                @endif
+                                
+                                {{-- Loop untuk status yang diizinkan dari controller --}}
+                                @foreach($statuses as $value => $label)
+                                    <option value="{{ $value }}" @selected(old('status', $jadwalBimbingan->status) == $value)>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('status')" />
                         </div>
@@ -3859,39 +3974,50 @@ $classes = ($active ?? false)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-800 leading-tight">
-            {{ __('Buat Laporan Bimbingan') }}
+            {{ __('Buat Laporan Bimbingan untuk ' . $jadwal->siswa->nama) }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <form action="{{ route('guru.laporan.store', $jadwalBimbingan->id) }}" method="POST">
+                <form action="{{ route('guru.laporan.store', $jadwal->id) }}" method="POST">
                     @csrf
                     <div class="p-8 space-y-6">
                         <div class="border-b border-slate-200 pb-6">
-                            <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Sesi Konseling</h3>
-                            <div class="mt-2 text-sm text-slate-600 space-y-1">
-                                <p><span class="font-semibold">Siswa:</span> {{ $jadwalBimbingan->siswa->nama }}</p>
-                                <p><span class="font-semibold">Tanggal:</span> {{ \Carbon\Carbon::parse($jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            </div>
+                            <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Laporan</h3>
+                            <p class="mt-1 text-sm text-slate-500">Pilih jenis surat yang akan dibuat. Data siswa akan otomatis terisi.</p>
                         </div>
-                        
+
+                        {{-- Dropdown untuk memilih jenis surat --}}
                         <div>
-                            <x-input-label for="isi_laporan" :value="__('Isi Laporan / Hasil Konseling')" />
-                            <textarea id="isi_laporan" name="isi_laporan" rows="8" class="mt-1 block w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm" required>{{ old('isi_laporan') }}</textarea>
+                            <x-input-label for="jenis_surat" :value="__('Pilih Jenis Surat/Laporan')" />
+                            <select id="jenis_surat" name="jenis_surat" class="mt-1 block w-full border-gray-300 rounded-md" required>
+                                <option value="">-- Pilih Template --</option>
+                                @foreach($templateSurat as $key => $label)
+                                    <option value="{{ $key }}" {{ old('jenis_surat') == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('jenis_surat')" />
+                        </div>
+
+                        {{-- Textarea untuk input tambahan --}}
+                        <div>
+                            <x-input-label for="isi_laporan" :value="__('Isi Laporan Tambahan (Opsional)')" />
+                            <textarea id="isi_laporan" name="isi_laporan" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('isi_laporan') }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->get('isi_laporan')" />
                         </div>
                         
                         <div>
                             <x-input-label for="rencana_tindak_lanjut" :value="__('Rencana Tindak Lanjut (Opsional)')" />
-                            <textarea id="rencana_tindak_lanjut" name="rencana_tindak_lanjut" rows="4" class="mt-1 block w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm">{{ old('rencana_tindak_lanjut') }}</textarea>
+                            <textarea id="rencana_tindak_lanjut" name="rencana_tindak_lanjut" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('rencana_tindak_lanjut') }}</textarea>
+                            <x-input-error class="mt-2" :messages="$errors->get('rencana_tindak_lanjut')" />
                         </div>
                     </div>
 
                     <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">
                         <x-primary-button class="bg-teal-600 hover:bg-teal-500 focus:bg-teal-700 focus:ring-teal-500">
-                            {{ __('Simpan Laporan') }}
+                            {{ __('Simpan & Buat Surat') }}
                         </x-primary-button>
                         <a href="{{ route('guru.jadwal-bimbingan.index') }}" class="text-sm text-slate-600 hover:text-slate-900">{{ __('Batal') }}</a>
                     </div>
@@ -4023,44 +4149,52 @@ $classes = ($active ?? false)
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <div class="p-8 space-y-6">
-                    <div class="border-b border-slate-200 pb-6">
-                        <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
-                        <div class="mt-2 text-sm text-slate-600 space-y-1">
-                            <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
-                            <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Dibuat Pada:</span> {{ $laporanBimbingan->created_at->isoFormat('D MMMM YYYY, HH:mm') }}</p>
+                <div class="p-6 md:p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            {{-- PERBAIKAN: Menggunakan relasi jadwalBimbingan --}}
+                            <h3 class="text-xl font-bold text-slate-900">Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</h3>
+                            <p class="text-sm text-slate-500">
+                                Dibuat oleh: {{ $laporanBimbingan->pembuat->name }} pada {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
+                            </p>
                         </div>
+                        
+                        @if ($laporanBimbingan->file_pendukung)
+                            <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" 
+                               class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                               download>
+                               Unduh Dokumen (.docx)
+                            </a>
+                        @endif
                     </div>
 
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan)) !!}
+                    <div class="border-t border-slate-200 pt-6 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Jenis Surat yang Dihasilkan</h4>
+                            <p class="text-slate-900">{{ str_replace('_', ' ', Str::title($laporanBimbingan->jenis_surat)) }}</p>
                         </div>
-                    </div>
 
-                    @if($laporanBimbingan->rencana_tindak_lanjut)
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Rencana Tindak Lanjut</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                           {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut)) !!}
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Isi Laporan Tambahan</h4>
+                            <div class="prose max-w-none text-slate-800">
+                                {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                            </div>
                         </div>
-                    </div>
-                    @endif
-                </div>
-                <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    <a href="{{ route('guru.jadwal-bimbingan.index') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Daftar Jadwal</a>
-                    
-                    <div class="flex items-center gap-4">
-                        <a href="{{ route('guru.laporan.edit', $laporanBimbingan->id) }}" class="inline-flex items-center px-4 py-2 bg-slate-200 border border-transparent rounded-md font-semibold text-xs text-slate-800 uppercase tracking-widest hover:bg-slate-300">
-                            Edit
-                        </a>
-                        <a href="{{ route('guru.laporan.download', $laporanBimbingan->id) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
-                            Download PDF
-                        </a>
+
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Rencana Tindak Lanjut</h4>
+                            <div class="prose max-w-none text-slate-800">
+                                {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="{{ route('guru.jadwal-bimbingan.index') }}" class="text-sm text-slate-600 hover:text-slate-900">
+                                &larr; Kembali ke Daftar Jadwal
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

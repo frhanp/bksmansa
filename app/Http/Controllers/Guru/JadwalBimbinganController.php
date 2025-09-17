@@ -51,7 +51,6 @@ class JadwalBimbinganController extends Controller
 
         // Paginate hasil query
         $jadwal = $query->latest()->paginate(10)->withQueryString();
-            
         return view('guru.jadwal.index', compact('jadwal', 'siswaFilter', 'kelasFilter', 'request'));
     }
 
@@ -74,6 +73,7 @@ class JadwalBimbinganController extends Controller
             'tanggal_jadwal' => $request->tanggal_jadwal,
             'status' => 'menunggu_verifikasi', // Status default
         ]);
+        // HAPUS dd($jadwalBaru); DARI SINI
 
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil dibuat dan menunggu verifikasi.');
     }

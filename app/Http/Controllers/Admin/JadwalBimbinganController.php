@@ -61,16 +61,22 @@ class JadwalBimbinganController extends Controller
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         $request->validate([
-            'status' => 'required|in:terverifikasi,dibatalkan'
+            'status' => 'required|in:menunggu_verifikasi,terverifikasi,selesai,dibatalkan',
         ]);
+        // Tampilkan data SEBELUM diubah
+        
 
-        $jadwalBimbingan->update([
-            'status' => $request->status,
-            'diverifikasi_oleh' => Auth::id(),
-        ]);
+        $jadwalBimbingan->status = $request->status;
 
-        $pesan = $request->status == 'terverifikasi' ? 'Jadwal berhasil diverifikasi.' : 'Jadwal telah dibatalkan.';
+        // PERBAIKAN: Tambahkan ID admin saat status diubah menjadi 'terverifikasi'
+        if ($request->status == 'terverifikasi') {
+            $jadwalBimbingan->diverifikasi_oleh = Auth::id();
+        }
+       // TAMBAHKAN DD DI SINI
+       
 
-        return back()->with('success', $pesan);
+        $jadwalBimbingan->save();
+
+        return redirect()->back()->with('success', 'Status jadwal berhasil diperbarui.');
     }
 }

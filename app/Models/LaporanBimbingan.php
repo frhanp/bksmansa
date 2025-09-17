@@ -14,8 +14,12 @@ class LaporanBimbingan extends Model
 
     protected $fillable = [
         'jadwal_id',
+        'jenis_surat',
+        'file_pendukung',
         'isi_laporan',
         'rencana_tindak_lanjut',
+        'jenis_surat',
+        'file_pendukung',
         'dibuat_oleh',
     ];
 
@@ -28,4 +32,9 @@ class LaporanBimbingan extends Model
 {
     return $this->belongsTo(User::class, 'dibuat_oleh');
 }
+
+public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
 }
