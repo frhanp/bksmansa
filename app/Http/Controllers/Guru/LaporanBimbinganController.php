@@ -16,12 +16,47 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class LaporanBimbinganController extends Controller
 {
-    // Daftar template yang tersedia
-    private $templateSurat = [
-        'surat_panggilan_ortu' => 'Surat Panggilan Orang Tua',
-        'surat_peringatan_1' => 'Surat Peringatan Pertama (SP 1)',
-        'laporan_standar' => 'Laporan Bimbingan Standar',
-    ];
+    private function getTemplateSurat()
+    {
+        return [
+            'surat_perjanjian' => [
+                'label' => 'Surat Perjanjian Siswa',
+                'fields' => [
+                    'isi_janji' => ['label' => 'Isi Poin-Poin Perjanjian', 'type' => 'textarea', 'required' => true, 'placeholder' => 'Siswa berjanji untuk...'],
+                ]
+            ],
+            'surat_penyerahan_ortu' => [
+                'label' => 'Surat Penyerahan Kembali ke Orang Tua',
+                'fields' => [
+                    'tempat_lahir' => ['label' => 'Tempat Lahir Siswa', 'type' => 'text', 'required' => true],
+                    'tanggal_lahir' => ['label' => 'Tanggal Lahir Siswa', 'type' => 'date', 'required' => true],
+                    'jenis_kelamin' => ['label' => 'Jenis Kelamin Siswa', 'type' => 'select', 'required' => true, 'options' => ['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan']],
+                ]
+            ],
+            'surat_peringatan' => [
+                'label' => 'Surat Peringatan',
+                'fields' => [
+                    'deskripsi_pelanggaran' => ['label' => 'Deskripsi Pelanggaran yang Dilakukan', 'type' => 'textarea', 'required' => true],
+                ]
+            ],
+            'surat_skorsing' => [
+                'label' => 'Surat Skorsing',
+                'fields' => [
+                    'tanggal_mulai_skorsing' => ['label' => 'Skorsing Berlaku Mulai Tanggal', 'type' => 'date', 'required' => true],
+                    'tanggal_selesai_skorsing' => ['label' => 'Skorsing Selesai Tanggal', 'type' => 'date', 'required' => true],
+                    'tanggal_masuk_kembali' => ['label' => 'Siswa Masuk Kembali Hari/Tanggal', 'type' => 'text', 'required' => true, 'placeholder' => 'Contoh: Senin, 20 Oktober 2025'],
+                ]
+            ],
+            'surat_undangan_ortu' => [
+                'label' => 'Surat Undangan Orang Tua',
+                'fields' => [
+                    'tanggal_undangan' => ['label' => 'Hari/Tanggal Undangan', 'type' => 'text', 'required' => true, 'placeholder' => 'Contoh: Senin, 20 Oktober 2025'],
+                    'jam_undangan' => ['label' => 'Jam', 'type' => 'time', 'required' => true],
+                    'tempat_undangan' => ['label' => 'Tempat', 'type' => 'text', 'required' => true, 'value' => 'Ruang Bimbingan Konseling'],
+                ]
+            ],
+        ];
+    }
 
     public function create($jadwalId)
     {
@@ -36,44 +71,69 @@ class LaporanBimbinganController extends Controller
 
         return view('guru.laporan.create', [
             'jadwal' => $jadwal,
-            'templateSurat' => $this->templateSurat,
+            // Mengirim struktur template yang benar ke view
+            'templateSurat' => $this->getTemplateSurat(),
         ]);
     }
 
-    /**
-     * PERBAIKAN: Mengambil data jadwal secara manual pada method store.
-     */
-    public function store(Request $request, $jadwalId) // Menerima ID mentah
-    {
 
-        // 1. Cari data jadwal secara manual
+    public function store(Request $request, $jadwalId)
+    {
+        dd($request->all());
         $jadwal = JadwalBimbingan::find($jadwalId);
         if (!$jadwal) {
             abort(404, 'Jadwal bimbingan tidak ditemukan.');
         }
 
-        // 2. Lakukan pengecekan keamanan
         if ($jadwal->konselor_id !== Auth::id()) {
             abort(403, 'Anda tidak berhak menyimpan laporan untuk jadwal ini.');
         }
 
-        $request->validate([
-            'jenis_surat' => 'required|in:' . implode(',', array_keys($this->templateSurat)),
+        $templates = $this->getTemplateSurat();
+        $selectedTemplateKey = $request->jenis_surat;
+        $selectedTemplate = $templates[$selectedTemplateKey] ?? null;
+
+        if (!$selectedTemplate) {
+            return back()->with('error', 'Jenis surat tidak valid.');
+        }
+        
+        // Validasi dinamis berdasarkan field yang dibutuhkan
+        $validationRules = [
+            'jenis_surat' => 'required|in:' . implode(',', array_keys($templates)),
             'isi_laporan' => 'nullable|string',
             'rencana_tindak_lanjut' => 'nullable|string',
-        ]);
+        ];
+        
+        $dynamicFieldsData = [];
+        foreach ($selectedTemplate['fields'] as $key => $config) {
+            if ($config['required']) {
+                $validationRules[$key] = 'required';
+            }
+             // Khusus untuk textarea janji, format dengan list
+             if ($key === 'isi_janji') {
+                $lines = explode("\n", trim($request->input($key)));
+                $formattedLines = [];
+                foreach ($lines as $index => $line) {
+                    $formattedLines[] = ($index + 1) . ". " . trim($line);
+                }
+                $dynamicFieldsData[$key] = implode("\n", $formattedLines);
+            } else {
+                 $dynamicFieldsData[$key] = $request->input($key);
+            }
+        }
+        
+        $request->validate($validationRules);
 
-        $templateName = $request->jenis_surat;
-        $templatePath = storage_path("app/templates/{$templateName}.docx");
-
+        $templatePath = storage_path("app/templates/{$selectedTemplateKey}.docx");
         if (!file_exists($templatePath)) {
             return back()->with('error', 'Template surat tidak ditemukan.');
         }
-
+        
         $templateProcessor = new TemplateProcessor($templatePath);
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
 
-        $data = [
+        // Menggabungkan data statis dan dinamis untuk template
+        $staticData = [
             'nama_siswa' => $siswa->nama,
             'nis' => $siswa->nis,
             'kelas' => $siswa->kelas,
@@ -82,50 +142,44 @@ class LaporanBimbinganController extends Controller
             'nama_konselor' => Auth::user()->name,
             'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
             'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
-            'isi_laporan' => $request->isi_laporan ?? 'Tidak ada catatan tambahan.',
-            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? 'Tidak ada rencana tindak lanjut spesifik.',
-            'dibuat_oleh' => Auth::id(),
-
+            'isi_laporan' => $request->isi_laporan ?? '-',
+            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
+        
+        $templateData = array_merge($staticData, $dynamicFieldsData);
+        
+        // Debug isi array yang dikirim ke Word
+        
 
-        $templateProcessor->setValues($data);
+        
+        $templateData = array_merge($staticData, $dynamicFieldsData);
+        $templateProcessor->setValues($templateData);
 
-        $fileName = "laporan_{$templateName}_" . $siswa->nis . '_' . time() . '.docx';
+        $fileName = "laporan_{$selectedTemplateKey}_" . $siswa->nis . '_' . time() . '.docx';
         $path = "laporan_word/{$fileName}";
-
         if (!Storage::disk('public')->exists('laporan_word')) {
             Storage::disk('public')->makeDirectory('laporan_word');
         }
         $templateProcessor->saveAs(storage_path("app/public/{$path}"));
 
-        // Siapkan semua data dalam sebuah array
-        $dataToSave = [
-            'jadwal_id' => $jadwal->id,
-            'jenis_surat' => $request->jenis_surat,
-            'isi_laporan' => $request->isi_laporan,
-            'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
-            'file_pendukung' => $path,
-            'dibuat_oleh' => Auth::id(),
-        ];
-
-     
-        $jadwal->update(['status' => 'selesai']);
+        LaporanBimbingan::create([
+            'jadwal_id' => $jadwal->id, 'jenis_surat' => $selectedTemplateKey,
+            'isi_laporan' => $request->isi_laporan, 'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
+            'file_pendukung' => $path, 'dibuat_oleh' => Auth::id(),
+        ]);
         
-        // Simpan data ke database
-        LaporanBimbingan::create($dataToSave);
+        $jadwal->update(['status' => 'selesai']);
 
-        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan file surat telah digenerate.');
+        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan status jadwal telah diubah menjadi Selesai.');
     }
+
+    // ================= AKHIR MODIFIKASI =================
 
     public function show(LaporanBimbingan $laporanBimbingan)
     {
-        
-        // Pastikan guru hanya bisa melihat laporannya sendiri
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
-
-        // PERBAIKAN: Gunakan nama relasi 'jadwal.siswa' yang benar.
         $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
