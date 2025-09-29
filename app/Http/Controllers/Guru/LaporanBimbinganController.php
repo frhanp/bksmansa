@@ -79,7 +79,7 @@ class LaporanBimbinganController extends Controller
 
     public function store(Request $request, $jadwalId)
     {
-        dd($request->all());
+        // dd($request->all());
         $jadwal = JadwalBimbingan::find($jadwalId);
         if (!$jadwal) {
             abort(404, 'Jadwal bimbingan tidak ditemukan.');
@@ -96,21 +96,24 @@ class LaporanBimbinganController extends Controller
         if (!$selectedTemplate) {
             return back()->with('error', 'Jenis surat tidak valid.');
         }
-        
+
         // Validasi dinamis berdasarkan field yang dibutuhkan
         $validationRules = [
             'jenis_surat' => 'required|in:' . implode(',', array_keys($templates)),
             'isi_laporan' => 'nullable|string',
             'rencana_tindak_lanjut' => 'nullable|string',
         ];
-        
+
         $dynamicFieldsData = [];
         foreach ($selectedTemplate['fields'] as $key => $config) {
             if ($config['required']) {
                 $validationRules[$key] = 'required';
             }
-             // Khusus untuk textarea janji, format dengan list
-             if ($key === 'isi_janji') {
+            if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
+                $dynamicFieldsData[$key] = Carbon::parse($request->input($key))->isoFormat('dddd, D MMMM YYYY');
+            }
+            // Khusus untuk textarea janji, format dengan list
+            if ($key === 'isi_janji') {
                 $lines = explode("\n", trim($request->input($key)));
                 $formattedLines = [];
                 foreach ($lines as $index => $line) {
@@ -118,17 +121,17 @@ class LaporanBimbinganController extends Controller
                 }
                 $dynamicFieldsData[$key] = implode("\n", $formattedLines);
             } else {
-                 $dynamicFieldsData[$key] = $request->input($key);
+                $dynamicFieldsData[$key] = $request->input($key);
             }
         }
-        
+
         $request->validate($validationRules);
 
         $templatePath = storage_path("app/templates/{$selectedTemplateKey}.docx");
         if (!file_exists($templatePath)) {
             return back()->with('error', 'Template surat tidak ditemukan.');
         }
-        
+
         $templateProcessor = new TemplateProcessor($templatePath);
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
 
@@ -145,13 +148,30 @@ class LaporanBimbinganController extends Controller
             'isi_laporan' => $request->isi_laporan ?? '-',
             'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
-        
-        $templateData = array_merge($staticData, $dynamicFieldsData);
-        
-        // Debug isi array yang dikirim ke Word
-        
+        if (isset($dynamicFieldsData['tanggal_mulai_skorsing'])) {
+            $dynamicFieldsData['tanggal_mulai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_mulai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
+        }
+        if (isset($dynamicFieldsData['tanggal_selesai_skorsing'])) {
+            $dynamicFieldsData['tanggal_selesai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_selesai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
+        }
+        if (isset($dynamicFieldsData['tanggal_lahir'])) {
+            $dynamicFieldsData['tanggal_lahir'] = Carbon::parse($dynamicFieldsData['tanggal_lahir'])->isoFormat('D MMMM YYYY');
+        }
+        if (isset($dynamicFieldsData['isi_janji'])) {
+            $lines = explode("\n", trim($dynamicFieldsData['isi_janji']));
+            $formattedLines = [];
+            foreach ($lines as $index => $line) {
+                $formattedLines[] = ($index + 1) . ". " . trim($line);
+            }
+            $dynamicFieldsData['isi_janji'] = implode("\n", $formattedLines);
+        }
 
-        
+        $templateData = array_merge($staticData, $dynamicFieldsData);
+
+        // Debug isi array yang dikirim ke Word
+
+
+
         $templateData = array_merge($staticData, $dynamicFieldsData);
         $templateProcessor->setValues($templateData);
 
@@ -163,11 +183,14 @@ class LaporanBimbinganController extends Controller
         $templateProcessor->saveAs(storage_path("app/public/{$path}"));
 
         LaporanBimbingan::create([
-            'jadwal_id' => $jadwal->id, 'jenis_surat' => $selectedTemplateKey,
-            'isi_laporan' => $request->isi_laporan, 'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
-            'file_pendukung' => $path, 'dibuat_oleh' => Auth::id(),
+            'jadwal_id' => $jadwal->id,
+            'jenis_surat' => $selectedTemplateKey,
+            'isi_laporan' => $request->isi_laporan,
+            'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
+            'file_pendukung' => $path,
+            'dibuat_oleh' => Auth::id(),
         ]);
-        
+
         $jadwal->update(['status' => 'selesai']);
 
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan status jadwal telah diubah menjadi Selesai.');
