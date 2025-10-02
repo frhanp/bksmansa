@@ -12,16 +12,27 @@
                     <div class="border-b border-slate-200 pb-6">
                         <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
                         <div class="mt-2 text-sm text-slate-600 space-y-1">
+                            {{-- Menggunakan variabel dan relasi asli Anda --}}
                             <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
                             <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->dibuatOleh->name }}</p>
+                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->pembuat->name }}</p>
                         </div>
                     </div>
+
+                    {{-- ================= AWAL PERUBAHAN ================= --}}
+                    {{-- Menambahkan informasi jenis surat yang dibuat --}}
+                    <div>
+                        <h4 class="font-semibold text-slate-800">Jenis Surat yang Dihasilkan</h4>
+                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700">
+                           {{ str_replace('_', ' ', Str::title($laporanBimbingan->jenis_surat)) }}
+                        </div>
+                    </div>
+                    {{-- ================= AKHIR PERUBAHAN ================= --}}
 
                     <div>
                         <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
                         <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan)) !!}
+                            {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
                         </div>
                     </div>
 
@@ -35,10 +46,16 @@
                     @endif
                 </div>
                  <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    <a href="{{ route('kepsek.dashboard') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Dasbor</a>
-                    <a href="{{ route('guru.laporan.download', $laporanBimbingan->id) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
-                        Download PDF
-                    </a>
+                    <a href="{{ route('kepsek.laporan.index') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Daftar Laporan</a>
+                    
+                    {{-- ================= AWAL PERUBAHAN ================= --}}
+                    {{-- Mengganti tombol PDF menjadi tombol Unduh Dokumen Word --}}
+                    @if ($laporanBimbingan->file_pendukung)
+                        <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500" download>
+                            Unduh Dokumen (.docx)
+                        </a>
+                    @endif
+                    {{-- ================= AKHIR PERUBAHAN ================= --}}
                 </div>
             </div>
         </div>

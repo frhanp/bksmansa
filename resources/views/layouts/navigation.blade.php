@@ -78,6 +78,13 @@
                 {{ __('Jadwal Bimbingan') }}
             </x-nav-link>
         @endif
+        
+        {{-- MENU KHUSUS KEPALA SEKOLAH --}}
+        @if (Auth::user()->role == 'kepala_sekolah')
+        <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.index')">
+            {{ __('Laporan Bimbingan') }}
+        </x-nav-link>
+        @endif
 
     </nav>
 

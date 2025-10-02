@@ -89,6 +89,7 @@ Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name(
 // --- KEPALA SEKOLAH ---
 Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name('kepsek.')->group(function () {
     Route::get('/dashboard', [KepalaSekolahDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/laporan', [KepsekLaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/{laporanBimbingan}', [KepsekLaporanController::class, 'show'])->name('laporan.show');
 });
 
