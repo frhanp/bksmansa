@@ -14,9 +14,6 @@
                     <div class="p-8 space-y-6">
                         <div class="border-b border-slate-200 pb-6">
                             <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Jadwal</h3>
-                            <p class="mt-1 text-sm text-slate-500">
-                                Harap diperhatikan: Anda hanya dapat mengubah status menjadi "Selesai" atau "Dibatalkan".
-                            </p>
                         </div>
 
                         <div>
@@ -30,8 +27,6 @@
                             <x-text-input id="tanggal_jadwal" name="tanggal_jadwal" type="datetime-local" class="mt-1 block w-full" :value="old('tanggal_jadwal', \Carbon\Carbon::parse($jadwalBimbingan->tanggal_jadwal)->format('Y-m-d\TH:i'))" required />
                             <x-input-error class="mt-2" :messages="$errors->get('tanggal_jadwal')" />
                         </div>
-
-                        {{-- PERBAIKAN: Dropdown status yang sudah dibatasi --}}
                         <div>
                             <x-input-label for="status" :value="__('Ubah Status Jadwal')" />
                             <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md" required>

@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class JadwalBimbinganController extends Controller
 {
@@ -83,34 +84,46 @@ class JadwalBimbinganController extends Controller
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
             abort(403);
         }
-        $siswa = Siswa::orderBy('nama')->get();
 
-        // Siapkan daftar status yang hanya boleh diakses oleh Guru BK
+        if ($jadwalBimbingan->status === 'selesai') {
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('error', 'Jadwal yang sudah selesai tidak dapat diubah lagi.');
+        }
+
+        $siswa = Siswa::orderBy('nama')->get();
+        
+        // Logika Baru: Selalu sertakan status saat ini sebagai pilihan.
         $statuses = [
-            'selesai' => 'Selesai',
-            'dibatalkan' => 'Dibatalkan',
+            $jadwalBimbingan->status => Str::title(str_replace('_', ' ', $jadwalBimbingan->status)) . ' (Saat Ini)'
         ];
+
+        if (in_array($jadwalBimbingan->status, ['dibatalkan', 'ditolak'])) {
+            // Jika dibatalkan/ditolak, tambahkan opsi untuk mengajukan ulang.
+            $statuses['menunggu_verifikasi'] = 'Ajukan Ulang (Menunggu Verifikasi)';
+        } else {
+            // Jika masih aktif (menunggu atau terverifikasi), tambahkan opsi untuk membatalkan.
+            $statuses['dibatalkan'] = 'Dibatalkan';
+        }
 
         return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa', 'statuses'));
     }
 
-    /**
-     * PERBAIKAN LOGIKA VALIDASI PADA METHOD UPDATE
-     */
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
             abort(403);
         }
+        if ($jadwalBimbingan->status === 'selesai') {
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('error', 'Jadwal yang sudah selesai tidak dapat diubah lagi.');
+        }
+
+        // Logika Baru: Perbarui aturan validasi agar lebih fleksibel
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'tanggal_jadwal' => 'required|date',
-            // Validasi hanya mengizinkan status 'selesai' atau 'dibatalkan'
-            'status' => ['required', Rule::in(['selesai', 'dibatalkan'])],
+            'status' => ['required', Rule::in(['menunggu_verifikasi', 'dibatalkan', 'terverifikasi'])],
         ]);
         
         $jadwalBimbingan->update($request->all());
-
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil diperbarui.');
     }
 
