@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-12 18:50:47_
+_Generated: 2025-10-15 21:57:09_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -368,11 +368,11 @@ Branch:
 main
 
 Last 5 commits:
+8a5c59c fix edit jadwal di gurubk
 2c2cc8e fix laporan di kepsek
 ea8f704 hapus ananda
 1273927 isi laporan jadi nullable
 92208d3 fix terakhir laporan bimbingan
-faeda56 fix template
 ```
 
 
@@ -574,89 +574,89 @@ require __DIR__.'/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ................................................................................................ 
-  GET|HEAD        _debugbar/assets/javascript .......... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ....... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} . debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        / ............................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript ......... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ...... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
   GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open ........... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
-  GET|HEAD        admin/dashboard ................................ admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/jenis-pelanggaran ... admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
-  POST            admin/jenis-pelanggaran ... admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
-  GET|HEAD        admin/jenis-pelanggaran/create admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@ΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranΓÇª
-  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggarΓÇª
-  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelangΓÇª
-  GET|HEAD        admin/pengguna ............................. admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
-  POST            admin/pengguna ............................. admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
-  GET|HEAD        admin/pengguna/create .................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
-  GET|HEAD        admin/pengguna/{pengguna} .................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
-  PUT|PATCH       admin/pengguna/{pengguna} ................ admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
-  DELETE          admin/pengguna/{pengguna} .............. admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
-  GET|HEAD        admin/pengguna/{pengguna}/edit ............... admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
-  GET|HEAD        admin/verifikasi-jadwal ............... admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
-  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@uΓÇª
-  GET|HEAD        confirm-password ...................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password ........................................ Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard .............................................................................. dashboard
-  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificationController@ΓÇª
-  GET|HEAD        forgot-password ....................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password .......................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        guru/dashboard ................................... guru.dashboard ΓÇ║ Guru\DashboardController@index
-  GET|HEAD        guru/jadwal-bimbingan ......... guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
-  POST            guru/jadwal-bimbingan ......... guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
+  GET|HEAD        _debugbar/open .......... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explaΓÇª
+  GET|HEAD        admin/dashboard ............................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/jenis-pelanggaran .. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
+  POST            admin/jenis-pelanggaran .. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
+  GET|HEAD        admin/jenis-pelanggaran/create admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranControllerΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaraΓÇª
+  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaΓÇª
+  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanΓÇª
+  GET|HEAD        admin/pengguna ............................ admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
+  POST            admin/pengguna ............................ admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
+  GET|HEAD        admin/pengguna/create ................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
+  GET|HEAD        admin/pengguna/{pengguna} ................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
+  PUT|PATCH       admin/pengguna/{pengguna} ............... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
+  DELETE          admin/pengguna/{pengguna} ............. admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
+  GET|HEAD        admin/pengguna/{pengguna}/edit .............. admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
+  GET|HEAD        admin/verifikasi-jadwal .............. admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
+  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@ΓÇª
+  GET|HEAD        confirm-password ..................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password ....................................... Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ............................................................................. dashboard
+  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificationControllerΓÇª
+  GET|HEAD        forgot-password ...................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password ......................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        guru/dashboard .................................. guru.dashboard ΓÇ║ Guru\DashboardController@index
+  GET|HEAD        guru/jadwal-bimbingan ........ guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
+  POST            guru/jadwal-bimbingan ........ guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
   GET|HEAD        guru/jadwal-bimbingan/create guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
-  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan guru.laporan.store ΓÇ║ Guru\LaporanBimbinganControlΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbingaΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganControlΓÇª
-  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganContrΓÇª
-  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganContΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganCoΓÇª
-  GET|HEAD        guru/laporan/{laporanBimbingan} ......... guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
-  PUT             guru/laporan/{laporanBimbingan} ..... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
-  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@ΓÇª
-  GET|HEAD        guru/laporan/{laporanBimbingan}/edit .... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
-  GET|HEAD        guru/pelanggaran-siswa ...... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
-  POST            guru/pelanggaran-siswa ...... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
-  GET|HEAD        guru/pelanggaran-siswa/create guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@creΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaConΓÇª
-  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaCΓÇª
-  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSisΓÇª
-  GET|HEAD        guru/siswa ......................................... guru.siswa.index ΓÇ║ Guru\SiswaController@index
-  POST            guru/siswa ......................................... guru.siswa.store ΓÇ║ Guru\SiswaController@store
-  GET|HEAD        guru/siswa/create ................................ guru.siswa.create ΓÇ║ Guru\SiswaController@create
-  GET|HEAD        guru/siswa/{siswa} ................................... guru.siswa.show ΓÇ║ Guru\SiswaController@show
-  PUT|PATCH       guru/siswa/{siswa} ............................... guru.siswa.update ΓÇ║ Guru\SiswaController@update
-  DELETE          guru/siswa/{siswa} ............................. guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
-  GET|HEAD        guru/siswa/{siswa}/edit .............................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
-  GET|HEAD        kepsek/dashboard ...................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
-  GET|HEAD        kepsek/laporan ...................... kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
-  GET|HEAD        kepsek/laporan/{laporanBimbingan} ..... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
-  GET|HEAD        login ......................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login .................................................. Auth\AuthenticatedSessionController@store
-  POST            logout ...................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        ortu/dashboard ............................... ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
-  GET|HEAD        ortu/laporan/{laporanBimbingan} .............. ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
-  PUT             password ........................................ password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile .................................................... profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ................................................ profile.update ΓÇ║ ProfileController@update
-  DELETE          profile .............................................. profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ......................................... register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register ..................................................... Auth\RegisteredUserController@store
-  POST            reset-password ................................. password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} ........................ password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} ..................................................................... storage.local
-  GET|HEAD        up ............................................................................................... 
-  GET|HEAD        verify-email ........................ verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} ........................ verification.verify ΓÇ║ Auth\VerifyEmailController
-  GET|HEAD        walikelas/dashboard .................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
-  GET|HEAD        walikelas/laporan/{laporanBimbingan} ... walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
-  GET|HEAD        walikelas/siswa/{siswa} .................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan guru.laporan.store ΓÇ║ Guru\LaporanBimbinganControΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbingΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganControΓÇª
+  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganContΓÇª
+  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganConΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganCΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan} ........ guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
+  PUT             guru/laporan/{laporanBimbingan} .... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
+  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganControllerΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
+  GET|HEAD        guru/pelanggaran-siswa ..... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
+  POST            guru/pelanggaran-siswa ..... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
+  GET|HEAD        guru/pelanggaran-siswa/create guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@crΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaCoΓÇª
+  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaΓÇª
+  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiΓÇª
+  GET|HEAD        guru/siswa ........................................ guru.siswa.index ΓÇ║ Guru\SiswaController@index
+  POST            guru/siswa ........................................ guru.siswa.store ΓÇ║ Guru\SiswaController@store
+  GET|HEAD        guru/siswa/create ............................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
+  GET|HEAD        guru/siswa/{siswa} .................................. guru.siswa.show ΓÇ║ Guru\SiswaController@show
+  PUT|PATCH       guru/siswa/{siswa} .............................. guru.siswa.update ΓÇ║ Guru\SiswaController@update
+  DELETE          guru/siswa/{siswa} ............................ guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
+  GET|HEAD        guru/siswa/{siswa}/edit ............................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
+  GET|HEAD        kepsek/dashboard ..................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
+  GET|HEAD        kepsek/laporan ..................... kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
+  GET|HEAD        kepsek/laporan/{laporanBimbingan} .... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
+  GET|HEAD        login ........................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ................................................. Auth\AuthenticatedSessionController@store
+  POST            logout ..................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        ortu/dashboard .............................. ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
+  GET|HEAD        ortu/laporan/{laporanBimbingan} ............. ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
+  PUT             password ....................................... password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile ................................................... profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile ............................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ............................................. profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ........................................ register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register .................................................... Auth\RegisteredUserController@store
+  POST            reset-password ................................ password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ....................... password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} .................................................................... storage.local
+  GET|HEAD        up .............................................................................................. 
+  GET|HEAD        verify-email ....................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} ....................... verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        walikelas/dashboard ................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/{laporanBimbingan} .. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
+  GET|HEAD        walikelas/siswa/{siswa} ................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                 Showing [81] routes
+                                                                                                Showing [81] routes
 
 ```
 
@@ -1451,6 +1451,7 @@ use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class JadwalBimbinganController extends Controller
 {
@@ -1526,34 +1527,46 @@ class JadwalBimbinganController extends Controller
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
             abort(403);
         }
-        $siswa = Siswa::orderBy('nama')->get();
 
-        // Siapkan daftar status yang hanya boleh diakses oleh Guru BK
+        if ($jadwalBimbingan->status === 'selesai') {
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('error', 'Jadwal yang sudah selesai tidak dapat diubah lagi.');
+        }
+
+        $siswa = Siswa::orderBy('nama')->get();
+        
+        // Logika Baru: Selalu sertakan status saat ini sebagai pilihan.
         $statuses = [
-            'selesai' => 'Selesai',
-            'dibatalkan' => 'Dibatalkan',
+            $jadwalBimbingan->status => Str::title(str_replace('_', ' ', $jadwalBimbingan->status)) . ' (Saat Ini)'
         ];
+
+        if (in_array($jadwalBimbingan->status, ['dibatalkan', 'ditolak'])) {
+            // Jika dibatalkan/ditolak, tambahkan opsi untuk mengajukan ulang.
+            $statuses['menunggu_verifikasi'] = 'Ajukan Ulang (Menunggu Verifikasi)';
+        } else {
+            // Jika masih aktif (menunggu atau terverifikasi), tambahkan opsi untuk membatalkan.
+            $statuses['dibatalkan'] = 'Dibatalkan';
+        }
 
         return view('guru.jadwal.edit', compact('jadwalBimbingan', 'siswa', 'statuses'));
     }
 
-    /**
-     * PERBAIKAN LOGIKA VALIDASI PADA METHOD UPDATE
-     */
     public function update(Request $request, JadwalBimbingan $jadwalBimbingan)
     {
         if ($jadwalBimbingan->konselor_id !== Auth::id()) {
             abort(403);
         }
+        if ($jadwalBimbingan->status === 'selesai') {
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('error', 'Jadwal yang sudah selesai tidak dapat diubah lagi.');
+        }
+
+        // Logika Baru: Perbarui aturan validasi agar lebih fleksibel
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'tanggal_jadwal' => 'required|date',
-            // Validasi hanya mengizinkan status 'selesai' atau 'dibatalkan'
-            'status' => ['required', Rule::in(['selesai', 'dibatalkan'])],
+            'status' => ['required', Rule::in(['menunggu_verifikasi', 'dibatalkan', 'terverifikasi'])],
         ]);
         
         $jadwalBimbingan->update($request->all());
-
         return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Jadwal bimbingan berhasil diperbarui.');
     }
 
@@ -3904,9 +3917,6 @@ $classes = ($active ?? false)
                     <div class="p-8 space-y-6">
                         <div class="border-b border-slate-200 pb-6">
                             <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Jadwal</h3>
-                            <p class="mt-1 text-sm text-slate-500">
-                                Harap diperhatikan: Anda hanya dapat mengubah status menjadi "Selesai" atau "Dibatalkan".
-                            </p>
                         </div>
 
                         <div>
@@ -3920,8 +3930,6 @@ $classes = ($active ?? false)
                             <x-text-input id="tanggal_jadwal" name="tanggal_jadwal" type="datetime-local" class="mt-1 block w-full" :value="old('tanggal_jadwal', \Carbon\Carbon::parse($jadwalBimbingan->tanggal_jadwal)->format('Y-m-d\TH:i'))" required />
                             <x-input-error class="mt-2" :messages="$errors->get('tanggal_jadwal')" />
                         </div>
-
-                        {{-- PERBAIKAN: Dropdown status yang sudah dibatasi --}}
                         <div>
                             <x-input-label for="status" :value="__('Ubah Status Jadwal')" />
                             <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md" required>
@@ -3969,110 +3977,139 @@ $classes = ($active ?? false)
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-medium text-slate-900">Daftar Jadwal Anda</h3>
-                        <a href="{{ route('guru.jadwal-bimbingan.create') }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
+                        <a href="{{ route('guru.jadwal-bimbingan.create') }}"
+                            class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
                             Buat Jadwal Baru
                         </a>
                     </div>
 
                     <!-- Form Filter Lengkap -->
-                    <form id="filter-form" action="{{ route('guru.jadwal-bimbingan.index') }}" method="GET" class="mb-6">
+                    <form id="filter-form" action="{{ route('guru.jadwal-bimbingan.index') }}" method="GET"
+                        class="mb-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <!-- Pencarian Nama -->
                             <div>
                                 <x-input-label for="search" :value="__('Cari Nama Siswa')" />
-                                <x-text-input id="search" type="text" name="search" class="w-full mt-1" :value="$request->search" placeholder="Tekan Enter..."/>
+                                <x-text-input id="search" type="text" name="search" class="w-full mt-1"
+                                    :value="$request->search" placeholder="Tekan Enter..." />
                             </div>
                             <!-- Filter Kelas -->
                             <div>
                                 <x-input-label for="filter_kelas" :value="__('Filter Kelas')" />
-                                <select name="filter_kelas" id="filter_kelas" class="filter-input w-full mt-1 border-slate-300 rounded-md shadow-sm">
+                                <select name="filter_kelas" id="filter_kelas"
+                                    class="filter-input w-full mt-1 border-slate-300 rounded-md shadow-sm">
                                     <option value="">Semua Kelas</option>
-                                    @foreach($kelasFilter as $kelas)
-                                        <option value="{{ $kelas }}" @selected($request->filter_kelas == $kelas)>{{ $kelas }}</option>
+                                    @foreach ($kelasFilter as $kelas)
+                                        <option value="{{ $kelas }}" @selected($request->filter_kelas == $kelas)>
+                                            {{ $kelas }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <!-- Filter Status -->
                             <div>
                                 <x-input-label for="filter_status" :value="__('Filter Status')" />
-                                <select name="filter_status" id="filter_status" class="filter-input w-full mt-1 border-slate-300 rounded-md shadow-sm">
+                                <select name="filter_status" id="filter_status"
+                                    class="filter-input w-full mt-1 border-slate-300 rounded-md shadow-sm">
                                     <option value="">Semua Status</option>
-                                    <option value="menunggu_verifikasi" @selected($request->filter_status == 'menunggu_verifikasi')>Menunggu Verifikasi</option>
+                                    <option value="menunggu_verifikasi" @selected($request->filter_status == 'menunggu_verifikasi')>Menunggu Verifikasi
+                                    </option>
                                     <option value="terverifikasi" @selected($request->filter_status == 'terverifikasi')>Terverifikasi</option>
                                     <option value="selesai" @selected($request->filter_status == 'selesai')>Selesai</option>
                                     <option value="dibatalkan" @selected($request->filter_status == 'dibatalkan')>Dibatalkan</option>
                                 </select>
                             </div>
-                             <!-- Spacer -->
-                             <div></div>
+                            <!-- Spacer -->
+                            <div></div>
                         </div>
                         <!-- Filter Tanggal -->
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
-                             <div>
+                            <div>
                                 <x-input-label for="start_date" :value="__('Dari Tanggal')" />
-                                <x-text-input id="start_date" type="date" name="start_date" class="filter-input w-full mt-1" :value="$request->start_date" />
+                                <x-text-input id="start_date" type="date" name="start_date"
+                                    class="filter-input w-full mt-1" :value="$request->start_date" />
                             </div>
-                             <div>
+                            <div>
                                 <x-input-label for="end_date" :value="__('Sampai Tanggal')" />
-                                <x-text-input id="end_date" type="date" name="end_date" class="filter-input w-full mt-1" :value="$request->end_date" />
+                                <x-text-input id="end_date" type="date" name="end_date"
+                                    class="filter-input w-full mt-1" :value="$request->end_date" />
                             </div>
                         </div>
-                         <div class="flex items-center gap-4 mt-4">
-                            <a href="{{ route('guru.jadwal-bimbingan.index') }}" class="text-sm text-slate-600 hover:text-slate-900">Reset Filter</a>
+                        <div class="flex items-center gap-4 mt-4">
+                            <a href="{{ route('guru.jadwal-bimbingan.index') }}"
+                                class="text-sm text-slate-600 hover:text-slate-900">Reset Filter</a>
                         </div>
                     </form>
 
 
                     @if (session('success'))
-                        <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">{{ session('success') }}</div>
+                        <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">
+                            {{ session('success') }}</div>
                     @endif
 
                     <div class="overflow-x-auto border-t border-slate-200">
                         <table class="min-w-full divide-y divide-slate-200">
                             <thead class="bg-slate-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Siswa</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal & Waktu</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Siswa
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal
+                                        & Waktu</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-slate-200">
                                 @forelse ($jadwal as $item)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $item->siswa->nama }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ \Carbon\Carbon::parse($item->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY, HH:mm') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                            {{ $item->siswa->nama }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                                            {{ \Carbon\Carbon::parse($item->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY, HH:mm') }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @php
-                                                $statusClass = [
-                                                    'menunggu_verifikasi' => 'bg-amber-100 text-amber-800',
-                                                    'terverifikasi' => 'bg-blue-100 text-blue-800',
-                                                    'selesai' => 'bg-green-100 text-green-800',
-                                                    'dibatalkan' => 'bg-red-100 text-red-800',
-                                                ][$item->status] ?? 'bg-slate-100 text-slate-800';
+                                                $statusClass =
+                                                    [
+                                                        'menunggu_verifikasi' => 'bg-amber-100 text-amber-800',
+                                                        'terverifikasi' => 'bg-blue-100 text-blue-800',
+                                                        'selesai' => 'bg-green-100 text-green-800',
+                                                        'dibatalkan' => 'bg-red-100 text-red-800',
+                                                    ][$item->status] ?? 'bg-slate-100 text-slate-800';
                                             @endphp
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
                                                 {{ str_replace('_', ' ', Str::title($item->status)) }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            @if($item->laporan)
-                                                <a href="{{ route('guru.laporan.show', $item->laporan->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-green-600 bg-green-50 rounded-md hover:bg-green-100">Lihat Laporan</a>
+                                            @if ($item->laporan)
+                                                <a href="{{ route('guru.laporan.show', $item->laporan->id) }}"
+                                                    class="inline-block px-3 py-1 text-sm font-semibold text-green-600 bg-green-50 rounded-md hover:bg-green-100">Lihat
+                                                    Laporan</a>
                                             @elseif(in_array($item->status, ['terverifikasi', 'selesai']))
-                                                <a href="{{ route('guru.laporan.create', $item->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100">Buat Laporan</a>
+                                                <a href="{{ route('guru.laporan.create', $item->id) }}"
+                                                    class="inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100">Buat
+                                                    Laporan</a>
                                             @endif
-                                            <a href="{{ route('guru.jadwal-bimbingan.edit', $item->id) }}" class="ml-2 inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">Edit Jadwal</a>
+                                            @if ($item->status !== 'selesai')
+                                                <a href="{{ route('guru.jadwal-bimbingan.edit', $item->id) }}"
+                                                    class="ml-2 inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">Edit
+                                                    Jadwal</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">Tidak ada jadwal yang cocok dengan filter.</td>
+                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">Tidak ada jadwal
+                                            yang cocok dengan filter.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
-                     @if ($jadwal->hasPages())
+                    @if ($jadwal->hasPages())
                         <div class="p-4 border-t border-slate-200">
                             {{ $jadwal->links() }}
                         </div>
@@ -4083,20 +4120,20 @@ $classes = ($active ?? false)
     </div>
 
     @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('filter-form');
-        const filters = form.querySelectorAll('.filter-input');
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('filter-form');
+                const filters = form.querySelectorAll('.filter-input');
 
-        filters.forEach(function (element) {
-            element.addEventListener('change', function () {
-                // Langsung submit form setiap kali ada perubahan, tanpa pengecualian.
-                form.submit();
+                filters.forEach(function(element) {
+                    element.addEventListener('change', function() {
+                        // Langsung submit form setiap kali ada perubahan, tanpa pengecualian.
+                        form.submit();
+                    });
+                });
             });
-        });
-    });
-</script>
-@endpush
+        </script>
+    @endpush
 </x-app-layout>
 
 ===== resources\views\guru\laporan\create.blade.php =====
