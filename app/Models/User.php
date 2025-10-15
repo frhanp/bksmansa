@@ -56,9 +56,9 @@ class User extends Authenticatable
         return $this->belongsTo(Guru::class);
     }
 
-    public function waliMurid(): BelongsTo
+    public function wali()
     {
-        return $this->belongsTo(WaliMurid::class);
+        return $this->belongsTo(WaliMurid::class, 'wali_id');
     }
 
     

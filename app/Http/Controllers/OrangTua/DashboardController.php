@@ -6,19 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
+use App\Models\LaporanBimbingan;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $waliId = Auth::user()->wali_id;
-        $siswa = Siswa::whereHas('waliMurid', fn($q) => $q->where('id', $waliId))
-            ->with([
-                'pelanggaran.jenisPelanggaran',
-                'jadwalBimbingan.laporan' // <-- Tambahkan ini
-            ])
-            ->firstOrFail();
+        $user = Auth::user();
+        
+        // Memeriksa relasi sebelum digunakan untuk menghindari error
+        if (!$user->wali || !$user->wali->siswa) {
+            return view('ortu.dashboard', ['siswa' => null]);
+        }
 
-        return view('ortu.dashboard', compact('siswa'));
+        // Menggunakan relasi 'wali' yang baru
+        $siswa = $user->wali->siswa->load(
+            'jadwalBimbingan.laporan', 
+            'pelanggaran.jenisPelanggaran', 
+            'waliKelas.user'
+        );
+        
+        $waliKelasUser = $siswa->waliKelas->user;
+
+        return view('ortu.dashboard', [
+            'siswa' => $siswa,
+            'waliKelasUser' => $waliKelasUser,
+        ]);
     }
 }

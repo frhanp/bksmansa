@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-15 21:57:09_
+_Generated: 2025-10-15 22:53:14_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -368,11 +368,11 @@ Branch:
 main
 
 Last 5 commits:
+fcb21a1 add chart kepsek
 8a5c59c fix edit jadwal di gurubk
 2c2cc8e fix laporan di kepsek
 ea8f704 hapus ananda
 1273927 isi laporan jadi nullable
-92208d3 fix terakhir laporan bimbingan
 ```
 
 
@@ -2153,11 +2153,14 @@ use App\Models\Siswa;
 use App\Models\PelanggaranSiswa;
 use App\Models\LaporanBimbingan;
 use App\Models\JadwalBimbingan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // --- 1. Data Statistik (Card) ---
         $stats = [
             'total_siswa' => Siswa::count(),
             'total_pelanggaran' => PelanggaranSiswa::count(),
@@ -2165,7 +2168,70 @@ class DashboardController extends Controller
             'jadwal_aktif' => JadwalBimbingan::whereIn('status', ['menunggu_verifikasi', 'terverifikasi'])->count(),
         ];
 
-        return view('kepsek.dashboard', compact('stats'));
+        // --- 2. Data untuk Grafik ---
+        $selectedYear = $request->input('tahun', Carbon::now()->year);
+        $selectedSemester = $request->input('semester');
+
+        $query = PelanggaranSiswa::select(
+                DB::raw('MONTH(tanggal_pelanggaran) as bulan'),
+                DB::raw('COUNT(*) as jumlah')
+            )
+            ->whereYear('tanggal_pelanggaran', $selectedYear)
+            ->groupBy('bulan');
+
+        if ($selectedSemester == 1) {
+            $query->whereMonth('tanggal_pelanggaran', '>=', 1)->whereMonth('tanggal_pelanggaran', '<=', 6);
+        } elseif ($selectedSemester == 2) {
+            $query->whereMonth('tanggal_pelanggaran', '>=', 7)->whereMonth('tanggal_pelanggaran', '<=', 12);
+        }
+
+        $dataPelanggaran = $query->pluck('jumlah', 'bulan')->all();
+
+        $chartData = array_fill(1, 12, 0);
+        foreach ($dataPelanggaran as $bulan => $jumlah) {
+            $chartData[$bulan] = $jumlah;
+        }
+
+        $labels = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+            'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'
+        ];
+        
+        if ($selectedSemester == 1) {
+            $labels = array_slice($labels, 0, 6);
+            $chartData = array_slice($chartData, 0, 6);
+        } elseif ($selectedSemester == 2) {
+            $labels = array_slice($labels, 6, 6);
+            $chartData = array_slice(array_values($chartData), 6, 6);
+        } else {
+             $chartData = array_values($chartData);
+        }
+        
+        // --- 3. Data untuk Widget Baru ---
+        $recentReports = LaporanBimbingan::with('jadwalBimbingan.siswa')->latest()->take(5)->get();
+        
+        $highPointStudents = Siswa::withCount(['pelanggaran as total_poin' => function ($query) {
+            $query->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+                  ->select(DB::raw('sum(jenis_pelanggaran.poin)'));
+        }])->orderByDesc('total_poin')->take(5)->get();
+
+
+        // --- 4. Data untuk Filter Dropdown ---
+        $availableYears = PelanggaranSiswa::select(DB::raw('YEAR(tanggal_pelanggaran) as tahun'))
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+
+        return view('kepsek.dashboard', compact(
+            'stats', 
+            'labels', 
+            'chartData', 
+            'availableYears', 
+            'selectedYear', 
+            'selectedSemester',
+            'recentReports',
+            'highPointStudents'
+        ));
     }
 }
 
@@ -2235,20 +2301,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
+use App\Models\LaporanBimbingan;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $waliId = Auth::user()->wali_id;
-        $siswa = Siswa::whereHas('waliMurid', fn($q) => $q->where('id', $waliId))
-            ->with([
-                'pelanggaran.jenisPelanggaran',
-                'jadwalBimbingan.laporan' // <-- Tambahkan ini
-            ])
-            ->firstOrFail();
+        $user = Auth::user();
+        
+        // Memeriksa relasi sebelum digunakan untuk menghindari error
+        if (!$user->wali || !$user->wali->siswa) {
+            return view('ortu.dashboard', ['siswa' => null]);
+        }
 
-        return view('ortu.dashboard', compact('siswa'));
+        // Menggunakan relasi 'wali' yang baru
+        $siswa = $user->wali->siswa->load(
+            'jadwalBimbingan.laporan', 
+            'pelanggaran.jenisPelanggaran', 
+            'waliKelas.user'
+        );
+        
+        $waliKelasUser = $siswa->waliKelas->user;
+
+        return view('ortu.dashboard', [
+            'siswa' => $siswa,
+            'waliKelasUser' => $waliKelasUser,
+        ]);
     }
 }
 
@@ -2463,6 +2541,11 @@ class Guru extends Model
     public function siswaWalian(): HasMany
     {
         return $this->hasMany(Siswa::class, 'wali_kelas_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
 }
 
@@ -5383,40 +5466,149 @@ $classes = ($active ?? false)
                 <p class="text-sm text-slate-500">Berikut adalah ringkasan statistik dari sistem Bimbingan Konseling.</p>
             </div>
 
-            {{-- Grid untuk menampilkan card statistik --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                    <div class="p-6">
-                        <p class="text-sm font-medium text-slate-500 truncate">Total Siswa</p>
-                        <p class="mt-1 text-3xl font-semibold text-slate-900">{{ $stats['total_siswa'] }}</p>
+            {{-- ================= AWAL MODIFIKASI ================= --}}
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <div class="lg:col-span-2">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                        <div class="p-6">
+                            <div class="flex flex-wrap justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-slate-900">Tren Pelanggaran Siswa</h3>
+                                <form id="filter-form" action="{{ route('kepsek.dashboard') }}" method="GET" class="flex items-center gap-4">
+                                    <select name="tahun" onchange="this.form.submit()" class="filter-input border-slate-300 rounded-md shadow-sm text-sm focus:border-teal-500 focus:ring-teal-500">
+                                        @forelse($availableYears as $year)
+                                            <option value="{{ $year }}" @selected($year == $selectedYear)>Tahun {{ $year }}</option>
+                                        @empty
+                                            <option>{{ date('Y') }}</option>
+                                        @endforelse
+                                    </select>
+                                    <select name="semester" onchange="this.form.submit()" class="filter-input border-slate-300 rounded-md shadow-sm text-sm focus:border-teal-500 focus:ring-teal-500">
+                                        <option value="">Semua Semester</option>
+                                        <option value="1" @selected($selectedSemester == 1)>Semester 1 (Jan-Jun)</option>
+                                        <option value="2" @selected($selectedSemester == 2)>Semester 2 (Jul-Des)</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div id="chart" class="w-full"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                    <div class="p-6">
-                        <p class="text-sm font-medium text-slate-500 truncate">Total Pelanggaran Dicatat</p>
-                        <p class="mt-1 text-3xl font-semibold text-slate-900">{{ $stats['total_pelanggaran'] }}</p>
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
+                            <p class="text-xs font-medium text-slate-500 truncate">Total Siswa</p>
+                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_siswa'] }}</p>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
+                            <p class="text-xs font-medium text-slate-500 truncate">Total Pelanggaran</p>
+                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_pelanggaran'] }}</p>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
+                            <p class="text-xs font-medium text-slate-500 truncate">Laporan Selesai</p>
+                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_laporan'] }}</p>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
+                            <p class="text-xs font-medium text-slate-500 truncate">Jadwal Aktif</p>
+                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['jadwal_aktif'] }}</p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                    <div class="p-6">
-                        <p class="text-sm font-medium text-slate-500 truncate">Total Laporan Bimbingan</p>
-                        <p class="mt-1 text-3xl font-semibold text-slate-900">{{ $stats['total_laporan'] }}</p>
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                        <div class="p-6">
+                            <h3 class="text-base font-medium text-slate-900 mb-4">Siswa Poin Tertinggi</h3>
+                            <ul class="space-y-3">
+                                @forelse ($highPointStudents as $siswa)
+                                <li class="flex items-center justify-between text-sm">
+                                    <div>
+                                        <p class="font-semibold text-slate-800">{{ $siswa->nama }}</p>
+                                        <p class="text-xs text-slate-500">{{ $siswa->kelas }}</p>
+                                    </div>
+                                    <span class="font-bold text-red-500">{{ $siswa->total_poin ?? 0 }} Poin</span>
+                                </li>
+                                @empty
+                                <p class="text-sm text-slate-500 text-center">Tidak ada data pelanggaran.</p>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                    <div class="p-6">
-                        <p class="text-sm font-medium text-slate-500 truncate">Jadwal Bimbingan Aktif</p>
-                        <p class="mt-1 text-3xl font-semibold text-slate-900">{{ $stats['jadwal_aktif'] }}</p>
+                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                        <div class="p-6">
+                            <h3 class="text-base font-medium text-slate-900 mb-4">Laporan Terbaru</h3>
+                             <ul class="space-y-3">
+                                @forelse ($recentReports as $laporan)
+                                <li class="text-sm">
+                                     <a href="{{ route('kepsek.laporan.show', $laporan->id) }}" class="font-semibold text-teal-600 hover:underline">Laporan untuk {{ $laporan->jadwalBimbingan->siswa->nama }}</a>
+                                     <p class="text-xs text-slate-500">{{ $laporan->created_at->diffForHumans() }}</p>
+                                </li>
+                                @empty
+                                <p class="text-sm text-slate-500 text-center">Belum ada laporan yang dibuat.</p>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+            {{-- ================= AKHIR MODIFIKASI ================= --}}
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                series: [{
+                    name: 'Jumlah Pelanggaran',
+                    data: @json($chartData)
+                }],
+                chart: {
+                    height: 350,
+                    type: 'area',
+                    toolbar: { show: false },
+                    zoom: { enabled: false }
+                },
+                colors: ['#0d9488'],
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth' },
+                xaxis: {
+                    categories: @json($labels),
+                    labels: {
+                        style: {
+                            colors: '#64748b',
+                            fontSize: '12px',
+                        },
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            colors: '#64748b',
+                            fontSize: '12px',
+                        },
+                         formatter: function (val) {
+                            return Math.floor(val);
+                        }
+                    },
+                },
+                grid: {
+                    borderColor: '#e2e8f0',
+                    strokeDashArray: 4,
+                },
+                tooltip: {
+                    x: {
+                        format: 'MMMM'
+                    },
+                },
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        });
+    </script>
+    @endpush
 </x-app-layout>
 
 ===== resources\views\layouts\app.blade.php =====
@@ -5443,6 +5635,7 @@ $classes = ($active ?? false)
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <body x-data="{ sidebarOpen: false }" class="font-sans antialiased bg-gray-100">
@@ -5750,119 +5943,169 @@ $classes = ($active ?? false)
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl mt-6">
-                <div class="p-6">
-                    <div class="border-b border-slate-200 pb-4 mb-6">
-                        <h3 class="text-lg font-medium text-slate-900">
-                            Riwayat Bimbingan Konseling
-                        </h3>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-slate-200">
-                                @forelse ($siswa->jadwalBimbingan as $jadwal)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                                            {{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('D MMM YYYY') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            @php
-                                                $statusClass =
-                                                    [
-                                                        'selesai' => 'bg-green-100 text-green-800',
-                                                    ][$jadwal->status] ?? 'bg-slate-100 text-slate-800';
-                                            @endphp
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
-                                                {{ str_replace('_', ' ', Str::title($jadwal->status)) }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            @if ($jadwal->laporan && $jadwal->status == 'selesai')
-                                                <a href="{{ route('ortu.laporan.show', $jadwal->laporan->id) }}"
-                                                    class="inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">
-                                                    Lihat Laporan
-                                                </a>
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3" class="px-6 py-4 text-center text-slate-500">Belum ada
-                                            riwayat bimbingan.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <div class="p-6">
-                    <div class="border-b border-slate-200 pb-4 mb-6">
-                        <h3 class="text-lg font-medium text-slate-900">
-                            Riwayat Pelanggaran Tercatat
-                        </h3>
+            @if ($siswa)
+                {{-- TAMPILAN NORMAL JIKA DATA SISWA DITEMUKAN --}}
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-slate-900">Selamat Datang, {{ Auth::user()->name }}!</h3>
+                    <p class="text-sm text-slate-500">Anda login sebagai orang tua/wali dari ananda {{ $siswa->nama }}.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                    <div class="lg:col-span-1 space-y-6">
+                        
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                            <div class="p-6">
+                                <h3 class="text-base font-medium text-slate-900 mb-4">Profil Ananda</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500">Nama Lengkap</span>
+                                        <span class="font-semibold text-slate-800">{{ $siswa->nama }}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500">Kelas</span>
+                                        <span class="font-semibold text-slate-800">{{ $siswa->kelas }}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500">Total Poin</span>
+                                        <span class="font-bold text-red-500">{{ $siswa->totalPoin() }} Poin</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                            <div class="p-6">
+                                 <h3 class="text-base font-medium text-slate-900 mb-4">Wali Kelas</h3>
+                                 <div class="flex items-center space-x-4">
+                                     <div class="flex-shrink-0">
+                                         <div class="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center">
+                                             <span class="text-lg font-bold text-slate-500">{{ substr($waliKelasUser->name, 0, 1) }}</span>
+                                         </div>
+                                     </div>
+                                     <div class="flex-1 min-w-0">
+                                         <p class="text-sm font-semibold text-slate-900 truncate">{{ $waliKelasUser->name }}</p>
+                                         <p class="text-sm text-slate-500 truncate">Wali Kelas {{ $siswa->kelas }}</p>
+                                     </div>
+                                 </div>
+                                 @if ($waliKelasUser->phone_number)
+                                    @php
+                                        $nomorWhatsapp = preg_replace('/^0/', '62', $waliKelasUser->phone_number);
+                                        $pesan = urlencode("Selamat pagi/siang Bapak/Ibu " . $waliKelasUser->name . ", saya orang tua/wali dari ananda " . $siswa->nama . " kelas " . $siswa->kelas . ".");
+                                    @endphp
+                                    <a href="https://wa.me/{{ $nomorWhatsapp }}?text={{ $pesan }}" target="_blank" class="mt-4 w-full flex items-center justify-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-600">
+                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.654 4.512 1.907 6.346l-.315 1.149 1.182-.307zm4.913 5.422c-.078-.048-.272-.132-.39-.187-.118-.055-1.104-.543-1.275-.605-.171-.062-.297-.099-.424.099-.127.198-.483.606-.594.727-.11.123-.22.138-.418.048-.198-.09-.904-.335-1.72-1.062-.637-.577-1.05-1.29-1.175-1.511-.124-.22-.013-.344.088-.443.091-.091.203-.232.304-.345.102-.112.127-.198.19-.33.063-.132.034-.248-.015-.344-.05-.096-.424-1.016-.579-1.383-.153-.368-.307-.315-.424-.32-.112-.005-.246-.005-.368-.005-.122 0-.317.048-.484.247-.167.198-.636.619-.636 1.511 0 .893.652 1.758.742 1.878.09.123 1.273 1.936 3.08 2.735.419.19.742.298 1.002.383.478.152.923.129 1.262.078.384-.058 1.104-.455 1.258-.893.153-.438.153-.811.105-.893-.048-.083-.171-.132-.368-.247z"/></svg>
+                                        <span>Hubungi via WhatsApp</span>
+                                    </a>
+                                 @else
+                                    <p class="mt-4 text-xs text-center text-slate-400 italic">Nomor telepon wali kelas tidak tersedia.</p>
+                                 @endif
+                            </div>
+                        </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Jenis
-                                        Pelanggaran</th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Poin
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Catatan
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-slate-200">
-                                @forelse ($siswa->pelanggaran as $pelanggaran)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                                            {{ \Carbon\Carbon::parse($pelanggaran->tanggal_pelanggaran)->isoFormat('D MMM YYYY') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
-                                            {{ $pelanggaran->jenisPelanggaran->nama_pelanggaran }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-800">
-                                            {{ $pelanggaran->jenisPelanggaran->poin }}</td>
-                                        <td class="px-6 py-4 text-sm text-slate-700">{{ $pelanggaran->catatan ?? '-' }}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">
-                                            Alhamdulillah, belum ada catatan pelanggaran.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4 mb-6">Riwayat Bimbingan Konseling</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-slate-200">
+                                        <thead class="bg-slate-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-slate-200">
+                                            @forelse ($siswa->jadwalBimbingan as $jadwal)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                                                        {{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('D MMM YYYY') }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                        @php
+                                                            $statusClass = [
+                                                                'selesai' => 'bg-green-100 text-green-800',
+                                                            ][$jadwal->status] ?? 'bg-slate-100 text-slate-800';
+                                                        @endphp
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">
+                                                            {{ str_replace('_', ' ', Str::title($jadwal->status)) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                        @if ($jadwal->laporan && $jadwal->status == 'selesai')
+                                                            <a href="{{ route('ortu.laporan.show', $jadwal->laporan->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">
+                                                                Lihat Laporan
+                                                            </a>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" class="px-6 py-4 text-center text-slate-500">Belum ada riwayat bimbingan.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-slate-900 border-b border-slate-200 pb-4 mb-6">Riwayat Pelanggaran Tercatat</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-slate-200">
+                                        <thead class="bg-slate-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Jenis Pelanggaran</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Poin</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Catatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-slate-200">
+                                            @forelse ($siswa->pelanggaran as $pelanggaran)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                                                        {{ \Carbon\Carbon::parse($pelanggaran->tanggal_pelanggaran)->isoFormat('D MMM YYYY') }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                                        {{ $pelanggaran->jenisPelanggaran->nama_pelanggaran }}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-800">
+                                                        {{ $pelanggaran->jenisPelanggaran->poin }}</td>
+                                                    <td class="px-6 py-4 text-sm text-slate-700">{{ $pelanggaran->catatan ?? '-' }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="4" class="px-6 py-4 text-center text-slate-500">
+                                                        Alhamdulillah, belum ada catatan pelanggaran.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            @else
+                {{-- TAMPILAN JIKA DATA SISWA TIDAK DITEMUKAN --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                    <div class="p-6 text-center">
+                        <h3 class="text-lg font-medium text-slate-900">Data Siswa Tidak Terhubung</h3>
+                        <p class="mt-2 text-sm text-slate-600">
+                            Akun Anda belum terhubung dengan data siswa mana pun. Mohon hubungi pihak sekolah atau administrator untuk menautkan akun Anda dengan data anak Anda.
+                        </p>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
