@@ -8,6 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            {{-- ================= AWAL MODIFIKASI ================= --}}
+
             @if ($siswa)
                 {{-- TAMPILAN NORMAL JIKA DATA SISWA DITEMUKAN --}}
                 <div class="mb-6">
@@ -170,6 +172,8 @@
                     </div>
                 </div>
             @endif
+
+            {{-- ================= AKHIR MODIFIKASI ================= --}}
         </div>
     </div>
 </x-app-layout>

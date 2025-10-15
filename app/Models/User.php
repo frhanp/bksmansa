@@ -25,6 +25,7 @@ class User extends Authenticatable
         'role',
         'guru_id',
         'wali_id',
+        'phone_number',
     ];
 
     /**

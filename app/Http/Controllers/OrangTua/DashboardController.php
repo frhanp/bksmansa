@@ -14,12 +14,16 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Memeriksa relasi sebelum digunakan untuk menghindari error
+        // Periksa apakah akun ini sudah terhubung dengan data Wali Murid dan Siswa
         if (!$user->wali || !$user->wali->siswa) {
-            return view('ortu.dashboard', ['siswa' => null]);
+            // Jika tidak terhubung, kirim data null ke view agar tidak error
+            return view('ortu.dashboard', [
+                'siswa' => null,
+                'waliKelasUser' => null,
+            ]);
         }
 
-        // Menggunakan relasi 'wali' yang baru
+        // Jika terhubung, lanjutkan mengambil semua data yang dibutuhkan
         $siswa = $user->wali->siswa->load(
             'jadwalBimbingan.laporan', 
             'pelanggaran.jenisPelanggaran', 
