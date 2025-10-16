@@ -97,6 +97,7 @@ Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name
 Route::middleware(['auth', 'check.role:orang_tua'])->prefix('ortu')->name('ortu.')->group(function () {
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan/{laporanBimbingan}', [OrtuLaporanController::class, 'show'])->name('laporan.show');
+    
 });
 
 // Memuat route otentikasi

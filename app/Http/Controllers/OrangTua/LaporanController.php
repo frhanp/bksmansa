@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LaporanBimbingan;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 class LaporanController extends Controller
 {
@@ -29,4 +31,6 @@ class LaporanController extends Controller
 
         return view('ortu.laporan.show', compact('laporanBimbingan'));
     }
+
+    
 }

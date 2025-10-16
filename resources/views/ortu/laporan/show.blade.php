@@ -20,6 +20,13 @@
                     </div>
 
                     <div>
+                        <h4 class="font-semibold text-slate-800">Jenis Surat yang Dihasilkan</h4>
+                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700">
+                           {{ str_replace('_', ' ', Str::title($laporanBimbingan->jenis_surat)) }}
+                        </div>
+                    </div>
+
+                    <div>
                         <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
                         <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
                             {!! nl2br(e($laporanBimbingan->isi_laporan)) !!}
@@ -38,13 +45,16 @@
                 {{-- --- AKHIR KONTEN YANG DISALIN --- --}}
 
                 <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    {{-- Ubah link kembali ini --}}
                     <a href="{{ route('ortu.dashboard') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Dasbor</a>
                     
-                    {{-- Tombol download juga berguna di sini --}}
-                    <a href="{{ route('guru.laporan.download', $laporanBimbingan->id) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
-                        Download PDF
-                    </a>
+                    {{-- ================= AWAL MODIFIKASI ================= --}}
+                    {{-- Tombol ini sekarang akan mengarah langsung ke file Word --}}
+                    @if ($laporanBimbingan->file_pendukung)
+                        <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500" download>
+                            Unduh Dokumen (.docx)
+                        </a>
+                    @endif
+                    {{-- ================= AKHIR MODIFIKASI ================= --}}
                 </div>
             </div>
         </div>
