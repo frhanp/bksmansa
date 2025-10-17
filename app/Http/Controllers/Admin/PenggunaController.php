@@ -16,7 +16,7 @@ class PenggunaController extends Controller
     public function index(Request $request)
     {
         // ... (Tidak ada perubahan di sini)
-        $query = User::with(['guru', 'waliMurid']);
+        $query = User::with(['guru', 'wali']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
