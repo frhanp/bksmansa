@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Illuminate\Support\Facades\DB;
+use App\Models\LaporanDokumen;
 
 
 class LaporanBimbinganController extends Controller
@@ -79,121 +81,120 @@ class LaporanBimbinganController extends Controller
 
     public function store(Request $request, $jadwalId)
     {
-        // dd($request->all());
         $jadwal = JadwalBimbingan::find($jadwalId);
-        if (!$jadwal) {
-            abort(404, 'Jadwal bimbingan tidak ditemukan.');
-        }
-
-        if ($jadwal->konselor_id !== Auth::id()) {
-            abort(403, 'Anda tidak berhak menyimpan laporan untuk jadwal ini.');
-        }
+        if (!$jadwal) { abort(404); }
+        if ($jadwal->konselor_id !== Auth::id()) { abort(403); }
 
         $templates = $this->getTemplateSurat();
-        $selectedTemplateKey = $request->jenis_surat;
-        $selectedTemplate = $templates[$selectedTemplateKey] ?? null;
+        $selectedTemplateKeys = $request->input('jenis_surat', []); // Sekarang array
 
-        if (!$selectedTemplate) {
-            return back()->with('error', 'Jenis surat tidak valid.');
+        if (empty($selectedTemplateKeys)) {
+            return back()->withErrors(['jenis_surat' => 'Pilih setidaknya satu jenis surat.'])->withInput();
         }
 
-        // Validasi dinamis berdasarkan field yang dibutuhkan
+        // Kumpulkan semua field dinamis yang dibutuhkan dari SEMUA template yang dipilih
+        $allRequiredFields = [];
         $validationRules = [
-            'jenis_surat' => 'required|in:' . implode(',', array_keys($templates)),
+            'jenis_surat' => 'required|array', // Validasi sebagai array
+            'jenis_surat.*' => 'in:' . implode(',', array_keys($templates)), // Setiap item harus valid
             'isi_laporan' => 'nullable|string',
             'rencana_tindak_lanjut' => 'nullable|string',
         ];
 
-        $dynamicFieldsData = [];
-        foreach ($selectedTemplate['fields'] as $key => $config) {
-            if ($config['required']) {
-                $validationRules[$key] = 'required';
-            }
-            if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
-                $dynamicFieldsData[$key] = Carbon::parse($request->input($key))->isoFormat('dddd, D MMMM YYYY');
-            }
-            // Khusus untuk textarea janji, format dengan list
-            if ($key === 'isi_janji') {
-                $lines = explode("\n", trim($request->input($key)));
-                $formattedLines = [];
-                foreach ($lines as $index => $line) {
-                    $formattedLines[] = ($index + 1) . ". " . trim($line);
+        foreach ($selectedTemplateKeys as $key) {
+            $templateConfig = $templates[$key] ?? null;
+            if ($templateConfig) {
+                foreach ($templateConfig['fields'] as $fieldKey => $config) {
+                    if ($config['required'] && !isset($validationRules[$fieldKey])) {
+                        $validationRules[$fieldKey] = 'required';
+                    }
+                    $allRequiredFields[$fieldKey] = $config; // Kumpulkan semua field unik
                 }
-                $dynamicFieldsData[$key] = implode("\n", $formattedLines);
-            } else {
-                $dynamicFieldsData[$key] = $request->input($key);
             }
         }
-
+        
         $request->validate($validationRules);
 
-        $templatePath = storage_path("app/templates/{$selectedTemplateKey}.docx");
-        if (!file_exists($templatePath)) {
-            return back()->with('error', 'Template surat tidak ditemukan.');
-        }
-
-        $templateProcessor = new TemplateProcessor($templatePath);
+        // Siapkan data statis sekali saja
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
-
-        // Menggabungkan data statis dan dinamis untuk template
         $staticData = [
-            'nama_siswa' => $siswa->nama,
-            'nis' => $siswa->nis,
-            'kelas' => $siswa->kelas,
-            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
-            'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
-            'nama_konselor' => Auth::user()->name,
-            'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
+            'nama_siswa' => $siswa->nama, 'nis' => $siswa->nis, 'kelas' => $siswa->kelas,
+            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A', 'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
+            'nama_konselor' => Auth::user()->name, 'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
             'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
-            'isi_laporan' => $request->isi_laporan ?? '-',
-            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
+            'isi_laporan' => $request->isi_laporan ?? '-', 'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
-        if (isset($dynamicFieldsData['tanggal_mulai_skorsing'])) {
-            $dynamicFieldsData['tanggal_mulai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_mulai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['tanggal_selesai_skorsing'])) {
-            $dynamicFieldsData['tanggal_selesai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_selesai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['tanggal_lahir'])) {
-            $dynamicFieldsData['tanggal_lahir'] = Carbon::parse($dynamicFieldsData['tanggal_lahir'])->isoFormat('D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['isi_janji'])) {
-            $lines = explode("\n", trim($dynamicFieldsData['isi_janji']));
-            $formattedLines = [];
-            foreach ($lines as $index => $line) {
-                $formattedLines[] = ($index + 1) . ". " . trim($line);
+
+        // Ambil data dinamis dari request
+        $dynamicFieldsData = $request->only(array_keys($allRequiredFields));
+
+        // Format data dinamis (tanggal, janji, dll.)
+        foreach ($dynamicFieldsData as $key => &$value) {
+            if (isset($allRequiredFields[$key])) {
+                 if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
+                    $value = Carbon::parse($value)->isoFormat('dddd, D MMMM YYYY');
+                } elseif ($key === 'isi_janji') {
+                    $lines = explode("\n", trim($value));
+                    $formattedLines = [];
+                    foreach ($lines as $index => $line) {
+                        $formattedLines[] = ($index + 1) . ". " . trim($line);
+                    }
+                    $value = implode("\n", $formattedLines);
+                }
             }
-            $dynamicFieldsData['isi_janji'] = implode("\n", $formattedLines);
         }
+        unset($value); // Hapus referensi
 
         $templateData = array_merge($staticData, $dynamicFieldsData);
 
-        // Debug isi array yang dikirim ke Word
+        // Gunakan transaksi database
+        DB::beginTransaction();
+        try {
+            // 1. Buat record laporan utama
+            $laporanBimbingan = LaporanBimbingan::create([
+                'jadwal_id' => $jadwal->id,
+                'isi_laporan' => $request->isi_laporan,
+                'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
+                'dibuat_oleh' => Auth::id(),
+            ]);
 
+            // 2. Loop untuk setiap template yang dipilih
+            foreach ($selectedTemplateKeys as $templateKey) {
+                $templatePath = storage_path("app/templates/{$templateKey}.docx");
+                if (!file_exists($templatePath)) {
+                    throw new \Exception("Template {$templateKey}.docx tidak ditemukan.");
+                }
 
+                $templateProcessor = new TemplateProcessor($templatePath);
+                $templateProcessor->setValues($templateData); // Gunakan data yang sama
 
-        $templateData = array_merge($staticData, $dynamicFieldsData);
-        $templateProcessor->setValues($templateData);
+                $fileName = "laporan_{$templateKey}_" . $siswa->nis . '_' . time() . '_' . uniqid() . '.docx';
+                $path = "laporan_word/{$fileName}";
+                if (!Storage::disk('public')->exists('laporan_word')) {
+                    Storage::disk('public')->makeDirectory('laporan_word');
+                }
+                $templateProcessor->saveAs(storage_path("app/public/{$path}"));
 
-        $fileName = "laporan_{$selectedTemplateKey}_" . $siswa->nis . '_' . time() . '.docx';
-        $path = "laporan_word/{$fileName}";
-        if (!Storage::disk('public')->exists('laporan_word')) {
-            Storage::disk('public')->makeDirectory('laporan_word');
+                // 3. Simpan info dokumen ke tabel baru
+                LaporanDokumen::create([
+                    'laporan_bimbingan_id' => $laporanBimbingan->id,
+                    'jenis_surat' => $templateKey,
+                    'file_path' => $path,
+                ]);
+            }
+
+            // 4. Update status jadwal
+            $jadwal->update(['status' => 'selesai']);
+
+            DB::commit(); // Konfirmasi semua perubahan jika berhasil
+
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan ' . count($selectedTemplateKeys) . ' file surat telah digenerate.');
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika ada error
+            // Hapus file yang mungkin sudah terbuat (opsional, tergantung kebutuhan)
+            return back()->with('error', 'Terjadi kesalahan saat membuat laporan: ' . $e->getMessage())->withInput();
         }
-        $templateProcessor->saveAs(storage_path("app/public/{$path}"));
-
-        LaporanBimbingan::create([
-            'jadwal_id' => $jadwal->id,
-            'jenis_surat' => $selectedTemplateKey,
-            'isi_laporan' => $request->isi_laporan,
-            'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
-            'file_pendukung' => $path,
-            'dibuat_oleh' => Auth::id(),
-        ]);
-
-        $jadwal->update(['status' => 'selesai']);
-
-        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan status jadwal telah diubah menjadi Selesai.');
     }
 
     // ================= AKHIR MODIFIKASI =================
@@ -203,7 +204,7 @@ class LaporanBimbinganController extends Controller
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
-        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat');
+        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat','dokumen');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
 

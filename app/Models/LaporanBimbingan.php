@@ -18,8 +18,6 @@ class LaporanBimbingan extends Model
         'file_pendukung',
         'isi_laporan',
         'rencana_tindak_lanjut',
-        'jenis_surat',
-        'file_pendukung',
         'dibuat_oleh',
     ];
 
@@ -29,12 +27,17 @@ class LaporanBimbingan extends Model
     }
 
     public function dibuatOleh(): BelongsTo
-{
-    return $this->belongsTo(User::class, 'dibuat_oleh');
-}
-
-public function pembuat()
     {
         return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    public function dokumen()
+    {
+        return $this->hasMany(LaporanDokumen::class);
     }
 }

@@ -1,61 +1,85 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+        <h2 class="font-bold text-2xl text-slate-800">
             {{ __('Detail Laporan Bimbingan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <div class="p-8 space-y-6">
-                    <div class="border-b border-slate-200 pb-6">
-                        <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
-                        <div class="mt-2 text-sm text-slate-600 space-y-1">
-                            {{-- Menggunakan variabel dan relasi asli Anda --}}
-                            <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
-                            <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->pembuat->name }}</p>
-                        </div>
-                    </div>
+    <div class="py-10">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden">
+                <div class="p-8 space-y-10">
 
-                    {{-- ================= AWAL PERUBAHAN ================= --}}
-                    {{-- Menambahkan informasi jenis surat yang dibuat --}}
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Jenis Surat yang Dihasilkan</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700">
-                           {{ str_replace('_', ' ', Str::title($laporanBimbingan->jenis_surat)) }}
+                    {{-- HEADER (Mengikuti layout guru.laporan.show) --}}
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-900">
+                                Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
+                            </h3>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Dibuat oleh
+                                <span class="font-medium text-slate-700">{{ $laporanBimbingan->pembuat->name }}</span>
+                                • {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
+                            </p>
                         </div>
-                    </div>
-                    {{-- ================= AKHIR PERUBAHAN ================= --}}
-
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
-                        </div>
-                    </div>
-
-                    @if($laporanBimbingan->rencana_tindak_lanjut)
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Rencana Tindak Lanjut</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                           {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut)) !!}
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                 <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    <a href="{{ route('kepsek.laporan.index') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Daftar Laporan</a>
-                    
-                    {{-- ================= AWAL PERUBAHAN ================= --}}
-                    {{-- Mengganti tombol PDF menjadi tombol Unduh Dokumen Word --}}
-                    @if ($laporanBimbingan->file_pendukung)
-                        <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500" download>
-                            Unduh Dokumen (.docx)
+                        {{-- Sesuaikan rute kembali ke daftar laporan Kepala Sekolah --}}
+                        <a href="{{ route('kepsek.laporan.index') }}"
+                           class="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-800 transition">
+                            ← Kembali ke Daftar Laporan
                         </a>
-                    @endif
-                    {{-- ================= AKHIR PERUBAHAN ================= --}}
+                    </div>
+
+                    {{-- HIGHLIGHT: DOKUMEN (Mengikuti layout guru.laporan.show) --}}
+                    <div class="bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl shadow-lg p-6">
+                        <h4 class="text-base font-semibold uppercase tracking-wide mb-4">Dokumen Dihasilkan</h4>
+
+                        @if ($laporanBimbingan->dokumen->isNotEmpty())
+                            <ul class="space-y-3">
+                                @foreach($laporanBimbingan->dokumen as $dokumen)
+                                    <li class="flex items-center justify-between bg-white/20 rounded-lg px-4 py-2">
+                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', Str::title($dokumen->jenis_surat)) }}</span>
+                                        <a href="{{ Storage::url($dokumen->file_path) }}"
+                                           class="inline-flex items-center px-3 py-1 bg-white text-teal-700 rounded-md text-xs font-semibold hover:bg-slate-100 transition"
+                                           download>
+                                            Unduh (.docx)
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-white/80 italic">Tidak ada dokumen terkait laporan ini.</p>
+                        @endif
+                    </div>
+
+                    {{-- GRID DETAIL (Mengikuti layout guru.laporan.show) --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        {{-- Kiri: Tindak Lanjut --}}
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                                    Rencana Tindak Lanjut
+                                </h4>
+                                <p class="text-sm text-slate-800 leading-relaxed">
+                                    {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Kanan: Isi Laporan --}}
+                        <div class="md:col-span-2">
+                            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200 h-full">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">
+                                    Isi Laporan Tambahan
+                                </h4>
+                                <div class="text-slate-800 leading-relaxed prose prose-sm max-w-none">
+                                    {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
