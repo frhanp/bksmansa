@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-15 22:53:14_
+_Generated: 2025-10-18 15:54:13_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -82,6 +82,7 @@ app\Models\Guru.php
 app\Models\JadwalBimbingan.php
 app\Models\JenisPelanggaran.php
 app\Models\LaporanBimbingan.php
+app\Models\LaporanDokumen.php
 app\Models\PelanggaranSiswa.php
 app\Models\Siswa.php
 app\Models\User.php
@@ -125,6 +126,9 @@ database\migrations\2025_07_12_163011_add_foreign_keys_to_users_table.php
 database\migrations\2025_09_15_032320_add_jenis_surat_to_laporan_bimbingan_table.php
 database\migrations\2025_09_17_013145_add_file_pendukung_to_laporan_bimbingan_table.php
 database\migrations\2025_09_29_010907_make_isi_laporan_nullable_in_laporan_bimbingan_table.php
+database\migrations\2025_10_15_150116_add_phone_number_to_users_table.php
+database\migrations\2025_10_18_063600_create_laporan_dokumens_table.php
+database\migrations\2025_10_18_063654_modify_laporan_bimbingan_for_multidoc.php
 database\seeders\DatabaseSeeder.php
 database\seeders\PelanggaranSeeder.php
 database\seeders\RolesAndUsersSeeder.php
@@ -238,10 +242,12 @@ storage\app\private\.gitignore
 storage\app\public\laporan_word
 storage\app\public\.gitignore
 storage\app\public\laporan_word\laporan_surat_penyerahan_ortu_12349_1758986877.docx
+storage\app\public\laporan_word\laporan_surat_penyerahan_ortu_12352_1760770799_68f33aeff0539.docx
 storage\app\public\laporan_word\laporan_surat_peringatan_12350_1758545463.docx
 storage\app\public\laporan_word\laporan_surat_peringatan_12351_1758987027.docx
 storage\app\public\laporan_word\laporan_surat_peringatan_1_12349_1758072946.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12348_1758983584.docx
+storage\app\public\laporan_word\laporan_surat_perjanjian_12352_1760770799_68f33aef13bb6.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12353_1758981834.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12354_1758221198.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12354_1758982401.docx
@@ -368,11 +374,11 @@ Branch:
 main
 
 Last 5 commits:
-fcb21a1 add chart kepsek
-8a5c59c fix edit jadwal di gurubk
-2c2cc8e fix laporan di kepsek
-ea8f704 hapus ananda
-1273927 isi laporan jadi nullable
+afca085 multiselect create laporan
+4ff4d62 fix error pengguna sistem
+9abf15f tampilkan jenis surat dan surat di  ortu
+52b7532 add kolom wa di users dan di profile
+7cbda1c add tombol nomor wa ke walas dari ortu
 ```
 
 
@@ -563,6 +569,7 @@ Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name
 Route::middleware(['auth', 'check.role:orang_tua'])->prefix('ortu')->name('ortu.')->group(function () {
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan/{laporanBimbingan}', [OrtuLaporanController::class, 'show'])->name('laporan.show');
+    
 });
 
 // Memuat route otentikasi
@@ -574,89 +581,89 @@ require __DIR__.'/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ............................................................................................... 
-  GET|HEAD        _debugbar/assets/javascript ......... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ...... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
-  GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open .......... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explaΓÇª
-  GET|HEAD        admin/dashboard ............................... admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/jenis-pelanggaran .. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
-  POST            admin/jenis-pelanggaran .. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
-  GET|HEAD        admin/jenis-pelanggaran/create admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranControllerΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaraΓÇª
-  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaΓÇª
-  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanΓÇª
-  GET|HEAD        admin/pengguna ............................ admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
-  POST            admin/pengguna ............................ admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
-  GET|HEAD        admin/pengguna/create ................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
-  GET|HEAD        admin/pengguna/{pengguna} ................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
-  PUT|PATCH       admin/pengguna/{pengguna} ............... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
-  DELETE          admin/pengguna/{pengguna} ............. admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
-  GET|HEAD        admin/pengguna/{pengguna}/edit .............. admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
-  GET|HEAD        admin/verifikasi-jadwal .............. admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
-  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@ΓÇª
-  GET|HEAD        confirm-password ..................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password ....................................... Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard ............................................................................. dashboard
-  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificationControllerΓÇª
-  GET|HEAD        forgot-password ...................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password ......................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        guru/dashboard .................................. guru.dashboard ΓÇ║ Guru\DashboardController@index
-  GET|HEAD        guru/jadwal-bimbingan ........ guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
-  POST            guru/jadwal-bimbingan ........ guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/create guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
-  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan guru.laporan.store ΓÇ║ Guru\LaporanBimbinganControΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbingΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganControΓÇª
-  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganContΓÇª
-  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganConΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganCΓÇª
-  GET|HEAD        guru/laporan/{laporanBimbingan} ........ guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
-  PUT             guru/laporan/{laporanBimbingan} .... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
-  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganControllerΓÇª
-  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
-  GET|HEAD        guru/pelanggaran-siswa ..... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
-  POST            guru/pelanggaran-siswa ..... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
-  GET|HEAD        guru/pelanggaran-siswa/create guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@crΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaCoΓÇª
-  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaΓÇª
-  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiΓÇª
-  GET|HEAD        guru/siswa ........................................ guru.siswa.index ΓÇ║ Guru\SiswaController@index
-  POST            guru/siswa ........................................ guru.siswa.store ΓÇ║ Guru\SiswaController@store
-  GET|HEAD        guru/siswa/create ............................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
-  GET|HEAD        guru/siswa/{siswa} .................................. guru.siswa.show ΓÇ║ Guru\SiswaController@show
-  PUT|PATCH       guru/siswa/{siswa} .............................. guru.siswa.update ΓÇ║ Guru\SiswaController@update
-  DELETE          guru/siswa/{siswa} ............................ guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
-  GET|HEAD        guru/siswa/{siswa}/edit ............................. guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
-  GET|HEAD        kepsek/dashboard ..................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
-  GET|HEAD        kepsek/laporan ..................... kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
-  GET|HEAD        kepsek/laporan/{laporanBimbingan} .... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
-  GET|HEAD        login ........................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login ................................................. Auth\AuthenticatedSessionController@store
-  POST            logout ..................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        ortu/dashboard .............................. ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
-  GET|HEAD        ortu/laporan/{laporanBimbingan} ............. ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
-  PUT             password ....................................... password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile ................................................... profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ............................................... profile.update ΓÇ║ ProfileController@update
-  DELETE          profile ............................................. profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ........................................ register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register .................................................... Auth\RegisteredUserController@store
-  POST            reset-password ................................ password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} ....................... password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} .................................................................... storage.local
-  GET|HEAD        up .............................................................................................. 
-  GET|HEAD        verify-email ....................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} ....................... verification.verify ΓÇ║ Auth\VerifyEmailController
-  GET|HEAD        walikelas/dashboard ................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
-  GET|HEAD        walikelas/laporan/{laporanBimbingan} .. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
-  GET|HEAD        walikelas/siswa/{siswa} ................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  GET|HEAD        / .......................................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript .................... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ................. debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} ........... debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} .......... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
+  GET|HEAD        _debugbar/open ..................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain ......... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
+  GET|HEAD        admin/dashboard .......................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/jenis-pelanggaran ............. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
+  POST            admin/jenis-pelanggaran ............. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
+  GET|HEAD        admin/jenis-pelanggaran/create .... admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranControllerΓÇª
+  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranControllΓÇª
+  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranControlΓÇª
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranContrΓÇª
+  GET|HEAD        admin/pengguna ....................................... admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
+  POST            admin/pengguna ....................................... admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
+  GET|HEAD        admin/pengguna/create .............................. admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
+  GET|HEAD        admin/pengguna/{pengguna} .............................. admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
+  PUT|PATCH       admin/pengguna/{pengguna} .......................... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
+  DELETE          admin/pengguna/{pengguna} ........................ admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
+  GET|HEAD        admin/pengguna/{pengguna}/edit ......................... admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
+  GET|HEAD        admin/verifikasi-jadwal ......................... admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
+  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} ..... admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
+  GET|HEAD        confirm-password ................................ password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password .................................................. Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ........................................................................................ dashboard
+  POST            email/verification-notification ..... verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
+  GET|HEAD        forgot-password ................................. password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password .................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        guru/dashboard ............................................. guru.dashboard ΓÇ║ Guru\DashboardController@index
+  GET|HEAD        guru/jadwal-bimbingan ................... guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
+  POST            guru/jadwal-bimbingan ................... guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/create .......... guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
+  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan . guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbinganControlleΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} .. guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@show
+  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@updaΓÇª
+  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@desΓÇª
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@eΓÇª
+  GET|HEAD        guru/laporan/{laporanBimbingan} ................... guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
+  PUT             guru/laporan/{laporanBimbingan} ............... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
+  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
+  GET|HEAD        guru/laporan/{laporanBimbingan}/edit .............. guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
+  GET|HEAD        guru/pelanggaran-siswa ................ guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
+  POST            guru/pelanggaran-siswa ................ guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
+  GET|HEAD        guru/pelanggaran-siswa/create ....... guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaController@shΓÇª
+  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaController@ΓÇª
+  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaControllerΓÇª
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaControllΓÇª
+  GET|HEAD        guru/siswa ................................................... guru.siswa.index ΓÇ║ Guru\SiswaController@index
+  POST            guru/siswa ................................................... guru.siswa.store ΓÇ║ Guru\SiswaController@store
+  GET|HEAD        guru/siswa/create .......................................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
+  GET|HEAD        guru/siswa/{siswa} ............................................. guru.siswa.show ΓÇ║ Guru\SiswaController@show
+  PUT|PATCH       guru/siswa/{siswa} ......................................... guru.siswa.update ΓÇ║ Guru\SiswaController@update
+  DELETE          guru/siswa/{siswa} ....................................... guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
+  GET|HEAD        guru/siswa/{siswa}/edit ........................................ guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
+  GET|HEAD        kepsek/dashboard ................................ kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
+  GET|HEAD        kepsek/laporan ................................ kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
+  GET|HEAD        kepsek/laporan/{laporanBimbingan} ............... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
+  GET|HEAD        login ................................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ............................................................ Auth\AuthenticatedSessionController@store
+  POST            logout ................................................ logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        ortu/dashboard ......................................... ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
+  GET|HEAD        ortu/laporan/{laporanBimbingan} ........................ ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
+  PUT             password .................................................. password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile .............................................................. profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile .......................................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ........................................................ profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ................................................... register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register ............................................................... Auth\RegisteredUserController@store
+  POST            reset-password ........................................... password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} .................................. password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} ............................................................................... storage.local
+  GET|HEAD        up ......................................................................................................... 
+  GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        walikelas/dashboard .............................. walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/{laporanBimbingan} ............. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
+  GET|HEAD        walikelas/siswa/{siswa} .............................. walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                Showing [81] routes
+                                                                                                           Showing [81] routes
 
 ```
 
@@ -916,7 +923,7 @@ class PenggunaController extends Controller
     public function index(Request $request)
     {
         // ... (Tidak ada perubahan di sini)
-        $query = User::with(['guru', 'waliMurid']);
+        $query = User::with(['guru', 'wali']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -1595,6 +1602,8 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Illuminate\Support\Facades\DB;
+use App\Models\LaporanDokumen;
 
 
 class LaporanBimbinganController extends Controller
@@ -1662,121 +1671,120 @@ class LaporanBimbinganController extends Controller
 
     public function store(Request $request, $jadwalId)
     {
-        // dd($request->all());
         $jadwal = JadwalBimbingan::find($jadwalId);
-        if (!$jadwal) {
-            abort(404, 'Jadwal bimbingan tidak ditemukan.');
-        }
-
-        if ($jadwal->konselor_id !== Auth::id()) {
-            abort(403, 'Anda tidak berhak menyimpan laporan untuk jadwal ini.');
-        }
+        if (!$jadwal) { abort(404); }
+        if ($jadwal->konselor_id !== Auth::id()) { abort(403); }
 
         $templates = $this->getTemplateSurat();
-        $selectedTemplateKey = $request->jenis_surat;
-        $selectedTemplate = $templates[$selectedTemplateKey] ?? null;
+        $selectedTemplateKeys = $request->input('jenis_surat', []); // Sekarang array
 
-        if (!$selectedTemplate) {
-            return back()->with('error', 'Jenis surat tidak valid.');
+        if (empty($selectedTemplateKeys)) {
+            return back()->withErrors(['jenis_surat' => 'Pilih setidaknya satu jenis surat.'])->withInput();
         }
 
-        // Validasi dinamis berdasarkan field yang dibutuhkan
+        // Kumpulkan semua field dinamis yang dibutuhkan dari SEMUA template yang dipilih
+        $allRequiredFields = [];
         $validationRules = [
-            'jenis_surat' => 'required|in:' . implode(',', array_keys($templates)),
+            'jenis_surat' => 'required|array', // Validasi sebagai array
+            'jenis_surat.*' => 'in:' . implode(',', array_keys($templates)), // Setiap item harus valid
             'isi_laporan' => 'nullable|string',
             'rencana_tindak_lanjut' => 'nullable|string',
         ];
 
-        $dynamicFieldsData = [];
-        foreach ($selectedTemplate['fields'] as $key => $config) {
-            if ($config['required']) {
-                $validationRules[$key] = 'required';
-            }
-            if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
-                $dynamicFieldsData[$key] = Carbon::parse($request->input($key))->isoFormat('dddd, D MMMM YYYY');
-            }
-            // Khusus untuk textarea janji, format dengan list
-            if ($key === 'isi_janji') {
-                $lines = explode("\n", trim($request->input($key)));
-                $formattedLines = [];
-                foreach ($lines as $index => $line) {
-                    $formattedLines[] = ($index + 1) . ". " . trim($line);
+        foreach ($selectedTemplateKeys as $key) {
+            $templateConfig = $templates[$key] ?? null;
+            if ($templateConfig) {
+                foreach ($templateConfig['fields'] as $fieldKey => $config) {
+                    if ($config['required'] && !isset($validationRules[$fieldKey])) {
+                        $validationRules[$fieldKey] = 'required';
+                    }
+                    $allRequiredFields[$fieldKey] = $config; // Kumpulkan semua field unik
                 }
-                $dynamicFieldsData[$key] = implode("\n", $formattedLines);
-            } else {
-                $dynamicFieldsData[$key] = $request->input($key);
             }
         }
-
+        
         $request->validate($validationRules);
 
-        $templatePath = storage_path("app/templates/{$selectedTemplateKey}.docx");
-        if (!file_exists($templatePath)) {
-            return back()->with('error', 'Template surat tidak ditemukan.');
-        }
-
-        $templateProcessor = new TemplateProcessor($templatePath);
+        // Siapkan data statis sekali saja
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
-
-        // Menggabungkan data statis dan dinamis untuk template
         $staticData = [
-            'nama_siswa' => $siswa->nama,
-            'nis' => $siswa->nis,
-            'kelas' => $siswa->kelas,
-            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
-            'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
-            'nama_konselor' => Auth::user()->name,
-            'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
+            'nama_siswa' => $siswa->nama, 'nis' => $siswa->nis, 'kelas' => $siswa->kelas,
+            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A', 'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
+            'nama_konselor' => Auth::user()->name, 'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
             'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
-            'isi_laporan' => $request->isi_laporan ?? '-',
-            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
+            'isi_laporan' => $request->isi_laporan ?? '-', 'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
-        if (isset($dynamicFieldsData['tanggal_mulai_skorsing'])) {
-            $dynamicFieldsData['tanggal_mulai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_mulai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['tanggal_selesai_skorsing'])) {
-            $dynamicFieldsData['tanggal_selesai_skorsing'] = Carbon::parse($dynamicFieldsData['tanggal_selesai_skorsing'])->isoFormat('dddd, D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['tanggal_lahir'])) {
-            $dynamicFieldsData['tanggal_lahir'] = Carbon::parse($dynamicFieldsData['tanggal_lahir'])->isoFormat('D MMMM YYYY');
-        }
-        if (isset($dynamicFieldsData['isi_janji'])) {
-            $lines = explode("\n", trim($dynamicFieldsData['isi_janji']));
-            $formattedLines = [];
-            foreach ($lines as $index => $line) {
-                $formattedLines[] = ($index + 1) . ". " . trim($line);
+
+        // Ambil data dinamis dari request
+        $dynamicFieldsData = $request->only(array_keys($allRequiredFields));
+
+        // Format data dinamis (tanggal, janji, dll.)
+        foreach ($dynamicFieldsData as $key => &$value) {
+            if (isset($allRequiredFields[$key])) {
+                 if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
+                    $value = Carbon::parse($value)->isoFormat('dddd, D MMMM YYYY');
+                } elseif ($key === 'isi_janji') {
+                    $lines = explode("\n", trim($value));
+                    $formattedLines = [];
+                    foreach ($lines as $index => $line) {
+                        $formattedLines[] = ($index + 1) . ". " . trim($line);
+                    }
+                    $value = implode("\n", $formattedLines);
+                }
             }
-            $dynamicFieldsData['isi_janji'] = implode("\n", $formattedLines);
         }
+        unset($value); // Hapus referensi
 
         $templateData = array_merge($staticData, $dynamicFieldsData);
 
-        // Debug isi array yang dikirim ke Word
+        // Gunakan transaksi database
+        DB::beginTransaction();
+        try {
+            // 1. Buat record laporan utama
+            $laporanBimbingan = LaporanBimbingan::create([
+                'jadwal_id' => $jadwal->id,
+                'isi_laporan' => $request->isi_laporan,
+                'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
+                'dibuat_oleh' => Auth::id(),
+            ]);
 
+            // 2. Loop untuk setiap template yang dipilih
+            foreach ($selectedTemplateKeys as $templateKey) {
+                $templatePath = storage_path("app/templates/{$templateKey}.docx");
+                if (!file_exists($templatePath)) {
+                    throw new \Exception("Template {$templateKey}.docx tidak ditemukan.");
+                }
 
+                $templateProcessor = new TemplateProcessor($templatePath);
+                $templateProcessor->setValues($templateData); // Gunakan data yang sama
 
-        $templateData = array_merge($staticData, $dynamicFieldsData);
-        $templateProcessor->setValues($templateData);
+                $fileName = "laporan_{$templateKey}_" . $siswa->nis . '_' . time() . '_' . uniqid() . '.docx';
+                $path = "laporan_word/{$fileName}";
+                if (!Storage::disk('public')->exists('laporan_word')) {
+                    Storage::disk('public')->makeDirectory('laporan_word');
+                }
+                $templateProcessor->saveAs(storage_path("app/public/{$path}"));
 
-        $fileName = "laporan_{$selectedTemplateKey}_" . $siswa->nis . '_' . time() . '.docx';
-        $path = "laporan_word/{$fileName}";
-        if (!Storage::disk('public')->exists('laporan_word')) {
-            Storage::disk('public')->makeDirectory('laporan_word');
+                // 3. Simpan info dokumen ke tabel baru
+                LaporanDokumen::create([
+                    'laporan_bimbingan_id' => $laporanBimbingan->id,
+                    'jenis_surat' => $templateKey,
+                    'file_path' => $path,
+                ]);
+            }
+
+            // 4. Update status jadwal
+            $jadwal->update(['status' => 'selesai']);
+
+            DB::commit(); // Konfirmasi semua perubahan jika berhasil
+
+            return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan ' . count($selectedTemplateKeys) . ' file surat telah digenerate.');
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika ada error
+            // Hapus file yang mungkin sudah terbuat (opsional, tergantung kebutuhan)
+            return back()->with('error', 'Terjadi kesalahan saat membuat laporan: ' . $e->getMessage())->withInput();
         }
-        $templateProcessor->saveAs(storage_path("app/public/{$path}"));
-
-        LaporanBimbingan::create([
-            'jadwal_id' => $jadwal->id,
-            'jenis_surat' => $selectedTemplateKey,
-            'isi_laporan' => $request->isi_laporan,
-            'rencana_tindak_lanjut' => $request->rencana_tindak_lanjut,
-            'file_pendukung' => $path,
-            'dibuat_oleh' => Auth::id(),
-        ]);
-
-        $jadwal->update(['status' => 'selesai']);
-
-        return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan status jadwal telah diubah menjadi Selesai.');
     }
 
     // ================= AKHIR MODIFIKASI =================
@@ -1786,7 +1794,7 @@ class LaporanBimbinganController extends Controller
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
-        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat');
+        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat','dokumen');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
 
@@ -2309,12 +2317,16 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Memeriksa relasi sebelum digunakan untuk menghindari error
+        // Periksa apakah akun ini sudah terhubung dengan data Wali Murid dan Siswa
         if (!$user->wali || !$user->wali->siswa) {
-            return view('ortu.dashboard', ['siswa' => null]);
+            // Jika tidak terhubung, kirim data null ke view agar tidak error
+            return view('ortu.dashboard', [
+                'siswa' => null,
+                'waliKelasUser' => null,
+            ]);
         }
 
-        // Menggunakan relasi 'wali' yang baru
+        // Jika terhubung, lanjutkan mengambil semua data yang dibutuhkan
         $siswa = $user->wali->siswa->load(
             'jadwalBimbingan.laporan', 
             'pelanggaran.jenisPelanggaran', 
@@ -2339,6 +2351,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LaporanBimbingan;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 class LaporanController extends Controller
 {
@@ -2362,6 +2376,8 @@ class LaporanController extends Controller
 
         return view('ortu.laporan.show', compact('laporanBimbingan'));
     }
+
+    
 }
 
 ===== app\Http\Controllers\WaliKelas\DashboardController.php =====
@@ -2631,8 +2647,6 @@ class LaporanBimbingan extends Model
         'file_pendukung',
         'isi_laporan',
         'rencana_tindak_lanjut',
-        'jenis_surat',
-        'file_pendukung',
         'dibuat_oleh',
     ];
 
@@ -2642,13 +2656,44 @@ class LaporanBimbingan extends Model
     }
 
     public function dibuatOleh(): BelongsTo
-{
-    return $this->belongsTo(User::class, 'dibuat_oleh');
-}
-
-public function pembuat()
     {
         return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    public function dokumen()
+    {
+        return $this->hasMany(LaporanDokumen::class);
+    }
+}
+
+===== app\Models\LaporanDokumen.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class LaporanDokumen extends Model
+{
+    use HasFactory;
+
+    protected $table = 'laporan_dokumen';
+
+    protected $fillable = [
+        'laporan_bimbingan_id',
+        'jenis_surat',
+        'file_path',
+    ];
+
+    public function laporanBimbingan()
+    {
+        return $this->belongsTo(LaporanBimbingan::class);
     }
 }
 
@@ -4231,110 +4276,117 @@ $classes = ($active ?? false)
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
 
+                {{-- ================= AWAL MODIFIKASI ================= --}}
                 <form action="{{ route('guru.laporan.store', $jadwal->id) }}" method="POST"
-                      x-data='{ 
-                        templates: @json($templateSurat), 
-                        selectedTemplate: "{{ old('jenis_surat') }}", 
-                        errors: @json($errors->toArray()) 
+                      x-data='{
+                          templates: @json($templateSurat),
+                          errors: @js($errors->any() ? $errors->toArray() : (object)[]), // Gunakan object kosong jika tidak ada error
+                          selectedTemplate: "{{ old('jenis_surat') }}",
+
+                          isFieldVisible(fieldKey) {
+                              for (const templateKey of this.selectedTemplates) {
+                                  if (this.templates[templateKey]?.fields[fieldKey]) { return true; }
+                              } return false;
+                          },
+                          isFieldRequired(fieldKey) {
+                               for (const templateKey of this.selectedTemplates) {
+                                  if (this.templates[templateKey]?.fields[fieldKey]?.required) { return true; }
+                              } return false;
+                          },
+                          getFieldDetails(fieldKey) {
+                              for (const templateKey of this.selectedTemplates) {
+                                   if (this.templates[templateKey]?.fields[fieldKey]) {
+                                      return this.templates[templateKey]?.fields[fieldKey];
+                                  }
+                              } return { label: "", type: "text", required: false };
+                          },
+                          selectedTemplates: @js(old('jenis_surat', []))
                       }'>
+                {{-- ================= AKHIR MODIFIKASI ================= --}}
                     @csrf
                     <div class="p-8 space-y-6">
-                        <!-- Header -->
                         <div class="border-b border-slate-200 pb-6">
                             <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Laporan</h3>
-                            <p class="mt-1 text-sm text-slate-500">
-                                Pilih jenis surat yang akan dibuat. Formulir akan menyesuaikan.
-                            </p>
+                            <p class="mt-1 text-sm text-slate-500">Pilih satu atau lebih jenis surat yang akan dibuat. Formulir akan menyesuaikan.</p>
                         </div>
 
-                        <!-- Pilih Jenis Surat -->
                         <div>
-                            <x-input-label for="jenis_surat" :value="__('Pilih Jenis Surat/Laporan')" />
-                            <select id="jenis_surat" name="jenis_surat" x-model="selectedTemplate"
-                                class="mt-1 block w-full border-gray-300 rounded-md" required>
-                                <option value="">-- Pilih Template --</option>
+                            <x-input-label :value="__('Pilih Jenis Surat/Laporan')" />
+                             <div class="mt-2 space-y-2">
                                 @foreach ($templateSurat as $key => $config)
-                                    <option value="{{ $key }}" @selected(old('jenis_surat') === $key)>
-                                        {{ $config['label'] }}
-                                    </option>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="jenis_surat[]" value="{{ $key }}" x-model="selectedTemplates" class="rounded border-gray-300 text-teal-600 shadow-sm focus:ring-teal-500">
+                                    <span class="ms-2 text-sm text-gray-600">{{ $config['label'] }}</span>
+                                </label>
                                 @endforeach
-                            </select>
+                            </div>
                             <x-input-error class="mt-2" :messages="$errors->get('jenis_surat')" />
+                             <x-input-error class="mt-2" :messages="$errors->get('jenis_surat.*')" />
                         </div>
 
-                        <!-- FORM DINAMIS -->
-                        <div x-show="selectedTemplate && templates[selectedTemplate]" 
-                             class="space-y-6 border-t border-slate-200 pt-6">
-                            <template x-for="(field, key) in templates[selectedTemplate].fields" :key="key">
-                                <div class="transition-all">
-                                    <!-- Label -->
-                                    <label class="block text-sm font-medium text-slate-700"
-                                           :for="key"
-                                           x-text="field.label"></label>
 
-                                    <!-- Textarea -->
-                                    <template x-if="field.type === 'textarea'">
-                                        <textarea :id="key" :name="key" rows="7"
-                                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                            :required="field.required"
-                                            :placeholder="field.placeholder || ''"></textarea>
-                                    </template>
+                        {{-- FORM DINAMIS --}}
+                        <div x-show="selectedTemplates.length > 0" class="space-y-6 border-t border-slate-200 pt-6">
+                            <h4 class="text-md font-medium text-slate-700">Input Tambahan (jika diperlukan)</h4>
 
-                                    <!-- Select -->
-                                    <template x-if="field.type === 'select'">
-                                        <select :id="key" :name="key"
-                                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                            :required="field.required">
-                                            <option value="">-- Pilih --</option>
-                                            <template x-for="(optionLabel, optionValue) in field.options" :key="optionValue">
-                                                <option :value="optionValue" x-text="optionLabel"></option>
-                                            </template>
-                                        </select>
-                                    </template>
+                             @php
+                                $allPossibleFields = [];
+                                foreach ($templateSurat as $config) {
+                                    foreach ($config['fields'] as $key => $fieldConfig) {
+                                        if (!isset($allPossibleFields[$key])) {
+                                            $allPossibleFields[$key] = $fieldConfig;
+                                        }
+                                    }
+                                }
+                            @endphp
 
-                                    <!-- Input text/date/time -->
-                                    <template x-if="!['textarea', 'select'].includes(field.type)">
-                                        <input :id="key" :name="key" :type="field.type"
-                                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                            :required="field.required"
-                                            :placeholder="field.placeholder || ''"
-                                            :value="field.value || ''">
-                                    </template>
+                            @foreach ($allPossibleFields as $key => $field)
+                                <template x-if="isFieldVisible('{{ $key }}')">
+                                    <div class="transition-all">
+                                        <x-input-label x-text="getFieldDetails('{{ $key }}').label" for="{{ $key }}" />
 
-                                    <!-- Error -->
-                                    <div x-show="errors[key]" class="text-sm text-red-600 mt-2"
-                                         x-text="errors[key]"></div>
-                                </div>
-                            </template>
+                                        @if ($field['type'] === 'textarea')
+                                            <textarea id="{{ $key }}" name="{{ $key }}" rows="7" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" x-bind:required="isFieldRequired('{{ $key }}')" placeholder="{{ $field['placeholder'] ?? '' }}">{{ old($key) }}</textarea>
+                                        @elseif ($field['type'] === 'select')
+                                            <select id="{{ $key }}" name="{{ $key }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" x-bind:required="isFieldRequired('{{ $key }}')">
+                                                 <option value="">-- Pilih --</option>
+                                                 @foreach($field['options'] as $optionValue => $optionLabel)
+                                                     <option value="{{ $optionValue }}" @selected(old($key) == $optionValue)>{{ $optionLabel }}</option>
+                                                 @endforeach
+                                            </select>
+                                        @else
+                                            <x-text-input id="{{ $key }}" name="{{ $key }}" type="{{ $field['type'] }}" class="mt-1 block w-full" x-bind:required="isFieldRequired('{{ $key }}')" placeholder="{{ $field['placeholder'] ?? '' }}" value="{{ old($key, $field['value'] ?? '') }}" />
+                                        @endif
+
+                                        <div x-show="errors['{{ $key }}']" class="text-sm text-red-600 mt-2" x-text="errors['{{ $key }}']?.[0]"></div>
+                                    </div>
+                                </template>
+                            @endforeach
                         </div>
-                        <!-- END FORM DINAMIS -->
 
-                        <!-- Tambahan -->
                         <div class="border-t border-slate-200 pt-6 space-y-6">
                             <div>
                                 <x-input-label for="isi_laporan" :value="__('Isi Laporan Tambahan (Opsional)')" />
-                                <textarea id="isi_laporan" name="isi_laporan" rows="4"
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('isi_laporan') }}</textarea>
+                                <textarea id="isi_laporan" name="isi_laporan" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('isi_laporan') }}</textarea>
+                                <x-input-error class="mt-2" :messages="$errors->get('isi_laporan')" />
                             </div>
 
                             <div>
                                 <x-input-label for="rencana_tindak_lanjut" :value="__('Rencana Tindak Lanjut (Opsional)')" />
-                                <textarea id="rencana_tindak_lanjut" name="rencana_tindak_lanjut" rows="4"
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('rencana_tindak_lanjut') }}</textarea>
+                                <textarea id="rencana_tindak_lanjut" name="rencana_tindak_lanjut" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('rencana_tindak_lanjut') }}</textarea>
+                                 <x-input-error class="mt-2" :messages="$errors->get('rencana_tindak_lanjut')" />
                             </div>
                         </div>
+
                     </div>
 
-                    <!-- Footer -->
                     <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">
                         <x-primary-button class="bg-teal-600 hover:bg-teal-500 focus:bg-teal-700 focus:ring-teal-500">
                             {{ __('Simpan & Buat Surat') }}
                         </x-primary-button>
-                        <a href="{{ route('guru.jadwal-bimbingan.index') }}"
-                           class="text-sm text-slate-600 hover:text-slate-900">{{ __('Batal') }}</a>
+                        <a href="{{ route('guru.jadwal-bimbingan.index') }}" class="text-sm text-slate-600 hover:text-slate-900">{{ __('Batal') }}</a>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -4463,64 +4515,77 @@ $classes = ($active ?? false)
 
     <div class="py-10">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-md rounded-xl overflow-hidden">
-                <div class="p-8 space-y-8">
-                    
-                    {{-- Header --}}
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden">
+                <div class="p-8 space-y-10">
+
+                    {{-- HEADER --}}
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-6 border-b border-slate-200">
                         <div>
                             <h3 class="text-2xl font-semibold text-slate-900">
-                                {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
+                                Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
                             </h3>
                             <p class="text-sm text-slate-500 mt-1">
-                                Dibuat oleh 
+                                Dibuat oleh
                                 <span class="font-medium text-slate-700">{{ $laporanBimbingan->pembuat->name }}</span>
                                 â€¢ {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
                             </p>
                         </div>
-
-                        @if ($laporanBimbingan->file_pendukung)
-                            <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" download
-                               class="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-teal-600 text-white text-sm font-semibold shadow hover:bg-teal-500 focus:ring-2 focus:ring-teal-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
-                                </svg>
-                                Unduh Dokumen
-                            </a>
-                        @endif
-                    </div>
-
-                    {{-- Konten --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-50 rounded-lg p-5">
-                            <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Jenis Surat</h4>
-                            <p class="mt-2 text-base font-medium text-slate-800">
-                                {{ str_replace('_',' ',Str::title($laporanBimbingan->jenis_surat)) }}
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-50 rounded-lg p-5">
-                            <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Rencana Tindak Lanjut</h4>
-                            <p class="mt-2 text-slate-800 leading-relaxed">
-                                {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 rounded-lg p-5">
-                        <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Isi Laporan Tambahan</h4>
-                        <div class="mt-3 text-slate-800 leading-relaxed prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
-                        </div>
-                    </div>
-
-                    <div class="pt-4">
                         <a href="{{ route('guru.jadwal-bimbingan.index') }}"
-                           class="inline-block text-sm font-medium text-teal-600 hover:text-teal-800">
-                            &larr; Kembali ke Daftar Jadwal
+                           class="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-800 transition">
+                            â† Kembali ke Daftar Jadwal
                         </a>
                     </div>
 
+                    {{-- HIGHLIGHT: DOKUMEN --}}
+                    <div class="bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl shadow-lg p-6">
+                        <h4 class="text-base font-semibold uppercase tracking-wide mb-4">Dokumen Dihasilkan</h4>
+
+                        @if ($laporanBimbingan->dokumen->isNotEmpty())
+                            <ul class="space-y-3">
+                                @foreach($laporanBimbingan->dokumen as $dokumen)
+                                    <li class="flex items-center justify-between bg-white/20 rounded-lg px-4 py-2">
+                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', Str::title($dokumen->jenis_surat)) }}</span>
+                                        <a href="{{ Storage::url($dokumen->file_path) }}"
+                                           class="inline-flex items-center px-3 py-1 bg-white text-teal-700 rounded-md text-xs font-semibold hover:bg-slate-100 transition"
+                                           download>
+                                            Unduh (.docx)
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-white/80 italic">Tidak ada dokumen.</p>
+                        @endif
+                    </div>
+
+                    {{-- GRID DETAIL --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        {{-- Kiri: Tindak Lanjut --}}
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                                    Rencana Tindak Lanjut
+                                </h4>
+                                <p class="text-sm text-slate-800 leading-relaxed">
+                                    {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Kanan: Isi Laporan --}}
+                        <div class="md:col-span-2">
+                            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200 h-full">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">
+                                    Isi Laporan Tambahan
+                                </h4>
+                                <div class="text-slate-800 leading-relaxed prose prose-sm max-w-none">
+                                    {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -5389,62 +5454,86 @@ $classes = ($active ?? false)
 ===== resources\views\kepsek\laporan\show.blade.php =====
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+        <h2 class="font-bold text-2xl text-slate-800">
             {{ __('Detail Laporan Bimbingan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <div class="p-8 space-y-6">
-                    <div class="border-b border-slate-200 pb-6">
-                        <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
-                        <div class="mt-2 text-sm text-slate-600 space-y-1">
-                            {{-- Menggunakan variabel dan relasi asli Anda --}}
-                            <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
-                            <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->pembuat->name }}</p>
-                        </div>
-                    </div>
+    <div class="py-10">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden">
+                <div class="p-8 space-y-10">
 
-                    {{-- ================= AWAL PERUBAHAN ================= --}}
-                    {{-- Menambahkan informasi jenis surat yang dibuat --}}
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Jenis Surat yang Dihasilkan</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700">
-                           {{ str_replace('_', ' ', Str::title($laporanBimbingan->jenis_surat)) }}
+                    {{-- HEADER (Mengikuti layout guru.laporan.show) --}}
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-900">
+                                Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
+                            </h3>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Dibuat oleh
+                                <span class="font-medium text-slate-700">{{ $laporanBimbingan->pembuat->name }}</span>
+                                â€¢ {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
+                            </p>
                         </div>
-                    </div>
-                    {{-- ================= AKHIR PERUBAHAN ================= --}}
-
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
-                        </div>
-                    </div>
-
-                    @if($laporanBimbingan->rencana_tindak_lanjut)
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Rencana Tindak Lanjut</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                           {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut)) !!}
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                 <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    <a href="{{ route('kepsek.laporan.index') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Daftar Laporan</a>
-                    
-                    {{-- ================= AWAL PERUBAHAN ================= --}}
-                    {{-- Mengganti tombol PDF menjadi tombol Unduh Dokumen Word --}}
-                    @if ($laporanBimbingan->file_pendukung)
-                        <a href="{{ Storage::url($laporanBimbingan->file_pendukung) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500" download>
-                            Unduh Dokumen (.docx)
+                        {{-- Sesuaikan rute kembali ke daftar laporan Kepala Sekolah --}}
+                        <a href="{{ route('kepsek.laporan.index') }}"
+                           class="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-800 transition">
+                            â† Kembali ke Daftar Laporan
                         </a>
-                    @endif
-                    {{-- ================= AKHIR PERUBAHAN ================= --}}
+                    </div>
+
+                    {{-- HIGHLIGHT: DOKUMEN (Mengikuti layout guru.laporan.show) --}}
+                    <div class="bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl shadow-lg p-6">
+                        <h4 class="text-base font-semibold uppercase tracking-wide mb-4">Dokumen Dihasilkan</h4>
+
+                        @if ($laporanBimbingan->dokumen->isNotEmpty())
+                            <ul class="space-y-3">
+                                @foreach($laporanBimbingan->dokumen as $dokumen)
+                                    <li class="flex items-center justify-between bg-white/20 rounded-lg px-4 py-2">
+                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', Str::title($dokumen->jenis_surat)) }}</span>
+                                        <a href="{{ Storage::url($dokumen->file_path) }}"
+                                           class="inline-flex items-center px-3 py-1 bg-white text-teal-700 rounded-md text-xs font-semibold hover:bg-slate-100 transition"
+                                           download>
+                                            Unduh (.docx)
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-white/80 italic">Tidak ada dokumen terkait laporan ini.</p>
+                        @endif
+                    </div>
+
+                    {{-- GRID DETAIL (Mengikuti layout guru.laporan.show) --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        {{-- Kiri: Tindak Lanjut --}}
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                                    Rencana Tindak Lanjut
+                                </h4>
+                                <p class="text-sm text-slate-800 leading-relaxed">
+                                    {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Kanan: Isi Laporan --}}
+                        <div class="md:col-span-2">
+                            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200 h-full">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">
+                                    Isi Laporan Tambahan
+                                </h4>
+                                <div class="text-slate-800 leading-relaxed prose prose-sm max-w-none">
+                                    {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -5882,51 +5971,86 @@ $classes = ($active ?? false)
 ===== resources\views\ortu\laporan\show.blade.php =====
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+        <h2 class="font-bold text-2xl text-slate-800">
             {{ __('Detail Laporan Bimbingan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                {{-- --- AWAL KONTEN YANG DISALIN --- --}}
-                <div class="p-8 space-y-6">
-                    <div class="border-b border-slate-200 pb-6">
-                        <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
-                        <div class="mt-2 text-sm text-slate-600 space-y-1">
-                            <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
-                            <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->dibuatOleh->name }}</p>
-                        </div>
-                    </div>
+    <div class="py-10">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden">
+                <div class="p-8 space-y-10">
 
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan)) !!}
-                        </div>
-                    </div>
-
-                    @if($laporanBimbingan->rencana_tindak_lanjut)
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Rencana Tindak Lanjut</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                           {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut)) !!}
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                {{-- --- AKHIR KONTEN YANG DISALIN --- --}}
-
-                <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    {{-- Ubah link kembali ini --}}
-                    <a href="{{ route('ortu.dashboard') }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Dasbor</a>
                     
-                    {{-- Tombol download juga berguna di sini --}}
-                    <a href="{{ route('guru.laporan.download', $laporanBimbingan->id) }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
-                        Download PDF
-                    </a>
+                    {{-- HEADER (Mengikuti layout guru.laporan.show) --}}
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-900">
+                                Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
+                            </h3>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Dibuat oleh
+                                <span class="font-medium text-slate-700">{{ $laporanBimbingan->pembuat->name }}</span>
+                                â€¢ {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
+                            </p>
+                        </div>
+                        <a href="{{ route('ortu.dashboard') }}"
+                           class="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-800 transition">
+                            â† Kembali ke Dasbor
+                        </a>
+                    </div>
+
+                    {{-- HIGHLIGHT: DOKUMEN (Mengikuti layout guru.laporan.show) --}}
+                    <div class="bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl shadow-lg p-6">
+                        <h4 class="text-base font-semibold uppercase tracking-wide mb-4">Dokumen Terkait</h4>
+
+                        @if ($laporanBimbingan->dokumen->isNotEmpty())
+                            <ul class="space-y-3">
+                                @foreach($laporanBimbingan->dokumen as $dokumen)
+                                    <li class="flex items-center justify-between bg-white/20 rounded-lg px-4 py-2">
+                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', Str::title($dokumen->jenis_surat)) }}</span>
+                                        <a href="{{ Storage::url($dokumen->file_path) }}"
+                                           class="inline-flex items-center px-3 py-1 bg-white text-teal-700 rounded-md text-xs font-semibold hover:bg-slate-100 transition"
+                                           download>
+                                            Unduh (.docx)
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-white/80 italic">Tidak ada dokumen terkait laporan ini.</p>
+                        @endif
+                    </div>
+
+                    {{-- GRID DETAIL (Mengikuti layout guru.laporan.show) --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        {{-- Kiri: Tindak Lanjut --}}
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                                    Rencana Tindak Lanjut
+                                </h4>
+                                <p class="text-sm text-slate-800 leading-relaxed">
+                                    {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Kanan: Isi Laporan --}}
+                        <div class="md:col-span-2">
+                            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200 h-full">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">
+                                    Isi Laporan Tambahan
+                                </h4>
+                                <div class="text-slate-800 leading-relaxed prose prose-sm max-w-none">
+                                    {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>                     
+
                 </div>
             </div>
         </div>
@@ -5943,6 +6067,8 @@ $classes = ($active ?? false)
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            {{-- ================= AWAL MODIFIKASI ================= --}}
 
             @if ($siswa)
                 {{-- TAMPILAN NORMAL JIKA DATA SISWA DITEMUKAN --}}
@@ -6106,6 +6232,8 @@ $classes = ($active ?? false)
                     </div>
                 </div>
             @endif
+
+            {{-- ================= AKHIR MODIFIKASI ================= --}}
         </div>
     </div>
 </x-app-layout>
@@ -6266,6 +6394,11 @@ $classes = ($active ?? false)
                 </div>
             @endif
         </div>
+        <div>
+            <x-input-label for="phone_number" :value="__('Nomor Telepon (WhatsApp)')" />
+            <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" autocomplete="tel" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
@@ -6317,40 +6450,88 @@ $classes = ($active ?? false)
 ===== resources\views\walikelas\laporan\show.blade.php =====
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+        <h2 class="font-bold text-2xl text-slate-800">
             {{ __('Detail Laporan Bimbingan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                <div class="p-8 space-y-6">
-                    <div class="border-b border-slate-200 pb-6">
-                        <h3 class="text-lg font-medium leading-6 text-slate-900">Laporan Sesi Konseling</h3>
-                        <div class="mt-2 text-sm text-slate-600 space-y-1">
-                            <p><span class="font-semibold">Siswa:</span> {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}</p>
-                            <p><span class="font-semibold">Tanggal Sesi:</span> {{ \Carbon\Carbon::parse($laporanBimbingan->jadwalBimbingan->tanggal_jadwal)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                            <p><span class="font-semibold">Konselor:</span> {{ $laporanBimbingan->dibuatOleh->name }}</p>
+    <div class="py-10">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white shadow-md rounded-2xl overflow-hidden">
+                <div class="p-8 space-y-10">
+
+                    {{-- ================= AWAL MODIFIKASI ================= --}}
+                    {{-- HEADER (Mengikuti layout guru.laporan.show) --}}
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-900">
+                                Laporan untuk {{ $laporanBimbingan->jadwalBimbingan->siswa->nama }}
+                            </h3>
+                            <p class="text-sm text-slate-500 mt-1">
+                                Dibuat oleh
+                                <span class="font-medium text-slate-700">{{ $laporanBimbingan->pembuat->name }}</span>
+                                â€¢ {{ $laporanBimbingan->created_at->isoFormat('dddd, D MMMM YYYY') }}
+                            </p>
                         </div>
+                        {{-- Sesuaikan rute kembali ke dashboard Wali Kelas --}}
+                        <a href="{{ route('walikelas.dashboard') }}"
+                           class="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-800 transition">
+                            â† Kembali ke Dasbor
+                        </a>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Isi Laporan / Hasil Konseling</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                            {!! nl2br(e($laporanBimbingan->isi_laporan)) !!}
+
+                    {{-- HIGHLIGHT: DOKUMEN (Mengikuti layout guru.laporan.show) --}}
+                    <div class="bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-xl shadow-lg p-6">
+                        <h4 class="text-base font-semibold uppercase tracking-wide mb-4">Dokumen Dihasilkan</h4>
+
+                        @if ($laporanBimbingan->dokumen->isNotEmpty())
+                            <ul class="space-y-3">
+                                @foreach($laporanBimbingan->dokumen as $dokumen)
+                                    <li class="flex items-center justify-between bg-white/20 rounded-lg px-4 py-2">
+                                        <span class="text-sm font-medium">{{ str_replace('_', ' ', Str::title($dokumen->jenis_surat)) }}</span>
+                                        <a href="{{ Storage::url($dokumen->file_path) }}"
+                                           class="inline-flex items-center px-3 py-1 bg-white text-teal-700 rounded-md text-xs font-semibold hover:bg-slate-100 transition"
+                                           download>
+                                            Unduh (.docx)
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-white/80 italic">Tidak ada dokumen terkait laporan ini.</p>
+                        @endif
+                    </div>
+
+                    {{-- GRID DETAIL (Mengikuti layout guru.laporan.show) --}}
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                        {{-- Kiri: Tindak Lanjut --}}
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-2">
+                                    Rencana Tindak Lanjut
+                                </h4>
+                                <p class="text-sm text-slate-800 leading-relaxed">
+                                    {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut ?: '-')) !!}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    @if($laporanBimbingan->rencana_tindak_lanjut)
-                    <div>
-                        <h4 class="font-semibold text-slate-800">Rencana Tindak Lanjut</h4>
-                        <div class="mt-2 p-4 bg-slate-50 rounded-lg text-slate-700 prose max-w-none">
-                           {!! nl2br(e($laporanBimbingan->rencana_tindak_lanjut)) !!}
+
+                        {{-- Kanan: Isi Laporan --}}
+                        <div class="md:col-span-2">
+                            <div class="bg-slate-50 rounded-lg p-6 border border-slate-200 h-full">
+                                <h4 class="text-sm font-semibold text-slate-600 uppercase tracking-wide mb-3">
+                                    Isi Laporan Tambahan
+                                </h4>
+                                <div class="text-slate-800 leading-relaxed prose prose-sm max-w-none">
+                                    {!! nl2br(e($laporanBimbingan->isi_laporan ?: '-')) !!}
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    @endif
-                </div>
-                 <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center">
-                    <a href="{{ route('walikelas.siswa.show', $laporanBimbingan->jadwalBimbingan->siswa->id) }}" class="text-sm font-semibold text-teal-600 hover:text-teal-800">&larr; Kembali ke Detail Siswa</a>
+                     {{-- ================= AKHIR MODIFIKASI ================= --}}
+
                 </div>
             </div>
         </div>

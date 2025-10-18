@@ -37,6 +37,7 @@
                                     <option value="kepala_sekolah" @selected($pengguna->role == 'kepala_sekolah')>Kepala Sekolah</option>
                                     <option value="admin_bk" @selected($pengguna->role == 'admin_bk')>Admin BK</option>
                                     <option value="orang_tua" @selected($pengguna->role == 'orang_tua')>Orang Tua</option>  
+                                    <option value="wakasek" @selected($pengguna->role == 'wakasek')>Wakasek</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>

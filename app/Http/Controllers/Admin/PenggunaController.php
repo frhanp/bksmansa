@@ -62,7 +62,7 @@ class PenggunaController extends Controller
             'wali_id' => 'required_if:role,orang_tua|nullable|exists:wali_murid,id|unique:users,wali_id',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua','wakasek'])],
         ]);
 
         $name = '';
@@ -115,7 +115,7 @@ class PenggunaController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $pengguna->id,
             // Tambahkan 'orang_tua' pada aturan validasi
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua','wakasek'])],
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 

@@ -80,8 +80,9 @@
         @endif
         
         {{-- MENU KHUSUS KEPALA SEKOLAH --}}
-        @if (Auth::user()->role == 'kepala_sekolah')
-        <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.index')">
+        @if (in_array(Auth::user()->role, ['kepala_sekolah', 'wakasek']))
+        <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
+            {{-- SVG tidak ada di digest asli, jadi saya tidak akan menambahkannya --}}
             {{ __('Laporan Bimbingan') }}
         </x-nav-link>
         @endif

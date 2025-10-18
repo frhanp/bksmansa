@@ -30,6 +30,7 @@
                                     <option value="guru_bk" @selected($request->filter_role == 'guru_bk')>Guru BK</option>
                                     <option value="wali_kelas" @selected($request->filter_role == 'wali_kelas')>Wali Kelas</option>
                                     <option value="kepala_sekolah" @selected($request->filter_role == 'kepala_sekolah')>Kepala Sekolah</option>
+                                    <option value="wakasek" @selected($request->filter_role == 'wakasek')>Wakasek</option>
                                     <option value="orang_tua" @selected($request->filter_role == 'orang_tua')>Orang Tua</option>
                                 </select>
                             </div>

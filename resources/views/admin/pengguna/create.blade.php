@@ -37,6 +37,7 @@
                                     <option value="wali_kelas">Wali Kelas</option>
                                     <option value="kepala_sekolah">Kepala Sekolah</option>
                                     <option value="admin_bk">Admin BK</option>
+                                    <option value="wakasek">Wakasek</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
