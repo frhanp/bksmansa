@@ -38,6 +38,7 @@ Route::get('/dashboard', function () {
         'guru_bk' => 'guru.dashboard',
         'wali_kelas' => 'walikelas.dashboard',
         'kepala_sekolah' => 'kepsek.dashboard',
+        'wakasek' => 'kepsek.dashboard',
         'orang_tua' => 'ortu.dashboard',
     ];
     return redirect()->route($routeMap[$role] ?? 'login');
@@ -63,6 +64,7 @@ Route::middleware(['auth', 'check.role:admin_bk'])->prefix('admin')->name('admin
     Route::resource('pengguna', PenggunaController::class);
     Route::get('verifikasi-jadwal', [AdminJadwalController::class, 'index'])->name('jadwal.index');
     Route::patch('verifikasi-jadwal/{jadwalBimbingan}', [AdminJadwalController::class, 'update'])->name('jadwal.update');
+    Route::resource('guru', App\Http\Controllers\Admin\GuruController::class);
 });
 
 // --- GURU BK ---
@@ -97,8 +99,7 @@ Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek
 Route::middleware(['auth', 'check.role:orang_tua'])->prefix('ortu')->name('ortu.')->group(function () {
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan/{laporanBimbingan}', [OrtuLaporanController::class, 'show'])->name('laporan.show');
-    
 });
 
 // Memuat route otentikasi
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

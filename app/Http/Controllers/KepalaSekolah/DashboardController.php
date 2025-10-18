@@ -13,6 +13,8 @@ use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
+    
+
     public function index(Request $request)
     {
         // --- 1. Data Statistik (Card) ---

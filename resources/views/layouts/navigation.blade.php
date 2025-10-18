@@ -41,6 +41,10 @@
                 </svg>
                 {{ __('Pengguna Sistem') }}
             </x-nav-link>
+            <x-nav-link :href="route('admin.guru.index')" :active="request()->routeIs('admin.guru.*')">
+                {{-- Tambahkan SVG ikon Guru/User jika ada --}}
+                {{ __('Data Guru') }}
+            </x-nav-link>
             <x-nav-link :href="route('admin.jadwal.index')" :active="request()->routeIs('admin.jadwal.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -80,11 +84,10 @@
         @endif
         
         {{-- MENU KHUSUS KEPALA SEKOLAH --}}
-        @if (in_array(Auth::user()->role, ['kepala_sekolah', 'wakasek']))
-        <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
-            {{-- SVG tidak ada di digest asli, jadi saya tidak akan menambahkannya --}}
-            {{ __('Laporan Bimbingan') }}
-        </x-nav-link>
+        @if (Auth::user()->role == 'kepala_sekolah' || Auth::user()->role == 'wakasek')
+            <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
+                {{ __('Laporan Bimbingan') }}
+            </x-nav-link>
         @endif
 
     </nav>
