@@ -58,6 +58,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Kelas</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Wali Kelas</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Laporan Individu</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-slate-200">
@@ -76,6 +77,13 @@
                                                 <button type="submit" class="ml-2 px-3 py-1 text-sm font-semibold text-red-600 bg-red-50 rounded-md hover:bg-red-100">Hapus</button>
                                             </form>
                                         </td>
+                                        <td class="px-4 py-2">
+                                            <a href="{{ route('guru.laporan.siswa', $item->id) }}" 
+                                               class="bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700">
+                                               Laporan Individu
+                                            </a>
+                                        </td>
+                                        
                                     </tr>
                                 @empty
                                     <tr>

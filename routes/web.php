@@ -79,6 +79,12 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
     Route::get('laporan/{laporanBimbingan}/edit', [LaporanBimbinganController::class, 'edit'])->name('laporan.edit');
     Route::put('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'update'])->name('laporan.update');
     Route::get('laporan/{laporanBimbingan}/download', [LaporanBimbinganController::class, 'downloadPdf'])->name('laporan.download');
+
+    Route::get('/laporan/siswa/{id}', [\App\Http\Controllers\Guru\LaporanBimbinganController::class, 'laporanSiswa'])
+    ->name('laporan.siswa');
+
+Route::get('/laporan/siswa/{id}/pdf', [\App\Http\Controllers\Guru\LaporanBimbinganController::class, 'laporanSiswaPdf'])
+    ->name('laporan.siswa.pdf');
 });
 
 // --- WALI KELAS ---

@@ -51,4 +51,16 @@ class Siswa extends Model
     {
         return $this->hasMany(JadwalBimbingan::class);
     }
+
+    public function laporanBimbingan()
+    {
+        return $this->hasManyThrough(
+            \App\Models\LaporanBimbingan::class,
+            \App\Models\JadwalBimbingan::class,
+            'siswa_id',      // FK di tabel jadwal_bimbingan
+            'jadwal_id',     // FK di tabel laporan_bimbingan
+            'id',            // PK di tabel siswa
+            'id'             // PK di tabel jadwal_bimbingan
+        );
+    }
 }

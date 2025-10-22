@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Support\Facades\DB;
 use App\Models\LaporanDokumen;
+use App\Models\Siswa;
+
 
 
 class LaporanBimbinganController extends Controller
@@ -247,4 +249,21 @@ class LaporanBimbinganController extends Controller
 
         return $pdf->download($namaFile);
     }
+
+    public function laporanSiswa($id)
+{
+    $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+    return view('guru.laporan.individu', compact('siswa'));
+}
+
+public function laporanSiswaPdf($id)
+{
+    $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+
+    $pdf = Pdf::loadView('pdf.laporan_individu', compact('siswa'))
+              ->setPaper('a4', 'portrait');
+
+    $filename = 'laporan_kasus_individu_' . str_replace(' ', '_', strtolower($siswa->nama)) . '_' . now()->format('Ymd_His') . '.pdf';
+    return $pdf->download($filename);
+}
 }

@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-18 15:54:13_
+_Generated: 2025-10-22 15:28:06_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -50,6 +50,7 @@ app\Http\Controllers\WaliKelas
 app\Http\Controllers\Controller.php
 app\Http\Controllers\ProfileController.php
 app\Http\Controllers\Admin\DashboardController.php
+app\Http\Controllers\Admin\GuruController.php
 app\Http\Controllers\Admin\JadwalBimbinganController.php
 app\Http\Controllers\Admin\JenisPelanggaranController.php
 app\Http\Controllers\Admin\PenggunaController.php
@@ -129,6 +130,7 @@ database\migrations\2025_09_29_010907_make_isi_laporan_nullable_in_laporan_bimbi
 database\migrations\2025_10_15_150116_add_phone_number_to_users_table.php
 database\migrations\2025_10_18_063600_create_laporan_dokumens_table.php
 database\migrations\2025_10_18_063654_modify_laporan_bimbingan_for_multidoc.php
+database\migrations\2025_10_18_075935_add_wakasek_role_to_users_table.php
 database\seeders\DatabaseSeeder.php
 database\seeders\PelanggaranSeeder.php
 database\seeders\RolesAndUsersSeeder.php
@@ -158,10 +160,14 @@ resources\views\vendor
 resources\views\walikelas
 resources\views\dashboard.blade.php
 resources\views\welcome.blade.php
+resources\views\admin\guru
 resources\views\admin\jadwal
 resources\views\admin\jenis-pelanggaran
 resources\views\admin\pengguna
 resources\views\admin\dashboard.blade.php
+resources\views\admin\guru\create.blade.php
+resources\views\admin\guru\edit.blade.php
+resources\views\admin\guru\index.blade.php
 resources\views\admin\jadwal\index.blade.php
 resources\views\admin\jenis-pelanggaran\create.blade.php
 resources\views\admin\jenis-pelanggaran\edit.blade.php
@@ -331,9 +337,11 @@ storage\framework\views\bbbd3ef6a9ab27c86f795231e0cb5b73.php
 storage\framework\views\bbc398f077ffb84c6976f57714bf3227.php
 storage\framework\views\c44a894a845ec66f403f15fdcb6323aa.php
 storage\framework\views\c4b5b7ee15448ab5a655284d735f360b.php
+storage\framework\views\cbe8b004ee2ecf989a5e95e82d745b2e.php
 storage\framework\views\cce167fb70de6c0fd290f9dcfa5e57ab.php
 storage\framework\views\cd73a1c0b1a05cd03e8b25beed2de779.php
 storage\framework\views\cdbf7c5438e2d069d13cd4ef94779ff1.php
+storage\framework\views\dc586ffb0fe71887ecbaf82922ed8423.php
 storage\framework\views\dc748a550a4179f40a5d9efab9754c5c.php
 storage\framework\views\e0624ea6d414303c0b152d6184617754.php
 storage\framework\views\e25376c7f1b162396cf8ebe9f4daa266.php
@@ -374,11 +382,11 @@ Branch:
 main
 
 Last 5 commits:
+cead3d0 add role wakasek
+ebfcaec add role wakasek
 afca085 multiselect create laporan
 4ff4d62 fix error pengguna sistem
 9abf15f tampilkan jenis surat dan surat di  ortu
-52b7532 add kolom wa di users dan di profile
-7cbda1c add tombol nomor wa ke walas dari ortu
 ```
 
 
@@ -510,6 +518,7 @@ Route::get('/dashboard', function () {
         'guru_bk' => 'guru.dashboard',
         'wali_kelas' => 'walikelas.dashboard',
         'kepala_sekolah' => 'kepsek.dashboard',
+        'wakasek' => 'kepsek.dashboard',
         'orang_tua' => 'ortu.dashboard',
     ];
     return redirect()->route($routeMap[$role] ?? 'login');
@@ -535,6 +544,7 @@ Route::middleware(['auth', 'check.role:admin_bk'])->prefix('admin')->name('admin
     Route::resource('pengguna', PenggunaController::class);
     Route::get('verifikasi-jadwal', [AdminJadwalController::class, 'index'])->name('jadwal.index');
     Route::patch('verifikasi-jadwal/{jadwalBimbingan}', [AdminJadwalController::class, 'update'])->name('jadwal.update');
+    Route::resource('guru', App\Http\Controllers\Admin\GuruController::class);
 });
 
 // --- GURU BK ---
@@ -559,7 +569,7 @@ Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name(
 });
 
 // --- KEPALA SEKOLAH ---
-Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name('kepsek.')->group(function () {
+Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek')->name('kepsek.')->group(function () {
     Route::get('/dashboard', [KepalaSekolahDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan', [KepsekLaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/{laporanBimbingan}', [KepsekLaporanController::class, 'show'])->name('laporan.show');
@@ -569,11 +579,10 @@ Route::middleware(['auth', 'check.role:kepala_sekolah'])->prefix('kepsek')->name
 Route::middleware(['auth', 'check.role:orang_tua'])->prefix('ortu')->name('ortu.')->group(function () {
     Route::get('/dashboard', [OrangTuaDashboardController::class, 'index'])->name('dashboard');
     Route::get('/laporan/{laporanBimbingan}', [OrtuLaporanController::class, 'show'])->name('laporan.show');
-    
 });
 
 // Memuat route otentikasi
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 ```
 
@@ -589,6 +598,13 @@ require __DIR__.'/auth.php';
   GET|HEAD        _debugbar/open ..................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
   POST            _debugbar/queries/explain ......... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
   GET|HEAD        admin/dashboard .......................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/guru ................................................... admin.guru.index ΓÇ║ Admin\GuruController@index
+  POST            admin/guru ................................................... admin.guru.store ΓÇ║ Admin\GuruController@store
+  GET|HEAD        admin/guru/create .......................................... admin.guru.create ΓÇ║ Admin\GuruController@create
+  GET|HEAD        admin/guru/{guru} .............................................. admin.guru.show ΓÇ║ Admin\GuruController@show
+  PUT|PATCH       admin/guru/{guru} .......................................... admin.guru.update ΓÇ║ Admin\GuruController@update
+  DELETE          admin/guru/{guru} ........................................ admin.guru.destroy ΓÇ║ Admin\GuruController@destroy
+  GET|HEAD        admin/guru/{guru}/edit ......................................... admin.guru.edit ΓÇ║ Admin\GuruController@edit
   GET|HEAD        admin/jenis-pelanggaran ............. admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
   POST            admin/jenis-pelanggaran ............. admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
   GET|HEAD        admin/jenis-pelanggaran/create .... admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
@@ -663,7 +679,7 @@ require __DIR__.'/auth.php';
   GET|HEAD        walikelas/laporan/{laporanBimbingan} ............. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
   GET|HEAD        walikelas/siswa/{siswa} .............................. walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                           Showing [81] routes
+                                                                                                           Showing [88] routes
 
 ```
 
@@ -706,6 +722,101 @@ class DashboardController extends Controller
             'jadwalPerluVerifikasi',
             'pelanggaranTerbaru'
         ));
+    }
+}
+
+===== app\Http\Controllers\Admin\GuruController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Guru;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+class GuruController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Guru::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nip', 'like', "%{$search}%");
+        }
+
+        $guru = $query->latest()->paginate(10)->withQueryString();
+        return view('admin.guru.index', compact('guru', 'request'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.guru.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nip' => ['required', 'string', 'max:50', Rule::unique('guru', 'nip')],
+        ]);
+
+        Guru::create($validated);
+
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil ditambahkan.');
+    }
+
+    /**
+     * Display the specified resource. (Tidak digunakan sesuai route)
+     */
+    public function show(Guru $guru)
+    {
+        abort(404);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Guru $guru)
+    {
+        return view('admin.guru.edit', compact('guru'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Guru $guru)
+    {
+         $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nip' => ['required', 'string', 'max:50', Rule::unique('guru', 'nip')->ignore($guru->id)],
+        ]);
+
+        $guru->update($validated);
+
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil diperbarui.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Guru $guru)
+    {
+        // Tambahkan pengecekan jika guru masih terhubung ke user? (Opsional)
+        if ($guru->user()->exists()) {
+            return back()->with('error', 'Tidak bisa menghapus guru yang masih memiliki akun pengguna.');
+        }
+        
+        $guru->delete();
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil dihapus.');
     }
 }
 
@@ -969,7 +1080,7 @@ class PenggunaController extends Controller
             'wali_id' => 'required_if:role,orang_tua|nullable|exists:wali_murid,id|unique:users,wali_id',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua','wakasek'])],
         ]);
 
         $name = '';
@@ -1022,7 +1133,7 @@ class PenggunaController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $pengguna->id,
             // Tambahkan 'orang_tua' pada aturan validasi
-            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua'])],
+            'role' => ['required', Rule::in(['admin_bk', 'guru_bk', 'wali_kelas', 'kepala_sekolah', 'orang_tua','wakasek'])],
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
@@ -2166,6 +2277,8 @@ use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
+    
+
     public function index(Request $request)
     {
         // --- 1. Data Statistik (Card) ---
@@ -2834,6 +2947,171 @@ class WaliMurid extends Model
 
 ## Views & UI Files Content
 ```
+===== resources\views\admin\guru\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+            {{ __('Tambah Data Guru Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                <form action="{{ route('admin.guru.store') }}" method="POST">
+                    @csrf
+                    <div class="p-8 space-y-6">
+                        <div class="border-b border-slate-200 pb-6">
+                            <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Guru</h3>
+                        </div>
+
+                        <div>
+                            <x-input-label for="nama" :value="__('Nama Lengkap (beserta gelar)')" />
+                            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama')" required autofocus />
+                            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="nip" :value="__('NIP (Nomor Induk Pegawai)')" />
+                            <x-text-input id="nip" name="nip" type="text" class="mt-1 block w-full" :value="old('nip')" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('nip')" />
+                        </div>
+                    </div>
+
+                    <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">
+                        <x-primary-button class="bg-teal-600 hover:bg-teal-500 focus:bg-teal-700 focus:ring-teal-500">
+                            {{ __('Simpan') }}
+                        </x-primary-button>
+                        <a href="{{ route('admin.guru.index') }}" class="text-sm text-slate-600 hover:text-slate-900">{{ __('Batal') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\guru\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+            {{ __('Edit Data Guru: ') . $guru->nama }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                <form action="{{ route('admin.guru.update', $guru->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="p-8 space-y-6">
+                        <div class="border-b border-slate-200 pb-6">
+                            <h3 class="text-lg font-medium leading-6 text-slate-900">Detail Guru</h3>
+                        </div>
+
+                        <div>
+                            <x-input-label for="nama" :value="__('Nama Lengkap (beserta gelar)')" />
+                            <x-text-input id="nama" name="nama" type="text" class="mt-1 block w-full" :value="old('nama', $guru->nama)" required autofocus />
+                            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="nip" :value="__('NIP (Nomor Induk Pegawai)')" />
+                            <x-text-input id="nip" name="nip" type="text" class="mt-1 block w-full" :value="old('nip', $guru->nip)" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('nip')" />
+                        </div>
+                    </div>
+
+                    <div class="px-8 py-4 bg-slate-50 border-t border-slate-200 flex items-center gap-4">
+                        <x-primary-button class="bg-teal-600 hover:bg-teal-500 focus:bg-teal-700 focus:ring-teal-500">
+                            {{ __('Update') }}
+                        </x-primary-button>
+                        <a href="{{ route('admin.guru.index') }}" class="text-sm text-slate-600 hover:text-slate-900">{{ __('Batal') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\guru\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Data Master Guru') }}
+            </h2>
+            <a href="{{ route('admin.guru.create') }}" class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-500">
+                Tambah Guru
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                <div class="p-6">
+                    <form action="{{ route('admin.guru.index') }}" method="GET" class="mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-grow">
+                                <x-text-input id="search" type="text" name="search" class="w-full" :value="$request->search" placeholder="Cari Nama atau NIP..."/>
+                            </div>
+                            <x-primary-button type="submit" class="bg-teal-600 hover:bg-teal-500">Cari</x-primary-button>
+                            @if($request->filled('search'))
+                                <a href="{{ route('admin.guru.index') }}" class="text-sm text-slate-600 hover:text-slate-900">Reset</a>
+                            @endif
+                        </div>
+                    </form>
+
+                    @if (session('success'))
+                        <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">{{ session('success') }}</div>
+                    @endif
+                     @if (session('error'))
+                        <div class="mb-4 p-4 bg-red-100 text-red-800 border border-red-300 rounded-lg">{{ session('error') }}</div>
+                    @endif
+
+                    <div class="overflow-x-auto border-t border-slate-200">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Nama</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">NIP</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                @forelse ($guru as $item)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $item->nama }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ $item->nip }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                            <a href="{{ route('admin.guru.edit', $item->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">Edit</a>
+                                            <form action="{{ route('admin.guru.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data guru ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="px-3 py-1 text-sm font-semibold text-red-600 bg-red-50 rounded-md hover:bg-red-100">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="px-6 py-4 text-center text-slate-500">Tidak ada data guru ditemukan.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    @if ($guru->hasPages())
+                        <div class="p-4 border-t border-slate-200">
+                            {{ $guru->links() }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
 ===== resources\views\admin\jadwal\index.blade.php =====
 <x-app-layout>
     <x-slot name="header">
@@ -3219,6 +3497,7 @@ class WaliMurid extends Model
                                     <option value="wali_kelas">Wali Kelas</option>
                                     <option value="kepala_sekolah">Kepala Sekolah</option>
                                     <option value="admin_bk">Admin BK</option>
+                                    <option value="wakasek">Wakasek</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
@@ -3303,6 +3582,7 @@ class WaliMurid extends Model
                                     <option value="kepala_sekolah" @selected($pengguna->role == 'kepala_sekolah')>Kepala Sekolah</option>
                                     <option value="admin_bk" @selected($pengguna->role == 'admin_bk')>Admin BK</option>
                                     <option value="orang_tua" @selected($pengguna->role == 'orang_tua')>Orang Tua</option>  
+                                    <option value="wakasek" @selected($pengguna->role == 'wakasek')>Wakasek</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('role')" />
                             </div>
@@ -3373,6 +3653,7 @@ class WaliMurid extends Model
                                     <option value="guru_bk" @selected($request->filter_role == 'guru_bk')>Guru BK</option>
                                     <option value="wali_kelas" @selected($request->filter_role == 'wali_kelas')>Wali Kelas</option>
                                     <option value="kepala_sekolah" @selected($request->filter_role == 'kepala_sekolah')>Kepala Sekolah</option>
+                                    <option value="wakasek" @selected($request->filter_role == 'wakasek')>Wakasek</option>
                                     <option value="orang_tua" @selected($request->filter_role == 'orang_tua')>Orang Tua</option>
                                 </select>
                             </div>
@@ -5544,7 +5825,7 @@ $classes = ($active ?? false)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-800 leading-tight">
-            {{ __('Dashboard Kepala Sekolah') }}
+            {{ __('Dashboard Pimpinan') }}
         </h2>
     </x-slot>
 
@@ -5897,6 +6178,10 @@ $classes = ($active ?? false)
                 </svg>
                 {{ __('Pengguna Sistem') }}
             </x-nav-link>
+            <x-nav-link :href="route('admin.guru.index')" :active="request()->routeIs('admin.guru.*')">
+                {{-- Tambahkan SVG ikon Guru/User jika ada --}}
+                {{ __('Data Guru') }}
+            </x-nav-link>
             <x-nav-link :href="route('admin.jadwal.index')" :active="request()->routeIs('admin.jadwal.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -5936,10 +6221,10 @@ $classes = ($active ?? false)
         @endif
         
         {{-- MENU KHUSUS KEPALA SEKOLAH --}}
-        @if (Auth::user()->role == 'kepala_sekolah')
-        <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.index')">
-            {{ __('Laporan Bimbingan') }}
-        </x-nav-link>
+        @if (Auth::user()->role == 'kepala_sekolah' || Auth::user()->role == 'wakasek')
+            <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
+                {{ __('Laporan Bimbingan') }}
+            </x-nav-link>
         @endif
 
     </nav>
