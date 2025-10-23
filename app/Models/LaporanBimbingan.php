@@ -40,4 +40,9 @@ class LaporanBimbingan extends Model
     {
         return $this->hasMany(LaporanDokumen::class);
     }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(\App\Models\JadwalBimbingan::class, 'jadwal_id');
+    }
 }

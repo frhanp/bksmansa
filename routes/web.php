@@ -22,6 +22,7 @@ use App\Http\Controllers\KepalaSekolah\LaporanController as KepsekLaporanControl
 use App\Http\Controllers\WaliKelas\LaporanController as WaliKelasLaporanController;
 use App\Http\Controllers\OrangTua\LaporanController as OrtuLaporanController;
 use App\Http\Controllers\WaliKelas\LaporanKelasController as WaliKelasLaporanKelasController;
+use App\Http\Controllers\Kepsek\LaporanKinerjaController;
 
 
 
@@ -130,6 +131,16 @@ Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name(
 // --- KEPALA SEKOLAH ---
 Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek')->name('kepsek.')->group(function () {
     Route::get('/dashboard', [KepalaSekolahDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/laporan/statistik', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'index'])
+    ->name('laporan.statistik');
+Route::get('/laporan/statistik/pdf', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'downloadPdf'])
+    ->name('laporan.statistik.pdf');
+
+    Route::get('/laporan/kinerja', [LaporanKinerjaController::class, 'index'])
+        ->name('laporan.kinerja');
+    Route::get('/laporan/kinerja/pdf', [LaporanKinerjaController::class, 'downloadPdf'])
+        ->name('laporan.kinerja.pdf');
     Route::get('/laporan', [KepsekLaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/{laporanBimbingan}', [KepsekLaporanController::class, 'show'])->name('laporan.show');
 });
