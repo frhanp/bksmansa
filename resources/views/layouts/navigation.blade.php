@@ -107,6 +107,10 @@
             <x-nav-link href="{{ route('kepsek.laporan.kinerja') }}" :active="request()->routeIs('kepsek.laporan.kinerja*')">
                 Laporan Kinerja Guru BK
             </x-nav-link>
+            <x-nav-link href="{{ route('kepsek.laporan.statistik') }}" :active="request()->routeIs('kepsek.laporan.statistik*')">
+                Laporan Tren & Statistik Sekolah
+            </x-nav-link>
+            
         @endif
 
     </nav>
