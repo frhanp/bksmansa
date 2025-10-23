@@ -85,6 +85,11 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
         ->name('laporan.siswa');
     Route::get('/laporan/siswa/{id}/pdf', [LaporanBimbinganController::class, 'laporanSiswaPdf'])
         ->name('laporan.siswa.pdf');
+    Route::get('/laporan/intervensi', [LaporanBimbinganController::class, 'laporanIntervensi'])
+        ->name('laporan.intervensi');
+
+    Route::get('/laporan/intervensi/pdf', [LaporanBimbinganController::class, 'laporanIntervensiPdf'])
+        ->name('laporan.intervensi.pdf');
     // === Akhir Modifikasi ===
 
     // === Route dinamis laporan ===

@@ -209,7 +209,7 @@ class LaporanBimbinganController extends Controller
         }
     }
 
-   
+
 
     public function show(LaporanBimbingan $laporanBimbingan)
     {
@@ -278,49 +278,105 @@ class LaporanBimbinganController extends Controller
     }
 
     public function laporanKolektif(Request $request)
-{
-    $jenisKasus = $request->input('jenis_kasus');
-    $kelas = $request->input('kelas');
-    $periodeAwal = $request->input('periode_awal');
-    $periodeAkhir = $request->input('periode_akhir');
+    {
+        $jenisKasus = $request->input('jenis_kasus');
+        $kelas = $request->input('kelas');
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
 
-    // Ambil semua jenis pelanggaran (untuk dropdown)
-    $daftarJenis = JenisPelanggaran::orderBy('nama_pelanggaran')->get();
+        // Ambil semua jenis pelanggaran (untuk dropdown)
+        $daftarJenis = JenisPelanggaran::orderBy('nama_pelanggaran')->get();
 
-    // Query dasar
-    $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
-        ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
-        ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
-        ->when($periodeAwal && $periodeAkhir, fn($q) => 
-            $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
-        );
+        // Query dasar
+        $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+            ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+            ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+            );
 
-    $data = $query->get()
-        ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+        $data = $query->get()
+            ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
 
-    return view('guru.laporan.kolektif', compact('data', 'daftarJenis', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'));
-}
+        return view('guru.laporan.kolektif', compact('data', 'daftarJenis', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'));
+    }
 
-public function laporanKolektifPdf(Request $request)
-{
-    $jenisKasus = $request->input('jenis_kasus');
-    $kelas = $request->input('kelas');
-    $periodeAwal = $request->input('periode_awal');
-    $periodeAkhir = $request->input('periode_akhir');
+    public function laporanKolektifPdf(Request $request)
+    {
+        $jenisKasus = $request->input('jenis_kasus');
+        $kelas = $request->input('kelas');
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
 
-    $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
-        ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
-        ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
-        ->when($periodeAwal && $periodeAkhir, fn($q) => 
-            $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
-        );
+        $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+            ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+            ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+            );
 
-    $data = $query->get()
-        ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+        $data = $query->get()
+            ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
 
-    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_kolektif', compact('data', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'))
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_kolektif', compact('data', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'))
             ->setPaper('a4', 'landscape');
 
-    return $pdf->download('laporan_kolektif_' . now()->format('Ymd_His') . '.pdf');
-}
+        return $pdf->download('laporan_kolektif_' . now()->format('Ymd_His') . '.pdf');
+    }
+
+    public function laporanIntervensi(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+        $status = $request->input('status'); // "sudah" / "belum"
+
+        $query = JadwalBimbingan::with(['siswa', 'guru', 'laporanBimbingan'])
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir])
+            );
+
+        // Filter status tindak lanjut
+        if ($status === 'sudah') {
+            $query->whereHas('laporanBimbingan');
+        } elseif ($status === 'belum') {
+            $query->whereDoesntHave('laporanBimbingan');
+        }
+
+        $data = $query->orderBy('tanggal_jadwal', 'desc')->get();
+
+        return view('guru.laporan.intervensi', compact('data', 'periodeAwal', 'periodeAkhir', 'status'));
+    }
+
+    public function laporanIntervensiPdf(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+        $status = $request->input('status');
+
+        $query = JadwalBimbingan::with(['siswa', 'guru', 'laporanBimbingan'])
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir])
+            );
+
+        if ($status === 'sudah') {
+            $query->whereHas('laporanBimbingan');
+        } elseif ($status === 'belum') {
+            $query->whereDoesntHave('laporanBimbingan');
+        }
+
+        $data = $query->orderBy('tanggal_jadwal', 'desc')->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_intervensi', compact('data', 'periodeAwal', 'periodeAkhir', 'status'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan_intervensi_' . now()->format('Ymd_His') . '.pdf');
+    }
 }
