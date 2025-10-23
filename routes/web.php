@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\JadwalBimbinganController as AdminJadwalControlle
 use App\Http\Controllers\KepalaSekolah\LaporanController as KepsekLaporanController;
 use App\Http\Controllers\WaliKelas\LaporanController as WaliKelasLaporanController;
 use App\Http\Controllers\OrangTua\LaporanController as OrtuLaporanController;
+use App\Http\Controllers\WaliKelas\LaporanKelasController as WaliKelasLaporanKelasController;
 
 
 
@@ -73,26 +74,53 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
     Route::resource('siswa', SiswaController::class);
     Route::resource('pelanggaran-siswa', PelanggaranSiswaController::class);
     Route::resource('jadwal-bimbingan', JadwalBimbinganController::class);
-    Route::get('jadwal-bimbingan/{jadwalBimbingan}/laporan/create', [LaporanBimbinganController::class, 'create'])->name('laporan.create');
-    Route::post('jadwal-bimbingan/{jadwalBimbingan}/laporan', [LaporanBimbinganController::class, 'store'])->name('laporan.store');
-    Route::get('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'show'])->name('laporan.show');
-    Route::get('laporan/{laporanBimbingan}/edit', [LaporanBimbinganController::class, 'edit'])->name('laporan.edit');
-    Route::put('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'update'])->name('laporan.update');
-    Route::get('laporan/{laporanBimbingan}/download', [LaporanBimbinganController::class, 'downloadPdf'])->name('laporan.download');
 
-    Route::get('/laporan/siswa/{id}', [\App\Http\Controllers\Guru\LaporanBimbinganController::class, 'laporanSiswa'])
-    ->name('laporan.siswa');
+    // === Awal Modifikasi: Laporan Custom (taruh sebelum route dinamis) ===
+    Route::get('/laporan/kolektif', [LaporanBimbinganController::class, 'laporanKolektif'])
+        ->name('laporan.kolektif');
+    Route::get('/laporan/kolektif/pdf', [LaporanBimbinganController::class, 'laporanKolektifPdf'])
+        ->name('laporan.kolektif.pdf');
 
-Route::get('/laporan/siswa/{id}/pdf', [\App\Http\Controllers\Guru\LaporanBimbinganController::class, 'laporanSiswaPdf'])
-    ->name('laporan.siswa.pdf');
+    Route::get('/laporan/siswa/{id}', [LaporanBimbinganController::class, 'laporanSiswa'])
+        ->name('laporan.siswa');
+    Route::get('/laporan/siswa/{id}/pdf', [LaporanBimbinganController::class, 'laporanSiswaPdf'])
+        ->name('laporan.siswa.pdf');
+    // === Akhir Modifikasi ===
+
+    // === Route dinamis laporan ===
+    Route::get('jadwal-bimbingan/{jadwalBimbingan}/laporan/create', [LaporanBimbinganController::class, 'create'])
+        ->name('laporan.create');
+    Route::post('jadwal-bimbingan/{jadwalBimbingan}/laporan', [LaporanBimbinganController::class, 'store'])
+        ->name('laporan.store');
+    Route::get('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'show'])
+        ->name('laporan.show');
+    Route::get('laporan/{laporanBimbingan}/edit', [LaporanBimbinganController::class, 'edit'])
+        ->name('laporan.edit');
+    Route::put('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'update'])
+        ->name('laporan.update');
+    Route::get('laporan/{laporanBimbingan}/download', [LaporanBimbinganController::class, 'downloadPdf'])
+        ->name('laporan.download');
+
+    // === Resource utama ===
+    Route::resource('laporan-bimbingan', LaporanBimbinganController::class);
 });
+
 
 // --- WALI KELAS ---
 Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
     Route::get('/siswa/{siswa}', [WaliKelasSiswaController::class, 'show'])->name('siswa.show');
+
+    // === Awal Modifikasi: pindahkan route statis ke atas ===
+    Route::get('/laporan/kelas', [WaliKelasLaporanKelasController::class, 'index'])
+        ->name('laporan.kelas');
+    Route::get('/laporan/kelas/pdf', [WaliKelasLaporanKelasController::class, 'downloadPdf'])
+        ->name('laporan.kelas.pdf');
+    // === Akhir Modifikasi ===
+
     Route::get('/laporan/{laporanBimbingan}', [WaliKelasLaporanController::class, 'show'])->name('laporan.show');
 });
+
 
 // --- KEPALA SEKOLAH ---
 Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek')->name('kepsek.')->group(function () {

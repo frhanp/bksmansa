@@ -15,6 +15,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Support\Facades\DB;
 use App\Models\LaporanDokumen;
 use App\Models\Siswa;
+use App\Models\JenisPelanggaran;
+use App\Models\PelanggaranSiswa;
 
 
 
@@ -84,8 +86,12 @@ class LaporanBimbinganController extends Controller
     public function store(Request $request, $jadwalId)
     {
         $jadwal = JadwalBimbingan::find($jadwalId);
-        if (!$jadwal) { abort(404); }
-        if ($jadwal->konselor_id !== Auth::id()) { abort(403); }
+        if (!$jadwal) {
+            abort(404);
+        }
+        if ($jadwal->konselor_id !== Auth::id()) {
+            abort(403);
+        }
 
         $templates = $this->getTemplateSurat();
         $selectedTemplateKeys = $request->input('jenis_surat', []); // Sekarang array
@@ -114,17 +120,22 @@ class LaporanBimbinganController extends Controller
                 }
             }
         }
-        
+
         $request->validate($validationRules);
 
         // Siapkan data statis sekali saja
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
         $staticData = [
-            'nama_siswa' => $siswa->nama, 'nis' => $siswa->nis, 'kelas' => $siswa->kelas,
-            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A', 'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
-            'nama_konselor' => Auth::user()->name, 'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
+            'nama_siswa' => $siswa->nama,
+            'nis' => $siswa->nis,
+            'kelas' => $siswa->kelas,
+            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
+            'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
+            'nama_konselor' => Auth::user()->name,
+            'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
             'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
-            'isi_laporan' => $request->isi_laporan ?? '-', 'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
+            'isi_laporan' => $request->isi_laporan ?? '-',
+            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
 
         // Ambil data dinamis dari request
@@ -133,7 +144,7 @@ class LaporanBimbinganController extends Controller
         // Format data dinamis (tanggal, janji, dll.)
         foreach ($dynamicFieldsData as $key => &$value) {
             if (isset($allRequiredFields[$key])) {
-                 if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
+                if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
                     $value = Carbon::parse($value)->isoFormat('dddd, D MMMM YYYY');
                 } elseif ($key === 'isi_janji') {
                     $lines = explode("\n", trim($value));
@@ -191,7 +202,6 @@ class LaporanBimbinganController extends Controller
             DB::commit(); // Konfirmasi semua perubahan jika berhasil
 
             return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan ' . count($selectedTemplateKeys) . ' file surat telah digenerate.');
-
         } catch (\Exception $e) {
             DB::rollBack(); // Batalkan semua perubahan jika ada error
             // Hapus file yang mungkin sudah terbuat (opsional, tergantung kebutuhan)
@@ -199,14 +209,14 @@ class LaporanBimbinganController extends Controller
         }
     }
 
-    // ================= AKHIR MODIFIKASI =================
+   
 
     public function show(LaporanBimbingan $laporanBimbingan)
     {
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
-        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat','dokumen');
+        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat', 'dokumen');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
 
@@ -251,19 +261,66 @@ class LaporanBimbinganController extends Controller
     }
 
     public function laporanSiswa($id)
+    {
+        $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+        return view('guru.laporan.individu', compact('siswa'));
+    }
+
+    public function laporanSiswaPdf($id)
+    {
+        $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('pdf.laporan_individu', compact('siswa'))
+            ->setPaper('a4', 'portrait');
+
+        $filename = 'laporan_kasus_individu_' . str_replace(' ', '_', strtolower($siswa->nama)) . '_' . now()->format('Ymd_His') . '.pdf';
+        return $pdf->download($filename);
+    }
+
+    public function laporanKolektif(Request $request)
 {
-    $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
-    return view('guru.laporan.individu', compact('siswa'));
+    $jenisKasus = $request->input('jenis_kasus');
+    $kelas = $request->input('kelas');
+    $periodeAwal = $request->input('periode_awal');
+    $periodeAkhir = $request->input('periode_akhir');
+
+    // Ambil semua jenis pelanggaran (untuk dropdown)
+    $daftarJenis = JenisPelanggaran::orderBy('nama_pelanggaran')->get();
+
+    // Query dasar
+    $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+        ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+        ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+        ->when($periodeAwal && $periodeAkhir, fn($q) => 
+            $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+        );
+
+    $data = $query->get()
+        ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+
+    return view('guru.laporan.kolektif', compact('data', 'daftarJenis', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'));
 }
 
-public function laporanSiswaPdf($id)
+public function laporanKolektifPdf(Request $request)
 {
-    $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+    $jenisKasus = $request->input('jenis_kasus');
+    $kelas = $request->input('kelas');
+    $periodeAwal = $request->input('periode_awal');
+    $periodeAkhir = $request->input('periode_akhir');
 
-    $pdf = Pdf::loadView('pdf.laporan_individu', compact('siswa'))
-              ->setPaper('a4', 'portrait');
+    $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+        ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+        ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+        ->when($periodeAwal && $periodeAkhir, fn($q) => 
+            $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+        );
 
-    $filename = 'laporan_kasus_individu_' . str_replace(' ', '_', strtolower($siswa->nama)) . '_' . now()->format('Ymd_His') . '.pdf';
-    return $pdf->download($filename);
+    $data = $query->get()
+        ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_kolektif', compact('data', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'))
+            ->setPaper('a4', 'landscape');
+
+    return $pdf->download('laporan_kolektif_' . now()->format('Ymd_His') . '.pdf');
 }
 }

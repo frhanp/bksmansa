@@ -65,6 +65,7 @@
                 </svg>
                 {{ __('Data Siswa') }}
             </x-nav-link>
+
             <x-nav-link :href="route('guru.pelanggaran-siswa.index')" :active="request()->routeIs('guru.pelanggaran-siswa.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -73,6 +74,10 @@
                 </svg>
                 {{ __('Catat Pelanggaran') }}
             </x-nav-link>
+            <x-nav-link href="{{ route('guru.laporan.kolektif') }}" :active="request()->routeIs('guru.laporan.kolektif*')">
+                Laporan Kolektif
+            </x-nav-link>
+
             <x-nav-link :href="route('guru.jadwal-bimbingan.index')" :active="request()->routeIs('guru.jadwal-bimbingan.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -82,7 +87,14 @@
                 {{ __('Jadwal Bimbingan') }}
             </x-nav-link>
         @endif
-        
+
+        @if (Auth::user()->role === 'wali_kelas')
+            <x-nav-link href="{{ route('walikelas.laporan.kelas') }}" :active="request()->routeIs('walikelas.laporan.kelas*')">
+                Laporan Kelas
+            </x-nav-link>
+        @endif
+
+
         {{-- MENU KHUSUS KEPALA SEKOLAH --}}
         @if (Auth::user()->role == 'kepala_sekolah' || Auth::user()->role == 'wakasek')
             <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
