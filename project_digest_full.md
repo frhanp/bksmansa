@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-22 15:28:06_
+_Generated: 2025-11-07 17:20:08_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -45,6 +45,7 @@ app\Http\Controllers\Admin
 app\Http\Controllers\Auth
 app\Http\Controllers\Guru
 app\Http\Controllers\KepalaSekolah
+app\Http\Controllers\Kepsek
 app\Http\Controllers\OrangTua
 app\Http\Controllers\WaliKelas
 app\Http\Controllers\Controller.php
@@ -70,10 +71,13 @@ app\Http\Controllers\Guru\PelanggaranSiswaController.php
 app\Http\Controllers\Guru\SiswaController.php
 app\Http\Controllers\KepalaSekolah\DashboardController.php
 app\Http\Controllers\KepalaSekolah\LaporanController.php
+app\Http\Controllers\Kepsek\LaporanKinerjaController.php
+app\Http\Controllers\Kepsek\LaporanStatistikController.php
 app\Http\Controllers\OrangTua\DashboardController.php
 app\Http\Controllers\OrangTua\LaporanController.php
 app\Http\Controllers\WaliKelas\DashboardController.php
 app\Http\Controllers\WaliKelas\LaporanController.php
+app\Http\Controllers\WaliKelas\LaporanKelasController.php
 app\Http\Controllers\WaliKelas\SiswaController.php
 app\Http\Middleware\CheckRole.php
 app\Http\Requests\Auth
@@ -95,6 +99,7 @@ app\View\Components\GuestLayout.php
 bootstrap\cache
 bootstrap\app.php
 bootstrap\providers.php
+bootstrap\cache\config.php
 bootstrap\cache\packages.php
 bootstrap\cache\services.php
 config\app.php
@@ -155,6 +160,7 @@ resources\views\guru
 resources\views\kepsek
 resources\views\layouts
 resources\views\ortu
+resources\views\pdf
 resources\views\profile
 resources\views\vendor
 resources\views\walikelas
@@ -204,6 +210,9 @@ resources\views\guru\jadwal\edit.blade.php
 resources\views\guru\jadwal\index.blade.php
 resources\views\guru\laporan\create.blade.php
 resources\views\guru\laporan\edit.blade.php
+resources\views\guru\laporan\individu.blade.php
+resources\views\guru\laporan\intervensi.blade.php
+resources\views\guru\laporan\kolektif.blade.php
 resources\views\guru\laporan\pdf.blade.php
 resources\views\guru\laporan\show.blade.php
 resources\views\guru\pelanggaran\create.blade.php
@@ -216,13 +225,21 @@ resources\views\guru\siswa\show.blade.php
 resources\views\kepsek\laporan
 resources\views\kepsek\dashboard.blade.php
 resources\views\kepsek\laporan\index.blade.php
+resources\views\kepsek\laporan\kinerja.blade.php
 resources\views\kepsek\laporan\show.blade.php
+resources\views\kepsek\laporan\statistik.blade.php
 resources\views\layouts\app.blade.php
 resources\views\layouts\guest.blade.php
 resources\views\layouts\navigation.blade.php
 resources\views\ortu\laporan
 resources\views\ortu\dashboard.blade.php
 resources\views\ortu\laporan\show.blade.php
+resources\views\pdf\laporan_individu.blade.php
+resources\views\pdf\laporan_intervensi.blade.php
+resources\views\pdf\laporan_kelas.blade.php
+resources\views\pdf\laporan_kinerja.blade.php
+resources\views\pdf\laporan_kolektif.blade.php
+resources\views\pdf\laporan_statistik.blade.php
 resources\views\profile\partials
 resources\views\profile\edit.blade.php
 resources\views\profile\partials\delete-user-form.blade.php
@@ -231,6 +248,7 @@ resources\views\profile\partials\update-profile-information-form.blade.php
 resources\views\walikelas\laporan
 resources\views\walikelas\siswa
 resources\views\walikelas\dashboard.blade.php
+resources\views\walikelas\laporan\kelas.blade.php
 resources\views\walikelas\laporan\show.blade.php
 resources\views\walikelas\siswa\show.blade.php
 routes\auth.php
@@ -278,83 +296,54 @@ storage\framework\cache\data\.gitignore
 storage\framework\sessions\.gitignore
 storage\framework\testing\.gitignore
 storage\framework\views\.gitignore
+storage\framework\views\164c7a6ca366308143fea3bb70e17f1f.php
 storage\framework\views\17fb9cf1e87954de28566c40d22f26ee.php
-storage\framework\views\1e4a9611b4303e797f986c20a91a1c4c.php
+storage\framework\views\1e38150dd297bb96e856e2e5f69119a4.php
 storage\framework\views\1ec7ac2fc245a546c040d41324c32910.php
-storage\framework\views\1ff7c7f1d811f3d6d2032da3e7fe70ab.php
-storage\framework\views\238680ef6d89ce297e4812eac06467a3.php
 storage\framework\views\248781f88085781ab99d1cd5560cb1f6.php
 storage\framework\views\267d1f9157aea2cf861da6af127431be.php
-storage\framework\views\275957c1cf264ee3d276e428ae9fb8ec.php
 storage\framework\views\2a77bb005e2a1a7ed13ae2efd34b3ec6.php
-storage\framework\views\33bb63e962a42d3153ceeb52568375da.php
+storage\framework\views\30eb4639911f1ebf4fdf2374ad4fc929.php
+storage\framework\views\32ec87d775443924145b7ba0afb6d202.php
 storage\framework\views\371979e226c0b6b398c220f62eaa0738.php
 storage\framework\views\3a5dfcedacf4e2f094da9c44ab18b46c.php
 storage\framework\views\3b0d6b3df6af4d74bc8d6de72d579393.php
 storage\framework\views\3bfa537db9ba3f19f65bb34d850867eb.php
-storage\framework\views\3da7f68771e5427d583340309d6386ce.php
 storage\framework\views\3e1858c803128c7c96b098d757eb5190.php
-storage\framework\views\3f49e61730507ad66700c2898830f438.php
+storage\framework\views\408fcd5a1aa0fe6d4ffc0c47a4471160.php
 storage\framework\views\418503ce4cb93b31023d91963decf3b2.php
 storage\framework\views\4453772a1dd2512ca04cd2249d58e79f.php
-storage\framework\views\47fdfeec924f345fb418ab6ace74620d.php
 storage\framework\views\49fb72c40cedac354609ff11f0170938.php
 storage\framework\views\4db4e5bbc258c612288d1d76c5417f9f.php
 storage\framework\views\4f36e5ac38ac9c2534daf4ffa4b7b8cd.php
-storage\framework\views\504845e7664bb230c07dc09725b40574.php
-storage\framework\views\50566619548eb260c62cbe09102277ab.php
 storage\framework\views\551336ce2361a8fc8ca4597a22893610.php
-storage\framework\views\58425eea22b4d0930bda0822aa296e34.php
-storage\framework\views\584fb98883136f3ace17153a500da9f1.php
-storage\framework\views\5b901050e2fb6906038d13ba836f8b7a.php
 storage\framework\views\652e780ceb17b0dd88f592947d5e7601.php
-storage\framework\views\70b930e6d7b2bb9163bf8f34507bce6b.php
-storage\framework\views\7147b76b8b383682319563d118cafa9b.php
-storage\framework\views\71a890de8ace7b6db5f8320910d4d4f7.php
+storage\framework\views\6b5ecdc4fbb5638fa135c60dd15a7a9b.php
 storage\framework\views\7243cf532cd2e76ef3606b8c9ccbde2a.php
-storage\framework\views\73796425fd564aa1cacdc9b6855be812.php
-storage\framework\views\793c78b37e30b68f3851e91f3d0ddc8a.php
+storage\framework\views\763d51d7d26d107cd0732e82ccf74185.php
 storage\framework\views\7d99483c6b72cda8cc6a4a204cad7e82.php
-storage\framework\views\7da44973b2641ed9e5aff54b1da9ec7e.php
-storage\framework\views\83950d5769b0dee58cb3e04ddb1c1df6.php
-storage\framework\views\853305f88810516cf1af9fea98e845e3.php
-storage\framework\views\8865ecb9ccb6c0dee8b9f8c77eec02c0.php
+storage\framework\views\811df368f84fb570c4315dc504beaf12.php
 storage\framework\views\893166689e0ba16f0e1a581c0ee3513e.php
-storage\framework\views\91f2ea225e35578614afd3d3ea2730f0.php
 storage\framework\views\9931b3eb46bfdb6e5ed46b04338ce657.php
 storage\framework\views\9b8d9e998b1de2e90989cf415ce89cac.php
 storage\framework\views\a1f285af821f7188d98d171ac7b66e74.php
 storage\framework\views\a677ef29b3b2ac720c7e2b3da6abfb28.php
 storage\framework\views\ac342d7db1a31d4df4f37892e0d368df.php
-storage\framework\views\ac60e38673ab5de0048c6b4930532b67.php
 storage\framework\views\ad2bf872c769f985357169ed1a1dbcdd.php
 storage\framework\views\afed814d3f6257bf10deda8576e530b5.php
-storage\framework\views\b08a3572b4785a4ca4f1335ba278d771.php
-storage\framework\views\b401e39a4ed475f69f16fb3608d25565.php
-storage\framework\views\b7fa3d7e9ea7b75b79a3446b4269dc42.php
+storage\framework\views\b794b8bbf87f27d9dd729c1c4dab2613.php
 storage\framework\views\b82e84855e48f0191e6d491b4b3b2492.php
 storage\framework\views\bbbd3ef6a9ab27c86f795231e0cb5b73.php
-storage\framework\views\bbc398f077ffb84c6976f57714bf3227.php
 storage\framework\views\c44a894a845ec66f403f15fdcb6323aa.php
-storage\framework\views\c4b5b7ee15448ab5a655284d735f360b.php
-storage\framework\views\cbe8b004ee2ecf989a5e95e82d745b2e.php
 storage\framework\views\cce167fb70de6c0fd290f9dcfa5e57ab.php
 storage\framework\views\cd73a1c0b1a05cd03e8b25beed2de779.php
-storage\framework\views\cdbf7c5438e2d069d13cd4ef94779ff1.php
-storage\framework\views\dc586ffb0fe71887ecbaf82922ed8423.php
-storage\framework\views\dc748a550a4179f40a5d9efab9754c5c.php
-storage\framework\views\e0624ea6d414303c0b152d6184617754.php
-storage\framework\views\e25376c7f1b162396cf8ebe9f4daa266.php
+storage\framework\views\d8c7f838e3f010ae0e296100809fda2c.php
+storage\framework\views\e183a6100543655415ce95f852cb2e45.php
 storage\framework\views\e51efba80bd9e3ca2623b406c2670d5f.php
-storage\framework\views\e75857c1113c5e7933b0e34a6267e688.php
 storage\framework\views\ea1f1ee78010b7be1da638324434ca31.php
 storage\framework\views\ec218957ad1d32931c59a3c9653830fb.php
-storage\framework\views\edcd4fe3b26a606b964e17d6305fe7fc.php
-storage\framework\views\f11a99e2ca59394be8cb707d93ebce10.php
-storage\framework\views\f45bf24c14cb80bfaf8c40101571da3c.php
 storage\framework\views\f53bd76725dad0ba27d4a3e45ca103af.php
-storage\framework\views\f817bdd906a7a8a3ea2f2ba190db4b8b.php
-storage\framework\views\f8ac72214fff7afb1cf8f651143fb35c.php
+storage\framework\views\f5df848f0d3b8b9c6ab09c72dd26b192.php
 storage\framework\views\fa5a2ab5488cd21e1301977292b69c2e.php
 tests\Feature
 tests\Unit
@@ -382,11 +371,11 @@ Branch:
 main
 
 Last 5 commits:
-cead3d0 add role wakasek
-ebfcaec add role wakasek
-afca085 multiselect create laporan
-4ff4d62 fix error pengguna sistem
-9abf15f tampilkan jenis surat dan surat di  ortu
+bf6c9e4 add laporan 6
+eaba5e1 add laporan 5
+3e42656 add laporan 4
+2e566c0 add laporan 2,3
+3a7d829 add laporan 1
 ```
 
 
@@ -501,6 +490,8 @@ use App\Http\Controllers\Admin\JadwalBimbinganController as AdminJadwalControlle
 use App\Http\Controllers\KepalaSekolah\LaporanController as KepsekLaporanController;
 use App\Http\Controllers\WaliKelas\LaporanController as WaliKelasLaporanController;
 use App\Http\Controllers\OrangTua\LaporanController as OrtuLaporanController;
+use App\Http\Controllers\WaliKelas\LaporanKelasController as WaliKelasLaporanKelasController;
+use App\Http\Controllers\Kepsek\LaporanKinerjaController;
 
 
 
@@ -553,24 +544,72 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
     Route::resource('siswa', SiswaController::class);
     Route::resource('pelanggaran-siswa', PelanggaranSiswaController::class);
     Route::resource('jadwal-bimbingan', JadwalBimbinganController::class);
-    Route::get('jadwal-bimbingan/{jadwalBimbingan}/laporan/create', [LaporanBimbinganController::class, 'create'])->name('laporan.create');
-    Route::post('jadwal-bimbingan/{jadwalBimbingan}/laporan', [LaporanBimbinganController::class, 'store'])->name('laporan.store');
-    Route::get('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'show'])->name('laporan.show');
-    Route::get('laporan/{laporanBimbingan}/edit', [LaporanBimbinganController::class, 'edit'])->name('laporan.edit');
-    Route::put('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'update'])->name('laporan.update');
-    Route::get('laporan/{laporanBimbingan}/download', [LaporanBimbinganController::class, 'downloadPdf'])->name('laporan.download');
+
+    // === Awal Modifikasi: Laporan Custom (taruh sebelum route dinamis) ===
+    Route::get('/laporan/kolektif', [LaporanBimbinganController::class, 'laporanKolektif'])
+        ->name('laporan.kolektif');
+    Route::get('/laporan/kolektif/pdf', [LaporanBimbinganController::class, 'laporanKolektifPdf'])
+        ->name('laporan.kolektif.pdf');
+
+    Route::get('/laporan/siswa/{id}', [LaporanBimbinganController::class, 'laporanSiswa'])
+        ->name('laporan.siswa');
+    Route::get('/laporan/siswa/{id}/pdf', [LaporanBimbinganController::class, 'laporanSiswaPdf'])
+        ->name('laporan.siswa.pdf');
+    Route::get('/laporan/intervensi', [LaporanBimbinganController::class, 'laporanIntervensi'])
+        ->name('laporan.intervensi');
+
+    Route::get('/laporan/intervensi/pdf', [LaporanBimbinganController::class, 'laporanIntervensiPdf'])
+        ->name('laporan.intervensi.pdf');
+    // === Akhir Modifikasi ===
+
+    // === Route dinamis laporan ===
+    Route::get('jadwal-bimbingan/{jadwalBimbingan}/laporan/create', [LaporanBimbinganController::class, 'create'])
+        ->name('laporan.create');
+    Route::post('jadwal-bimbingan/{jadwalBimbingan}/laporan', [LaporanBimbinganController::class, 'store'])
+        ->name('laporan.store');
+    Route::get('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'show'])
+        ->name('laporan.show');
+    Route::get('laporan/{laporanBimbingan}/edit', [LaporanBimbinganController::class, 'edit'])
+        ->name('laporan.edit');
+    Route::put('laporan/{laporanBimbingan}', [LaporanBimbinganController::class, 'update'])
+        ->name('laporan.update');
+    Route::get('laporan/{laporanBimbingan}/download', [LaporanBimbinganController::class, 'downloadPdf'])
+        ->name('laporan.download');
+
+    // === Resource utama ===
+    Route::resource('laporan-bimbingan', LaporanBimbinganController::class);
 });
+
 
 // --- WALI KELAS ---
 Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
     Route::get('/siswa/{siswa}', [WaliKelasSiswaController::class, 'show'])->name('siswa.show');
+
+    // === Awal Modifikasi: pindahkan route statis ke atas ===
+    Route::get('/laporan/kelas', [WaliKelasLaporanKelasController::class, 'index'])
+        ->name('laporan.kelas');
+    Route::get('/laporan/kelas/pdf', [WaliKelasLaporanKelasController::class, 'downloadPdf'])
+        ->name('laporan.kelas.pdf');
+    // === Akhir Modifikasi ===
+
     Route::get('/laporan/{laporanBimbingan}', [WaliKelasLaporanController::class, 'show'])->name('laporan.show');
 });
+
 
 // --- KEPALA SEKOLAH ---
 Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek')->name('kepsek.')->group(function () {
     Route::get('/dashboard', [KepalaSekolahDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/laporan/statistik', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'index'])
+    ->name('laporan.statistik');
+Route::get('/laporan/statistik/pdf', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'downloadPdf'])
+    ->name('laporan.statistik.pdf');
+
+    Route::get('/laporan/kinerja', [LaporanKinerjaController::class, 'index'])
+        ->name('laporan.kinerja');
+    Route::get('/laporan/kinerja/pdf', [LaporanKinerjaController::class, 'downloadPdf'])
+        ->name('laporan.kinerja.pdf');
     Route::get('/laporan', [KepsekLaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/{laporanBimbingan}', [KepsekLaporanController::class, 'show'])->name('laporan.show');
 });
@@ -637,6 +676,19 @@ require __DIR__ . '/auth.php';
   PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@updaΓÇª
   DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@desΓÇª
   GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@eΓÇª
+  GET|HEAD        guru/laporan-bimbingan ................ guru.laporan-bimbingan.index ΓÇ║ Guru\LaporanBimbinganController@index
+  POST            guru/laporan-bimbingan ................ guru.laporan-bimbingan.store ΓÇ║ Guru\LaporanBimbinganController@store
+  GET|HEAD        guru/laporan-bimbingan/create ....... guru.laporan-bimbingan.create ΓÇ║ Guru\LaporanBimbinganController@create
+  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.show ΓÇ║ Guru\LaporanBimbinganController@shΓÇª
+  PUT|PATCH       guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.update ΓÇ║ Guru\LaporanBimbinganController@ΓÇª
+  DELETE          guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.destroy ΓÇ║ Guru\LaporanBimbinganControllerΓÇª
+  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan}/edit guru.laporan-bimbingan.edit ΓÇ║ Guru\LaporanBimbinganControllΓÇª
+  GET|HEAD        guru/laporan/intervensi ........ guru.laporan.intervensi ΓÇ║ Guru\LaporanBimbinganController@laporanIntervensi
+  GET|HEAD        guru/laporan/intervensi/pdf guru.laporan.intervensi.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanIntervensiΓÇª
+  GET|HEAD        guru/laporan/kolektif .............. guru.laporan.kolektif ΓÇ║ Guru\LaporanBimbinganController@laporanKolektif
+  GET|HEAD        guru/laporan/kolektif/pdf ... guru.laporan.kolektif.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanKolektifPdf
+  GET|HEAD        guru/laporan/siswa/{id} .................. guru.laporan.siswa ΓÇ║ Guru\LaporanBimbinganController@laporanSiswa
+  GET|HEAD        guru/laporan/siswa/{id}/pdf ....... guru.laporan.siswa.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanSiswaPdf
   GET|HEAD        guru/laporan/{laporanBimbingan} ................... guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
   PUT             guru/laporan/{laporanBimbingan} ............... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
   GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
@@ -657,6 +709,10 @@ require __DIR__ . '/auth.php';
   GET|HEAD        guru/siswa/{siswa}/edit ........................................ guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
   GET|HEAD        kepsek/dashboard ................................ kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
   GET|HEAD        kepsek/laporan ................................ kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
+  GET|HEAD        kepsek/laporan/kinerja ...................... kepsek.laporan.kinerja ΓÇ║ Kepsek\LaporanKinerjaController@index
+  GET|HEAD        kepsek/laporan/kinerja/pdf ........ kepsek.laporan.kinerja.pdf ΓÇ║ Kepsek\LaporanKinerjaController@downloadPdf
+  GET|HEAD        kepsek/laporan/statistik ................ kepsek.laporan.statistik ΓÇ║ Kepsek\LaporanStatistikController@index
+  GET|HEAD        kepsek/laporan/statistik/pdf .. kepsek.laporan.statistik.pdf ΓÇ║ Kepsek\LaporanStatistikController@downloadPdf
   GET|HEAD        kepsek/laporan/{laporanBimbingan} ............... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
   GET|HEAD        login ................................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
   POST            login ............................................................ Auth\AuthenticatedSessionController@store
@@ -676,10 +732,12 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
   GET|HEAD        walikelas/dashboard .............................. walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/kelas ................... walikelas.laporan.kelas ΓÇ║ WaliKelas\LaporanKelasController@index
+  GET|HEAD        walikelas/laporan/kelas/pdf ..... walikelas.laporan.kelas.pdf ΓÇ║ WaliKelas\LaporanKelasController@downloadPdf
   GET|HEAD        walikelas/laporan/{laporanBimbingan} ............. walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
   GET|HEAD        walikelas/siswa/{siswa} .............................. walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
 
-                                                                                                           Showing [88] routes
+                                                                                                          Showing [107] routes
 
 ```
 
@@ -1715,6 +1773,10 @@ use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Support\Facades\DB;
 use App\Models\LaporanDokumen;
+use App\Models\Siswa;
+use App\Models\JenisPelanggaran;
+use App\Models\PelanggaranSiswa;
+
 
 
 class LaporanBimbinganController extends Controller
@@ -1783,8 +1845,12 @@ class LaporanBimbinganController extends Controller
     public function store(Request $request, $jadwalId)
     {
         $jadwal = JadwalBimbingan::find($jadwalId);
-        if (!$jadwal) { abort(404); }
-        if ($jadwal->konselor_id !== Auth::id()) { abort(403); }
+        if (!$jadwal) {
+            abort(404);
+        }
+        if ($jadwal->konselor_id !== Auth::id()) {
+            abort(403);
+        }
 
         $templates = $this->getTemplateSurat();
         $selectedTemplateKeys = $request->input('jenis_surat', []); // Sekarang array
@@ -1813,17 +1879,22 @@ class LaporanBimbinganController extends Controller
                 }
             }
         }
-        
+
         $request->validate($validationRules);
 
         // Siapkan data statis sekali saja
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
         $staticData = [
-            'nama_siswa' => $siswa->nama, 'nis' => $siswa->nis, 'kelas' => $siswa->kelas,
-            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A', 'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
-            'nama_konselor' => Auth::user()->name, 'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
+            'nama_siswa' => $siswa->nama,
+            'nis' => $siswa->nis,
+            'kelas' => $siswa->kelas,
+            'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
+            'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
+            'nama_konselor' => Auth::user()->name,
+            'nip_konselor' => Auth::user()->guru->nip ?? 'N/A',
             'tanggal_surat' => Carbon::now()->isoFormat('D MMMM YYYY'),
-            'isi_laporan' => $request->isi_laporan ?? '-', 'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
+            'isi_laporan' => $request->isi_laporan ?? '-',
+            'tindak_lanjut' => $request->rencana_tindak_lanjut ?? '-',
         ];
 
         // Ambil data dinamis dari request
@@ -1832,7 +1903,7 @@ class LaporanBimbinganController extends Controller
         // Format data dinamis (tanggal, janji, dll.)
         foreach ($dynamicFieldsData as $key => &$value) {
             if (isset($allRequiredFields[$key])) {
-                 if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
+                if (in_array($key, ['tanggal_mulai_skorsing', 'tanggal_selesai_skorsing', 'tanggal_lahir'])) {
                     $value = Carbon::parse($value)->isoFormat('dddd, D MMMM YYYY');
                 } elseif ($key === 'isi_janji') {
                     $lines = explode("\n", trim($value));
@@ -1890,7 +1961,6 @@ class LaporanBimbinganController extends Controller
             DB::commit(); // Konfirmasi semua perubahan jika berhasil
 
             return redirect()->route('guru.jadwal-bimbingan.index')->with('success', 'Laporan berhasil dibuat dan ' . count($selectedTemplateKeys) . ' file surat telah digenerate.');
-
         } catch (\Exception $e) {
             DB::rollBack(); // Batalkan semua perubahan jika ada error
             // Hapus file yang mungkin sudah terbuat (opsional, tergantung kebutuhan)
@@ -1898,14 +1968,14 @@ class LaporanBimbinganController extends Controller
         }
     }
 
-    // ================= AKHIR MODIFIKASI =================
+
 
     public function show(LaporanBimbingan $laporanBimbingan)
     {
         if ($laporanBimbingan->dibuat_oleh !== Auth::id()) {
             abort(403);
         }
-        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat','dokumen');
+        $laporanBimbingan->load('jadwalBimbingan.siswa', 'pembuat', 'dokumen');
         return view('guru.laporan.show', compact('laporanBimbingan'));
     }
 
@@ -1947,6 +2017,126 @@ class LaporanBimbinganController extends Controller
         $namaFile = 'laporan-bimbingan-' . Str::slug($laporanBimbingan->jadwalBimbingan->siswa->nama) . '.pdf';
 
         return $pdf->download($namaFile);
+    }
+
+    public function laporanSiswa($id)
+    {
+        $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+        return view('guru.laporan.individu', compact('siswa'));
+    }
+
+    public function laporanSiswaPdf($id)
+    {
+        $siswa = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('pdf.laporan_individu', compact('siswa'))
+            ->setPaper('a4', 'portrait');
+
+        $filename = 'laporan_kasus_individu_' . str_replace(' ', '_', strtolower($siswa->nama)) . '_' . now()->format('Ymd_His') . '.pdf';
+        return $pdf->download($filename);
+    }
+
+    public function laporanKolektif(Request $request)
+    {
+        $jenisKasus = $request->input('jenis_kasus');
+        $kelas = $request->input('kelas');
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+
+        // Ambil semua jenis pelanggaran (untuk dropdown)
+        $daftarJenis = JenisPelanggaran::orderBy('nama_pelanggaran')->get();
+
+        // Query dasar
+        $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+            ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+            ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+            );
+
+        $data = $query->get()
+            ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+
+        return view('guru.laporan.kolektif', compact('data', 'daftarJenis', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'));
+    }
+
+    public function laporanKolektifPdf(Request $request)
+    {
+        $jenisKasus = $request->input('jenis_kasus');
+        $kelas = $request->input('kelas');
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+
+        $query = PelanggaranSiswa::with(['jenisPelanggaran', 'siswa'])
+            ->when($jenisKasus, fn($q) => $q->whereHas('jenisPelanggaran', fn($j) => $j->where('nama_pelanggaran', $jenisKasus)))
+            ->when($kelas, fn($q) => $q->whereHas('siswa', fn($s) => $s->where('kelas', $kelas)))
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_pelanggaran', [$periodeAwal, $periodeAkhir])
+            );
+
+        $data = $query->get()
+            ->groupBy(fn($item) => $item->jenisPelanggaran->nama_pelanggaran);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_kolektif', compact('data', 'jenisKasus', 'kelas', 'periodeAwal', 'periodeAkhir'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan_kolektif_' . now()->format('Ymd_His') . '.pdf');
+    }
+
+    public function laporanIntervensi(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+        $status = $request->input('status'); // "sudah" / "belum"
+
+        $query = JadwalBimbingan::with(['siswa', 'guru', 'laporanBimbingan'])
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir])
+            );
+
+        // Filter status tindak lanjut
+        if ($status === 'sudah') {
+            $query->whereHas('laporanBimbingan');
+        } elseif ($status === 'belum') {
+            $query->whereDoesntHave('laporanBimbingan');
+        }
+
+        $data = $query->orderBy('tanggal_jadwal', 'desc')->get();
+
+        return view('guru.laporan.intervensi', compact('data', 'periodeAwal', 'periodeAkhir', 'status'));
+    }
+
+    public function laporanIntervensiPdf(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+        $status = $request->input('status');
+
+        $query = JadwalBimbingan::with(['siswa', 'guru', 'laporanBimbingan'])
+            ->when(
+                $periodeAwal && $periodeAkhir,
+                fn($q) =>
+                $q->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir])
+            );
+
+        if ($status === 'sudah') {
+            $query->whereHas('laporanBimbingan');
+        } elseif ($status === 'belum') {
+            $query->whereDoesntHave('laporanBimbingan');
+        }
+
+        $data = $query->orderBy('tanggal_jadwal', 'desc')->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.laporan_intervensi', compact('data', 'periodeAwal', 'periodeAkhir', 'status'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan_intervensi_' . now()->format('Ymd_His') . '.pdf');
     }
 }
 
@@ -2413,6 +2603,154 @@ class LaporanController extends Controller
     }
 }
 
+===== app\Http\Controllers\Kepsek\LaporanKinerjaController.php =====
+<?php
+
+namespace App\Http\Controllers\Kepsek;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\JadwalBimbingan;
+use App\Models\LaporanBimbingan;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class LaporanKinerjaController extends Controller
+{
+    public function index(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+
+        $guruBk = User::where('role', 'guru_bk')->get()->map(function ($guru) use ($periodeAwal, $periodeAkhir) {
+            $jadwalQuery = JadwalBimbingan::where('konselor_id', $guru->id);
+            $laporanQuery = LaporanBimbingan::whereHas('jadwal', fn($q) => $q->where('konselor_id', $guru->id));
+
+            if ($periodeAwal && $periodeAkhir) {
+                $jadwalQuery->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir]);
+                $laporanQuery->whereBetween('created_at', [$periodeAwal, $periodeAkhir]);
+            }
+
+            return [
+                'nama' => $guru->name,
+                'total_jadwal' => $jadwalQuery->count(),
+                'total_laporan' => $laporanQuery->count(),
+                'jenis_kasus' => \App\Models\PelanggaranSiswa::whereHas('siswa', function ($q) use ($guru) {
+                    $q->whereHas('jadwalBimbingan', function ($qq) use ($guru) {
+                        $qq->where('konselor_id', $guru->id);
+                    });
+                })
+                    ->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+                    ->distinct('jenis_pelanggaran.id')
+                    ->count('jenis_pelanggaran.id'),
+
+            ];
+        });
+
+        return view('kepsek.laporan.kinerja', compact('guruBk', 'periodeAwal', 'periodeAkhir'));
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        $periodeAwal = $request->input('periode_awal');
+        $periodeAkhir = $request->input('periode_akhir');
+
+        $guruBk = User::where('role', 'guru_bk')->get()->map(function ($guru) use ($periodeAwal, $periodeAkhir) {
+            $jadwalQuery = JadwalBimbingan::where('konselor_id', $guru->id);
+            $laporanQuery = LaporanBimbingan::whereHas('jadwal', fn($q) => $q->where('konselor_id', $guru->id));
+
+            if ($periodeAwal && $periodeAkhir) {
+                $jadwalQuery->whereBetween('tanggal_jadwal', [$periodeAwal, $periodeAkhir]);
+                $laporanQuery->whereBetween('created_at', [$periodeAwal, $periodeAkhir]);
+            }
+
+            return [
+                'nama' => $guru->name,
+                'total_jadwal' => $jadwalQuery->count(),
+                'total_laporan' => $laporanQuery->count(),
+                'jenis_kasus' => \App\Models\PelanggaranSiswa::whereHas('siswa', function ($q) use ($guru) {
+                    $q->whereHas('jadwalBimbingan', function ($qq) use ($guru) {
+                        $qq->where('konselor_id', $guru->id);
+                    });
+                })
+                    ->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+                    ->distinct('jenis_pelanggaran.id')
+                    ->count('jenis_pelanggaran.id'),
+
+            ];
+        });
+
+        $pdf = Pdf::loadView('pdf.laporan_kinerja', compact('guruBk', 'periodeAwal', 'periodeAkhir'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan_kinerja_guru_bk_' . now()->format('Ymd_His') . '.pdf');
+    }
+}
+
+===== app\Http\Controllers\Kepsek\LaporanStatistikController.php =====
+<?php
+
+namespace App\Http\Controllers\Kepsek;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\PelanggaranSiswa;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\LaporanBimbingan;
+
+
+class LaporanStatistikController extends Controller
+{
+    public function index(Request $request)
+    {
+        $tahun = $request->input('tahun', now()->year);
+
+        // Kasus per bulan
+        // Kasus per bulan (pakai tanggal_pelanggaran)
+        $kasusBulanan = PelanggaranSiswa::selectRaw('MONTH(tanggal_pelanggaran) as bulan, COUNT(*) as total')
+            ->whereYear('tanggal_pelanggaran', $tahun)
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
+
+
+        // Jenis pelanggaran paling sering
+        $jenisKasus = PelanggaranSiswa::join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+            ->select('jenis_pelanggaran.nama_pelanggaran', DB::raw('COUNT(*) as total'))
+            ->groupBy('jenis_pelanggaran.id', 'jenis_pelanggaran.nama_pelanggaran')
+            ->orderByDesc('total')
+            ->take(5)
+            ->get();
+
+        // Efektivitas penanganan
+        $totalKasus = PelanggaranSiswa::count();
+        $totalTertangani = LaporanBimbingan::count();
+        $efektivitas = $totalKasus > 0 ? round(($totalTertangani / $totalKasus) * 100, 1) : 0;
+
+        return view('kepsek.laporan.statistik', compact('kasusBulanan', 'jenisKasus', 'efektivitas', 'tahun'));
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        $tahun = $request->input('tahun', now()->year);
+
+        $jenisKasus = PelanggaranSiswa::join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+            ->select('jenis_pelanggaran.nama_pelanggaran', DB::raw('COUNT(*) as total'))
+            ->groupBy('jenis_pelanggaran.id', 'jenis_pelanggaran.nama_pelanggaran')
+            ->orderByDesc('total')
+            ->get();
+
+        $totalKasus = PelanggaranSiswa::count();
+        $totalTertangani = LaporanBimbingan::count();
+        $efektivitas = $totalKasus > 0 ? round(($totalTertangani / $totalKasus) * 100, 1) : 0;
+
+        $pdf = Pdf::loadView('pdf.laporan_statistik', compact('jenisKasus', 'efektivitas', 'tahun'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('laporan_statistik_' . $tahun . '_' . now()->format('Ymd_His') . '.pdf');
+    }
+}
+
 ===== app\Http\Controllers\OrangTua\DashboardController.php =====
 <?php
 
@@ -2542,6 +2880,69 @@ class LaporanController extends Controller
 
         $laporanBimbingan->load('jadwalBimbingan.siswa', 'dibuatOleh.guru');
         return view('walikelas.laporan.show', compact('laporanBimbingan'));
+    }
+}
+
+===== app\Http\Controllers\WaliKelas\LaporanKelasController.php =====
+<?php
+
+namespace App\Http\Controllers\WaliKelas;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Siswa;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class LaporanKelasController extends Controller
+{
+    public function index(Request $request)
+    {
+        $kelas = $request->input('kelas');
+
+        $query = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan']);
+
+        if ($kelas) {
+            $query->where('kelas', $kelas);
+        }
+
+        $data = $query->get()->map(function ($siswa) {
+            $totalPelanggaran = $siswa->pelanggaran->count();
+            $totalPoin = $siswa->pelanggaran->sum(fn($p) => $p->jenisPelanggaran->poin ?? 0);
+            $totalBimbingan = $siswa->laporanBimbingan->count();
+
+            return [
+                'nama' => $siswa->nama,
+                'kelas' => $siswa->kelas,
+                'pelanggaran' => $totalPelanggaran,
+                'poin' => $totalPoin,
+                'bimbingan' => $totalBimbingan,
+            ];
+        });
+
+        return view('walikelas.laporan.kelas', compact('data', 'kelas'));
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        $kelas = $request->input('kelas');
+
+        $query = Siswa::with(['pelanggaran.jenisPelanggaran', 'laporanBimbingan']);
+        if ($kelas) $query->where('kelas', $kelas);
+
+        $data = $query->get()->map(function ($siswa) {
+            return [
+                'nama' => $siswa->nama,
+                'kelas' => $siswa->kelas,
+                'pelanggaran' => $siswa->pelanggaran->count(),
+                'poin' => $siswa->pelanggaran->sum(fn($p) => $p->jenisPelanggaran->poin ?? 0),
+                'bimbingan' => $siswa->laporanBimbingan->count(),
+            ];
+        });
+
+        $pdf = Pdf::loadView('pdf.laporan_kelas', compact('data', 'kelas'))
+                ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan_kelas_' . ($kelas ?? 'semua') . '_' . now()->format('Ymd_His') . '.pdf');
     }
 }
 
@@ -2687,6 +3088,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JadwalBimbingan extends Model
 {
@@ -2715,6 +3117,16 @@ class JadwalBimbingan extends Model
     public function laporan(): HasOne
     {
         return $this->hasOne(LaporanBimbingan::class, 'jadwal_id');
+    }
+
+    public function guru(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'konselor_id');
+    }
+
+    public function laporanBimbingan(): HasMany
+    {
+        return $this->hasMany(LaporanBimbingan::class, 'jadwal_id');
     }
 }
 
@@ -2781,6 +3193,11 @@ class LaporanBimbingan extends Model
     public function dokumen()
     {
         return $this->hasMany(LaporanDokumen::class);
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(\App\Models\JadwalBimbingan::class, 'jadwal_id');
     }
 }
 
@@ -2905,6 +3322,18 @@ class Siswa extends Model
     public function jadwalBimbingan(): HasMany
     {
         return $this->hasMany(JadwalBimbingan::class);
+    }
+
+    public function laporanBimbingan()
+    {
+        return $this->hasManyThrough(
+            \App\Models\LaporanBimbingan::class,
+            \App\Models\JadwalBimbingan::class,
+            'siswa_id',      // FK di tabel jadwal_bimbingan
+            'jadwal_id',     // FK di tabel laporan_bimbingan
+            'id',            // PK di tabel siswa
+            'id'             // PK di tabel jadwal_bimbingan
+        );
     }
 }
 
@@ -4720,6 +5149,285 @@ $classes = ($active ?? false)
     </div>
 </x-app-layout>
 
+===== resources\views\guru\laporan\individu.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Kasus Individu') }}
+            </h2>
+            <a href="{{ route('guru.laporan.siswa.pdf', $siswa->id) }}" 
+               class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+                Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Data Siswa --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Data Siswa</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
+                    <div><span class="font-medium">Nama:</span> {{ $siswa->nama }}</div>
+                    <div><span class="font-medium">NIS:</span> {{ $siswa->nis }}</div>
+                    <div><span class="font-medium">Kelas:</span> {{ $siswa->kelas }}</div>
+                    <div><span class="font-medium">Total Poin Pelanggaran:</span> 
+                        <span class="text-red-600 font-semibold">{{ $siswa->totalPoin() }} poin</span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Riwayat Pelanggaran --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Riwayat Pelanggaran</h3>
+                @if ($siswa->pelanggaran->isEmpty())
+                    <p class="text-slate-500 italic">Tidak ada pelanggaran tercatat.</p>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-slate-200 rounded-lg">
+                            <thead class="bg-slate-50 text-slate-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-sm font-semibold">Tanggal</th>
+                                    <th class="px-4 py-2 text-left text-sm font-semibold">Jenis Pelanggaran</th>
+                                    <th class="px-4 py-2 text-left text-sm font-semibold">Poin</th>
+                                    <th class="px-4 py-2 text-left text-sm font-semibold">Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                @foreach ($siswa->pelanggaran as $pel)
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="px-4 py-2 text-sm">{{ \Carbon\Carbon::parse($pel->tanggal_pelanggaran)->format('d M Y') }}</td>
+                                        <td class="px-4 py-2 text-sm">{{ $pel->jenisPelanggaran->nama_pelanggaran }}</td>
+                                        <td class="px-4 py-2 text-sm text-red-600 font-semibold">{{ $pel->jenisPelanggaran->poin }}</td>
+                                        <td class="px-4 py-2 text-sm">{{ $pel->catatan ?? '-' }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
+
+            {{-- Riwayat Bimbingan Konseling --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-100">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Riwayat Bimbingan Konseling</h3>
+                @if ($siswa->laporanBimbingan->isEmpty())
+                    <p class="text-slate-500 italic">Belum ada laporan bimbingan.</p>
+                @else
+                    <div class="space-y-4">
+                        @foreach ($siswa->laporanBimbingan->sortByDesc('created_at') as $lap)
+                            <div class="border border-slate-200 rounded-lg p-4 hover:shadow-sm transition">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="text-sm text-slate-500 mb-1">
+                                            {{ \Carbon\Carbon::parse($lap->created_at)->translatedFormat('d F Y') }}
+                                        </p>
+                                        <p class="text-slate-800 font-medium">{{ Str::limit($lap->isi_laporan, 150) }}</p>
+                                        @if($lap->rencana_tindak_lanjut)
+                                            <p class="text-slate-500 text-sm mt-1">
+                                                <span class="font-semibold text-slate-600">Tindak Lanjut:</span> 
+                                                {{ Str::limit($lap->rencana_tindak_lanjut, 100) }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                    @if($lap->jenis_surat)
+                                        <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-md border border-indigo-100">
+                                            {{ $lap->jenis_surat }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\guru\laporan\intervensi.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Intervensi & Tindak Lanjut') }}
+            </h2>
+            <a href="{{ route('guru.laporan.intervensi.pdf', request()->all()) }}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+               Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Filter --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <form method="GET" action="{{ route('guru.laporan.intervensi') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Awal</label>
+                        <input type="date" name="periode_awal" value="{{ request('periode_awal') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Akhir</label>
+                        <input type="date" name="periode_akhir" value="{{ request('periode_akhir') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Status</label>
+                        <select name="status" class="w-full rounded-md border-slate-300 text-sm">
+                            <option value="">Semua</option>
+                            <option value="sudah" {{ request('status') == 'sudah' ? 'selected' : '' }}>Sudah Ditindaklanjuti</option>
+                            <option value="belum" {{ request('status') == 'belum' ? 'selected' : '' }}>Belum Ditindaklanjuti</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                            Tampilkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Data --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Data Intervensi</h3>
+
+                @if ($data->isEmpty())
+                    <p class="text-slate-500 italic">Tidak ada data intervensi pada periode ini.</p>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-slate-200 text-sm">
+                            <thead class="bg-slate-50 text-slate-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Tanggal</th>
+                                    <th class="px-4 py-2 text-left">Siswa</th>
+                                    <th class="px-4 py-2 text-left">Guru BK</th>
+                                    <th class="px-4 py-2 text-left">Status</th>
+                                    <th class="px-4 py-2 text-left">Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                @foreach ($data as $item)
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($item->tanggal_jadwal)->translatedFormat('d F Y') }}</td>
+                                        <td class="px-4 py-2">{{ $item->siswa->nama }}</td>
+                                        <td class="px-4 py-2">{{ $item->guru->name ?? '-' }}</td>
+                                        <td class="px-4 py-2">
+                                            @if ($item->laporanBimbingan->isNotEmpty())
+                                                <span class="text-green-700 font-medium">Sudah</span>
+                                            @else
+                                                <span class="text-red-700 font-medium">Belum</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            {{ $item->laporanBimbingan->first()->rencana_tindak_lanjut ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\guru\laporan\kolektif.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Kasus Kolektif') }}
+            </h2>
+            <a href="{{ route('guru.laporan.kolektif.pdf', request()->all()) }}" 
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+                Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Filter --}}
+            <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+                <form method="GET" action="{{ route('guru.laporan.kolektif') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Jenis Kasus</label>
+                        <select name="jenis_kasus" class="w-full rounded-md border-slate-300 text-sm">
+                            <option value="">Semua</option>
+                            @foreach ($daftarJenis as $jenis)
+                                <option value="{{ $jenis->nama_pelanggaran }}" {{ request('jenis_kasus') == $jenis->nama_pelanggaran ? 'selected' : '' }}>
+                                    {{ $jenis->nama_pelanggaran }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Kelas</label>
+                        <input type="text" name="kelas" value="{{ request('kelas') }}" class="w-full rounded-md border-slate-300 text-sm" placeholder="Misal: X IPA 2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Awal</label>
+                        <input type="date" name="periode_awal" value="{{ request('periode_awal') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Akhir</label>
+                        <input type="date" name="periode_akhir" value="{{ request('periode_akhir') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+
+                    <div class="md:col-span-4 flex justify-end mt-3">
+                        <button type="submit" class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                            Tampilkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Hasil Laporan --}}
+            <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Hasil Rekapitulasi</h3>
+
+                @if ($data->isEmpty())
+                    <p class="text-slate-500 italic">Tidak ada data pelanggaran untuk filter yang dipilih.</p>
+                @else
+                    @foreach ($data as $jenis => $list)
+                        <div class="mb-6">
+                            <h4 class="text-md font-semibold text-indigo-700 mb-2">{{ $jenis }}</h4>
+                            <table class="min-w-full border border-slate-200 text-sm">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-3 py-2 text-left">Nama Siswa</th>
+                                        <th class="px-3 py-2 text-left">Kelas</th>
+                                        <th class="px-3 py-2 text-left">Tanggal</th>
+                                        <th class="px-3 py-2 text-left">Catatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    @foreach ($list as $item)
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="px-3 py-2">{{ $item->siswa->nama }}</td>
+                                            <td class="px-3 py-2">{{ $item->siswa->kelas }}</td>
+                                            <td class="px-3 py-2">{{ \Carbon\Carbon::parse($item->tanggal_pelanggaran)->translatedFormat('d F Y') }}</td>
+                                            <td class="px-3 py-2">{{ $item->catatan ?? '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+
+        </div>
+    </div>
+</x-app-layout>
+
 ===== resources\views\guru\laporan\pdf.blade.php =====
 <!DOCTYPE html>
 <html lang="id">
@@ -5384,6 +6092,7 @@ $classes = ($active ?? false)
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Kelas</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Wali Kelas</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Laporan Individu</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-slate-200">
@@ -5402,6 +6111,13 @@ $classes = ($active ?? false)
                                                 <button type="submit" class="ml-2 px-3 py-1 text-sm font-semibold text-red-600 bg-red-50 rounded-md hover:bg-red-100">Hapus</button>
                                             </form>
                                         </td>
+                                        <td class="px-4 py-2">
+                                            <a href="{{ route('guru.laporan.siswa', $item->id) }}" 
+                                               class="bg-indigo-600 text-white px-3 py-1 rounded text-sm hover:bg-indigo-700">
+                                               Laporan Individu
+                                            </a>
+                                        </td>
+                                        
                                     </tr>
                                 @empty
                                     <tr>
@@ -5732,6 +6448,75 @@ $classes = ($active ?? false)
 
 </x-app-layout>
 
+===== resources\views\kepsek\laporan\kinerja.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Kinerja Guru BK') }}
+            </h2>
+            <a href="{{ route('kepsek.laporan.kinerja.pdf', request()->all()) }}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+               Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Filter --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <form method="GET" action="{{ route('kepsek.laporan.kinerja') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Awal</label>
+                        <input type="date" name="periode_awal" value="{{ request('periode_awal') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Periode Akhir</label>
+                        <input type="date" name="periode_akhir" value="{{ request('periode_akhir') }}" class="w-full rounded-md border-slate-300 text-sm">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                            Tampilkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Data --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                @if ($guruBk->isEmpty())
+                    <p class="text-slate-500 italic">Tidak ada data guru BK.</p>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-slate-200 text-sm">
+                            <thead class="bg-slate-50 text-slate-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Nama Guru BK</th>
+                                    <th class="px-4 py-2 text-left">Jumlah Jadwal Konseling</th>
+                                    <th class="px-4 py-2 text-left">Jumlah Laporan Konseling</th>
+                                    <th class="px-4 py-2 text-left">Jenis Kasus Ditangani</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                @foreach ($guruBk as $row)
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="px-4 py-2">{{ $row['nama'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['total_jadwal'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['total_laporan'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['jenis_kasus'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
 ===== resources\views\kepsek\laporan\show.blade.php =====
 <x-app-layout>
     <x-slot name="header">
@@ -5819,6 +6604,112 @@ $classes = ($active ?? false)
             </div>
         </div>
     </div>
+</x-app-layout>
+
+===== resources\views\kepsek\laporan\statistik.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Tren & Statistik Sekolah') }}
+            </h2>
+            <a href="{{ route('kepsek.laporan.statistik.pdf', ['tahun' => $tahun]) }}"
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+               Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Filter Tahun --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <form method="GET" action="{{ route('kepsek.laporan.statistik') }}" class="flex flex-wrap items-end gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Tahun</label>
+                        <input type="number" name="tahun" value="{{ $tahun }}" class="rounded-md border-slate-300 text-sm w-32">
+                    </div>
+                    <button type="submit" class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                        Tampilkan
+                    </button>
+                </form>
+            </div>
+
+            {{-- Statistik --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200 text-center">
+                    <h3 class="text-slate-500 text-sm mb-2">Efektivitas Penanganan</h3>
+                    <p class="text-3xl font-bold text-indigo-600">{{ $efektivitas }}%</p>
+                </div>
+            </div>
+
+            {{-- Grafik Tren --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4">Tren Kasus per Bulan ({{ $tahun }})</h3>
+                <canvas id="chartKasusBulanan" height="100"></canvas>
+            </div>
+
+            {{-- Jenis Pelanggaran --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4">5 Jenis Pelanggaran Terbanyak</h3>
+                <table class="min-w-full border border-slate-200 text-sm">
+                    <thead class="bg-slate-50 text-slate-700">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Jenis Pelanggaran</th>
+                            <th class="px-4 py-2 text-left">Jumlah Kasus</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        @foreach ($jenisKasus as $jk)
+                            <tr>
+                                <td class="px-4 py-2">{{ $jk->nama_pelanggaran }}</td>
+                                <td class="px-4 py-2">{{ $jk->total }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{-- Chart.js --}}
+    @php
+    // Ubah Collection jadi array agar bisa dipakai di JS
+    $kasusArray = $kasusBulanan->toArray();
+@endphp
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('chartKasusBulanan').getContext('2d');
+
+    // Data dari backend (sudah jadi array)
+    const dataKasus = @json(array_values($kasusArray));
+    const labelBulan = @json(array_map(
+        fn($b) => \Carbon\Carbon::create()->month($b)->translatedFormat('F'),
+        array_keys($kasusArray)
+    ));
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labelBulan,
+            datasets: [{
+                label: 'Jumlah Kasus',
+                data: dataKasus,
+                borderColor: '#4f46e5',
+                tension: 0.3,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
 </x-app-layout>
 
 ===== resources\views\kepsek\dashboard.blade.php =====
@@ -6202,6 +7093,7 @@ $classes = ($active ?? false)
                 </svg>
                 {{ __('Data Siswa') }}
             </x-nav-link>
+
             <x-nav-link :href="route('guru.pelanggaran-siswa.index')" :active="request()->routeIs('guru.pelanggaran-siswa.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -6210,6 +7102,13 @@ $classes = ($active ?? false)
                 </svg>
                 {{ __('Catat Pelanggaran') }}
             </x-nav-link>
+            <x-nav-link href="{{ route('guru.laporan.kolektif') }}" :active="request()->routeIs('guru.laporan.kolektif*')">
+                Laporan Kolektif
+            </x-nav-link>
+            <x-nav-link href="{{ route('guru.laporan.intervensi') }}" :active="request()->routeIs('guru.laporan.intervensi*')">
+                Laporan Intervensi & Tindak Lanjut
+            </x-nav-link>
+
             <x-nav-link :href="route('guru.jadwal-bimbingan.index')" :active="request()->routeIs('guru.jadwal-bimbingan.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -6219,12 +7118,27 @@ $classes = ($active ?? false)
                 {{ __('Jadwal Bimbingan') }}
             </x-nav-link>
         @endif
-        
+
+        @if (Auth::user()->role === 'wali_kelas')
+            <x-nav-link href="{{ route('walikelas.laporan.kelas') }}" :active="request()->routeIs('walikelas.laporan.kelas*')">
+                Laporan Kelas
+            </x-nav-link>
+        @endif
+
+
         {{-- MENU KHUSUS KEPALA SEKOLAH --}}
         @if (Auth::user()->role == 'kepala_sekolah' || Auth::user()->role == 'wakasek')
-            <x-nav-link :href="route('kepsek.laporan.index')" :active="request()->routeIs('kepsek.laporan.*')">
+            <x-nav-link href="{{ route('kepsek.laporan.index') }}" :active="request()->routeIs('kepsek.laporan.index')">
                 {{ __('Laporan Bimbingan') }}
             </x-nav-link>
+
+            <x-nav-link href="{{ route('kepsek.laporan.kinerja') }}" :active="request()->routeIs('kepsek.laporan.kinerja*')">
+                Laporan Kinerja Guru BK
+            </x-nav-link>
+            <x-nav-link href="{{ route('kepsek.laporan.statistik') }}" :active="request()->routeIs('kepsek.laporan.statistik*')">
+                Laporan Tren & Statistik Sekolah
+            </x-nav-link>
+            
         @endif
 
     </nav>
@@ -6523,6 +7437,389 @@ $classes = ($active ?? false)
     </div>
 </x-app-layout>
 
+===== resources\views\pdf\laporan_individu.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Kasus Individu - {{ $siswa->nama }}</title>
+    <style>
+        @page { margin: 2.5cm 2cm; }
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 11pt; color: #1e293b; }
+        h2, h3 { color: #111827; margin-bottom: 0.4em; }
+        h2 { text-align: center; text-transform: uppercase; font-size: 14pt; letter-spacing: 0.5px; }
+        hr { border: 0; border-top: 1px solid #cbd5e1; margin: 0.6em 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 0.5em; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; vertical-align: top; }
+        th { background: #f1f5f9; font-weight: 600; text-align: left; color: #0f172a; }
+        ul { margin: 0.2em 0 0.5em 1em; padding: 0; }
+        .text-muted { color: #64748b; font-style: italic; }
+        .section { margin-bottom: 1.2cm; }
+        .header { text-align: center; margin-bottom: 1cm; }
+        .school-title { font-weight: bold; font-size: 13pt; color: #1e3a8a; }
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; font-size: 9pt; text-align: center; color: #64748b; }
+    </style>
+</head>
+<body>
+
+    {{-- HEADER SEKOLAH --}}
+    <div class="header">
+        <div class="school-title">Bimbingan Konseling - SMA Negeri 1 Gorontalo</div>
+        <div class="text-muted">Laporan Kasus Individu</div>
+        <hr>
+    </div>
+
+    {{-- JUDUL --}}
+    <h2>Laporan Kasus Individu</h2>
+
+    {{-- DATA SISWA --}}
+    <div class="section">
+        <table>
+            <tr>
+                <th width="25%">Nama Siswa</th>
+                <td>{{ $siswa->nama }}</td>
+            </tr>
+            <tr>
+                <th>NIS</th>
+                <td>{{ $siswa->nis }}</td>
+            </tr>
+            <tr>
+                <th>Kelas</th>
+                <td>{{ $siswa->kelas }}</td>
+            </tr>
+            <tr>
+                <th>Total Poin Pelanggaran</th>
+                <td><strong style="color:#dc2626;">{{ $siswa->totalPoin() }} poin</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    {{-- RIWAYAT PELANGGARAN --}}
+    <div class="section">
+        <h3>Riwayat Pelanggaran</h3>
+        @if ($siswa->pelanggaran->isEmpty())
+            <p class="text-muted">Tidak ada pelanggaran tercatat.</p>
+        @else
+            <table>
+                <thead>
+                    <tr>
+                        <th width="18%">Tanggal</th>
+                        <th>Jenis Pelanggaran</th>
+                        <th width="12%">Poin</th>
+                        <th>Catatan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($siswa->pelanggaran as $pel)
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($pel->tanggal_pelanggaran)->format('d/m/Y') }}</td>
+                            <td>{{ $pel->jenisPelanggaran->nama_pelanggaran }}</td>
+                            <td style="color:#dc2626; font-weight:bold;">{{ $pel->jenisPelanggaran->poin }}</td>
+                            <td>{{ $pel->catatan ?? '-' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+
+    {{-- RIWAYAT BIMBINGAN --}}
+    <div class="section">
+        <h3>Riwayat Bimbingan Konseling</h3>
+        @if ($siswa->laporanBimbingan->isEmpty())
+            <p class="text-muted">Belum ada laporan bimbingan.</p>
+        @else
+            <table>
+                <thead>
+                    <tr>
+                        <th width="18%">Tanggal</th>
+                        <th>Isi Laporan</th>
+                        <th width="28%">Tindak Lanjut</th>
+                        <th width="14%">Jenis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($siswa->laporanBimbingan->sortByDesc('created_at') as $lap)
+                        <tr>
+                            <td>{{ \Carbon\Carbon::parse($lap->created_at)->format('d/m/Y') }}</td>
+                            <td>{{ $lap->isi_laporan }}</td>
+                            <td>{{ $lap->rencana_tindak_lanjut ?? '-' }}</td>
+                            <td>{{ $lap->jenis_surat ?? 'Umum' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+
+    {{-- FOOTER --}}
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK pada {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+
+</body>
+</html>
+
+===== resources\views\pdf\laporan_intervensi.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Intervensi & Tindak Lanjut</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11pt; color: #1e293b; }
+        h2 { text-align: center; margin-bottom: 0.4cm; }
+        table { width: 100%; border-collapse: collapse; margin-top: 0.3cm; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; }
+        th { background: #f1f5f9; text-align: left; }
+        .footer { position: fixed; bottom: 0; text-align: center; font-size: 9pt; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h2>Laporan Intervensi & Tindak Lanjut</h2>
+
+    <p>
+        <strong>Periode:</strong>
+        {{ $periodeAwal ? \Carbon\Carbon::parse($periodeAwal)->format('d/m/Y') : '-' }} -
+        {{ $periodeAkhir ? \Carbon\Carbon::parse($periodeAkhir)->format('d/m/Y') : '-' }}<br>
+        <strong>Status:</strong> {{ $status ? ucfirst($status) : 'Semua' }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Siswa</th>
+                <th>Guru BK</th>
+                <th>Status</th>
+                <th>Catatan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data as $item)
+                <tr>
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal_jadwal)->format('d/m/Y') }}</td>
+                    <td>{{ $item->siswa->nama }}</td>
+                    <td>{{ $item->guru->name ?? '-' }}</td>
+                    <td>{{ $item->laporanBimbingan->isNotEmpty() ? 'Sudah' : 'Belum' }}</td>
+                    <td>{{ $item->laporanBimbingan->first()->rencana_tindak_lanjut ?? '-' }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK â€” {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+</body>
+</html>
+
+===== resources\views\pdf\laporan_kelas.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Kelas</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11pt; color: #1e293b; }
+        h2 { text-align: center; margin-bottom: 0.5cm; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; }
+        th { background: #f1f5f9; text-align: left; }
+        .footer { position: fixed; bottom: 0; text-align: center; font-size: 9pt; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h2>Laporan Kelas {{ $kelas ?? 'Semua' }}</h2>
+
+    @if ($data->isEmpty())
+        <p>Tidak ada data siswa untuk kelas ini.</p>
+    @else
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Siswa</th>
+                    <th>Kelas</th>
+                    <th>Jumlah Pelanggaran</th>
+                    <th>Total Poin</th>
+                    <th>Sesi Bimbingan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $row)
+                    <tr>
+                        <td>{{ $row['nama'] }}</td>
+                        <td>{{ $row['kelas'] }}</td>
+                        <td>{{ $row['pelanggaran'] }}</td>
+                        <td>{{ $row['poin'] }}</td>
+                        <td>{{ $row['bimbingan'] }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK â€” {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+</body>
+</html>
+
+===== resources\views\pdf\laporan_kinerja.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Kinerja Guru BK</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11pt; color: #1e293b; }
+        h2 { text-align: center; margin-bottom: 0.4cm; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; }
+        th { background: #f1f5f9; text-align: left; }
+        .footer { position: fixed; bottom: 0; text-align: center; font-size: 9pt; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h2>Laporan Kinerja Guru BK</h2>
+
+    <p>
+        <strong>Periode:</strong>
+        {{ $periodeAwal ? \Carbon\Carbon::parse($periodeAwal)->format('d/m/Y') : '-' }} -
+        {{ $periodeAkhir ? \Carbon\Carbon::parse($periodeAkhir)->format('d/m/Y') : '-' }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nama Guru BK</th>
+                <th>Jumlah Jadwal Konseling</th>
+                <th>Jumlah Laporan Konseling</th>
+                <th>Jenis Kasus Ditangani</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($guruBk as $row)
+                <tr>
+                    <td>{{ $row['nama'] }}</td>
+                    <td>{{ $row['total_jadwal'] }}</td>
+                    <td>{{ $row['total_laporan'] }}</td>
+                    <td>{{ $row['jenis_kasus'] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK â€” {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+</body>
+</html>
+
+===== resources\views\pdf\laporan_kolektif.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Kasus Kolektif</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11pt; color: #1e293b; }
+        h2, h3 { color: #111827; margin-bottom: 0.4em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 0.3cm; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; }
+        th { background: #f1f5f9; font-weight: 600; text-align: left; }
+        .section { margin-bottom: 1.2cm; }
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 9pt; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Laporan Kasus Kolektif</h2>
+    <p><strong>Jenis Kasus:</strong> {{ $jenisKasus ?? 'Semua' }}<br>
+       <strong>Kelas:</strong> {{ $kelas ?? 'Semua' }}<br>
+       <strong>Periode:</strong> 
+       {{ $periodeAwal ? \Carbon\Carbon::parse($periodeAwal)->format('d/m/Y') : '-' }} - 
+       {{ $periodeAkhir ? \Carbon\Carbon::parse($periodeAkhir)->format('d/m/Y') : '-' }}
+    </p>
+
+    <hr>
+
+    @forelse ($data as $jenis => $list)
+        <h3>{{ $jenis }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Siswa</th>
+                    <th>Kelas</th>
+                    <th>Tanggal</th>
+                    <th>Catatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($list as $item)
+                    <tr>
+                        <td>{{ $item->siswa->nama }}</td>
+                        <td>{{ $item->siswa->kelas }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pelanggaran)->format('d/m/Y') }}</td>
+                        <td>{{ $item->catatan ?? '-' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <br>
+    @empty
+        <p>Tidak ada data pelanggaran.</p>
+    @endforelse
+
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK â€” {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+</body>
+</html>
+
+===== resources\views\pdf\laporan_statistik.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Tren & Statistik Sekolah</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 11pt; color: #1e293b; }
+        h2 { text-align: center; margin-bottom: 0.5cm; }
+        table { width: 100%; border-collapse: collapse; margin-top: 0.3cm; }
+        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10pt; }
+        th { background: #f1f5f9; text-align: left; }
+        .footer { position: fixed; bottom: 0; text-align: center; font-size: 9pt; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h2>Laporan Tren & Statistik Sekolah {{ $tahun }}</h2>
+
+    <p><strong>Efektivitas Penanganan:</strong> {{ $efektivitas }}%</p>
+
+    <h4>Jenis Pelanggaran Terbanyak:</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Jenis Pelanggaran</th>
+                <th>Jumlah Kasus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($jenisKasus as $jk)
+                <tr>
+                    <td>{{ $jk->nama_pelanggaran }}</td>
+                    <td>{{ $jk->total }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Dicetak otomatis oleh Sistem BK â€” {{ now()->translatedFormat('d F Y, H:i') }}
+    </div>
+</body>
+</html>
+
 ===== resources\views\profile\partials\delete-user-form.blade.php =====
 <section class="space-y-6">
     <header>
@@ -6727,6 +8024,73 @@ $classes = ($active ?? false)
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')
                 </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\walikelas\laporan\kelas.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                {{ __('Laporan Kelas') }}
+            </h2>
+            <a href="{{ route('walikelas.laporan.kelas.pdf', request()->all()) }}" 
+               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-all">
+               Download PDF
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-8">
+
+            {{-- Filter Kelas --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                <form method="GET" action="{{ route('walikelas.laporan.kelas') }}" class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Kelas</label>
+                        <input type="text" name="kelas" value="{{ request('kelas') }}" class="w-full rounded-md border-slate-300 text-sm" placeholder="Misal: XI IPA 1">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+                            Tampilkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Data Laporan --}}
+            <div class="bg-white shadow-md rounded-xl p-6 border border-slate-200">
+                @if ($data->isEmpty())
+                    <p class="text-slate-500 italic">Tidak ada data siswa untuk kelas ini.</p>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-slate-200 text-sm">
+                            <thead class="bg-slate-50 text-slate-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Nama Siswa</th>
+                                    <th class="px-4 py-2 text-left">Kelas</th>
+                                    <th class="px-4 py-2 text-left">Jumlah Pelanggaran</th>
+                                    <th class="px-4 py-2 text-left">Total Poin</th>
+                                    <th class="px-4 py-2 text-left">Sesi Bimbingan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                @foreach ($data as $row)
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="px-4 py-2">{{ $row['nama'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['kelas'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['pelanggaran'] }}</td>
+                                        <td class="px-4 py-2 text-red-600 font-semibold">{{ $row['poin'] }}</td>
+                                        <td class="px-4 py-2">{{ $row['bimbingan'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

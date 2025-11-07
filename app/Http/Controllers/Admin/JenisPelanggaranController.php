@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JenisPelanggaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class JenisPelanggaranController extends Controller
 {
@@ -58,8 +59,18 @@ class JenisPelanggaranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_pelanggaran' => 'required|string|max:255',
+            'nama_pelanggaran' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('jenis_pelanggaran')->where(function ($query) use ($request) {
+                    return $query->where('poin', $request->poin);
+                })
+            ],
             'poin' => 'required|integer|min:1',
+        ], [
+            // Tambahkan pesan kustom ini
+            'nama_pelanggaran.unique' => 'Kombinasi nama pelanggaran dan poin ini sudah ada.'
         ]);
 
         JenisPelanggaran::create([
@@ -86,8 +97,18 @@ class JenisPelanggaranController extends Controller
     public function update(Request $request, JenisPelanggaran $jenisPelanggaran)
     {
         $request->validate([
-            'nama_pelanggaran' => 'required|string|max:255',
+            'nama_pelanggaran' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('jenis_pelanggaran')->where(function ($query) use ($request) {
+                    return $query->where('poin', $request->poin);
+                })->ignore($jenisPelanggaran->id)
+            ],
             'poin' => 'required|integer|min:1',
+        ], [
+            // Tambahkan pesan kustom ini
+            'nama_pelanggaran.unique' => 'Kombinasi nama pelanggaran dan poin ini sudah ada.'
         ]);
 
         $jenisPelanggaran->update($request->all());

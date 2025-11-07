@@ -70,6 +70,10 @@ class SiswaController extends Controller
             'nama_wali' => 'required|string|max:255',
             'email_wali' => 'required|email|max:255|unique:users,email',
             'nomor_telepon_wali' => 'nullable|string|max:20',
+        ], [
+            // Tambahkan pesan kustom ini
+            'nis.unique' => 'NIS ini sudah terdaftar untuk siswa lain.',
+            'email_wali.unique' => 'Email ini sudah digunakan oleh akun lain.',
         ]);
 
         $siswa = Siswa::create($request->only('nama', 'nis', 'kelas', 'wali_kelas_id'));
@@ -116,8 +120,11 @@ class SiswaController extends Controller
             'nama_wali' => 'required|string|max:255',
             'email_wali' => 'required|email|max:255|unique:users,email,' . $siswa->waliMurid->user->id,
             'nomor_telepon_wali' => 'nullable|string|max:20',
-            // --- VALIDASI BARU UNTUK PASSWORD ---
             'password' => 'nullable|string|min:8|confirmed',
+        ], [
+            // Tambahkan pesan kustom ini
+            'nis.unique' => 'NIS ini sudah terdaftar untuk siswa lain.',
+            'email_wali.unique' => 'Email ini sudah digunakan oleh akun lain.',
         ]);
 
         $siswa->update($request->only('nama', 'nis', 'kelas', 'wali_kelas_id'));
