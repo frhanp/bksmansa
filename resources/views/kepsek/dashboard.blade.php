@@ -1,158 +1,129 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-800 leading-tight">
-            {{ __('Dashboard Pimpinan') }}
+            {{ Auth::user()->role == 'wakasek' ? __('Dashboard Wakasek Kesiswaan') : __('Dashboard Kepala Sekolah') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-6">
-                <h3 class="text-lg font-medium text-slate-900">Selamat Datang, {{ Auth::user()->name }}!</h3>
-                <p class="text-sm text-slate-500">Berikut adalah ringkasan statistik dari sistem Bimbingan Konseling.</p>
-            </div>
-
-            {{-- ================= AWAL MODIFIKASI ================= --}}
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                <div class="lg:col-span-2">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                        <div class="p-6">
-                            <div class="flex flex-wrap justify-between items-center mb-4">
-                                <h3 class="text-lg font-medium text-slate-900">Tren Pelanggaran Siswa</h3>
-                                <form id="filter-form" action="{{ route('kepsek.dashboard') }}" method="GET" class="flex items-center gap-4">
-                                    <select name="tahun" onchange="this.form.submit()" class="filter-input border-slate-300 rounded-md shadow-sm text-sm focus:border-teal-500 focus:ring-teal-500">
-                                        @forelse($availableYears as $year)
-                                            <option value="{{ $year }}" @selected($year == $selectedYear)>Tahun {{ $year }}</option>
-                                        @empty
-                                            <option>{{ date('Y') }}</option>
-                                        @endforelse
-                                    </select>
-                                    <select name="semester" onchange="this.form.submit()" class="filter-input border-slate-300 rounded-md shadow-sm text-sm focus:border-teal-500 focus:ring-teal-500">
-                                        <option value="">Semua Semester</option>
-                                        <option value="1" @selected($selectedSemester == 1)>Semester 1 (Jan-Jun)</option>
-                                        <option value="2" @selected($selectedSemester == 2)>Semester 2 (Jul-Des)</option>
-                                    </select>
-                                </form>
-                            </div>
-                            <div id="chart" class="w-full"></div>
-                        </div>
-                    </div>
+            {{-- BOX TUPOKSI (Penjelasan Tugas) --}}
+            <div class="mb-8 p-6 bg-teal-50 border-l-4 border-teal-500 rounded-r-xl shadow-sm">
+                <div class="flex items-center gap-3 mb-2">
+                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="font-bold text-teal-900">Tugas Pokok & Fungsi (Tupoksi)</h3>
                 </div>
-
-                <div class="lg:col-span-1 space-y-6">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
-                            <p class="text-xs font-medium text-slate-500 truncate">Total Siswa</p>
-                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_siswa'] }}</p>
-                        </div>
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
-                            <p class="text-xs font-medium text-slate-500 truncate">Total Pelanggaran</p>
-                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_pelanggaran'] }}</p>
-                        </div>
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
-                            <p class="text-xs font-medium text-slate-500 truncate">Laporan Selesai</p>
-                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['total_laporan'] }}</p>
-                        </div>
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl p-4">
-                            <p class="text-xs font-medium text-slate-500 truncate">Jadwal Aktif</p>
-                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $stats['jadwal_aktif'] }}</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                        <div class="p-6">
-                            <h3 class="text-base font-medium text-slate-900 mb-4">Siswa Poin Tertinggi</h3>
-                            <ul class="space-y-3">
-                                @forelse ($highPointStudents as $siswa)
-                                <li class="flex items-center justify-between text-sm">
-                                    <div>
-                                        <p class="font-semibold text-slate-800">{{ $siswa->nama }}</p>
-                                        <p class="text-xs text-slate-500">{{ $siswa->kelas }}</p>
-                                    </div>
-                                    <span class="font-bold text-red-500">{{ $siswa->total_poin ?? 0 }} Poin</span>
-                                </li>
-                                @empty
-                                <p class="text-sm text-slate-500 text-center">Tidak ada data pelanggaran.</p>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
-
-                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                        <div class="p-6">
-                            <h3 class="text-base font-medium text-slate-900 mb-4">Laporan Terbaru</h3>
-                             <ul class="space-y-3">
-                                @forelse ($recentReports as $laporan)
-                                <li class="text-sm">
-                                     <a href="{{ route('kepsek.laporan.show', $laporan->id) }}" class="font-semibold text-teal-600 hover:underline">Laporan untuk {{ $laporan->jadwalBimbingan->siswa->nama }}</a>
-                                     <p class="text-xs text-slate-500">{{ $laporan->created_at->diffForHumans() }}</p>
-                                </li>
-                                @empty
-                                <p class="text-sm text-slate-500 text-center">Belum ada laporan yang dibuat.</p>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
+                <p class="text-sm text-teal-800 leading-relaxed">
+                    @if(Auth::user()->role == 'wakasek')
+                        Sebagai <strong>Wakasek Kesiswaan</strong>, fokus utama Anda adalah pengawasan kedisiplinan harian. Gunakan dashboard ini untuk memantau siswa dengan akumulasi poin tinggi dan berikan <strong>Disposisi</strong> (instruksi langsung) kepada Guru BK untuk tindakan lebih lanjut.
+                    @else
+                        Sebagai <strong>Kepala Sekolah</strong>, fokus Anda adalah pemantauan strategis. Gunakan grafik tren untuk mengevaluasi efektivitas program bimbingan konseling dan pastikan kinerja staf BK berjalan optimal sesuai target sekolah.
+                    @endif
+                </p>
             </div>
-            {{-- ================= AKHIR MODIFIKASI ================= --}}
+
+            {{-- CARD STATISTIK UMUM --}}
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                @foreach([
+                    ['Total Siswa', $stats['total_siswa'], 'bg-blue-500'],
+                    ['Pelanggaran', $stats['total_pelanggaran'], 'bg-red-500'],
+                    ['Laporan Selesai', $stats['total_laporan'], 'bg-green-500'],
+                    ['Jadwal Aktif', $stats['jadwal_aktif'], 'bg-amber-500']
+                ] as $item)
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center">
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">{{ $item[0] }}</p>
+                    <p class="text-3xl font-bold text-slate-800">{{ $item[1] }}</p>
+                </div>
+                @endforeach
+            </div>
+
+            <div class="grid grid-cols-1 gap-8">
+                @if(Auth::user()->role == 'wakasek')
+                    {{-- TAMPILAN KHUSUS WAKASEK: DAFTAR SISWA KRITIS --}}
+                    <div class="bg-white shadow-sm sm:rounded-xl overflow-hidden border border-slate-200">
+                        <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                            <h3 class="font-bold text-red-700 uppercase text-sm tracking-widest">Siswa Butuh Penanganan Segera (>50 Poin)</h3>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Zona Merah</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-slate-200">
+                                <thead class="bg-white">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Siswa</th>
+                                        <th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 uppercase">Total Poin</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Berikan Instruksi (Disposisi)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-slate-100">
+                                    @forelse($siswaKritis as $s)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $s->nama }} ({{ $s->kelas }})</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-lg font-bold text-red-600">{{ $s->total_poin }}</td>
+                                        <td class="px-6 py-4">
+                                            @if($s->activeDisposisi)
+                                                {{-- Jika ada instruksi yang sedang berjalan --}}
+                                                <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                                                    <div class="flex items-center gap-2 mb-1 text-[10px] font-bold text-amber-700 uppercase">
+                                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                        Sedang Diproses Guru BK
+                                                    </div>
+                                                    <p class="text-xs text-slate-600 italic">"{{ $s->activeDisposisi->pesan }}"</p>
+                                                    <p class="text-[9px] text-slate-400 mt-1 italic">Dikirim: {{ $s->activeDisposisi->created_at->diffForHumans() }}</p>
+                                                </div>
+                                            @else
+                                                {{-- Jika tidak ada instruksi aktif, tampilkan form input --}}
+                                                <form action="{{ route('kepsek.disposisi.store', $s->id) }}" method="POST" class="flex gap-2">
+                                                    @csrf
+                                                    <input type="text" name="pesan" placeholder="Beri instruksi baru..." required 
+                                                        class="text-sm w-full border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                                                    <x-primary-button class="text-[10px] whitespace-nowrap">Kirim</x-primary-button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr><td colspan="3" class="px-6 py-10 text-center text-slate-400 italic">Alhamdulillah, tidak ada siswa di zona merah.</td></tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @else
+                    {{-- TAMPILAN KHUSUS KEPSEK: GRAFIK TREN --}}
+                    <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="font-bold text-slate-800">Analisis Tren Kedisiplinan</h3>
+                            <form action="{{ route('kepsek.dashboard') }}" method="GET">
+                                <select name="tahun" onchange="this.form.submit()" class="border-slate-300 rounded-lg text-sm">
+                                    @foreach($availableYears as $y)
+                                        <option value="{{ $y }}" @selected($y == $selectedYear)>Tahun {{ $y }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                        <div id="chart"></div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 
+    @if(Auth::user()->role == 'kepala_sekolah')
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var options = {
-                series: [{
-                    name: 'Jumlah Pelanggaran',
-                    data: @json($chartData)
-                }],
-                chart: {
-                    height: 350,
-                    type: 'area',
-                    toolbar: { show: false },
-                    zoom: { enabled: false }
-                },
+            new ApexCharts(document.querySelector("#chart"), {
+                series: [{ name: 'Pelanggaran', data: @json($chartValues) }],
+                chart: { type: 'area', height: 350, toolbar: {show:false} },
                 colors: ['#0d9488'],
-                dataLabels: { enabled: false },
                 stroke: { curve: 'smooth' },
-                xaxis: {
-                    categories: @json($labels),
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '12px',
-                        },
-                    }
-                },
-                yaxis: {
-                    labels: {
-                        style: {
-                            colors: '#64748b',
-                            fontSize: '12px',
-                        },
-                         formatter: function (val) {
-                            return Math.floor(val);
-                        }
-                    },
-                },
-                grid: {
-                    borderColor: '#e2e8f0',
-                    strokeDashArray: 4,
-                },
-                tooltip: {
-                    x: {
-                        format: 'MMMM'
-                    },
-                },
-            };
-
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
+                xaxis: { categories: @json($labels) },
+                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.3 } }
+            }).render();
         });
     </script>
     @endpush
+    @endif
 </x-app-layout>

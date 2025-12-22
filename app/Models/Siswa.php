@@ -63,4 +63,9 @@ class Siswa extends Model
             'id'             // PK di tabel jadwal_bimbingan
         );
     }
+
+    public function activeDisposisi()
+    {
+        return $this->hasOne(Disposisi::class)->where('status_selesai', false)->latest();
+    }
 }

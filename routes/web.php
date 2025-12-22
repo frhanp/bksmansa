@@ -128,14 +128,15 @@ Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name(
 });
 
 
-// --- KEPALA SEKOLAH ---
+// --- KEPALA SEKOLAH & WAKASEK ---
 Route::middleware(['auth', 'check.role:kepala_sekolah,wakasek'])->prefix('kepsek')->name('kepsek.')->group(function () {
     Route::get('/dashboard', [KepalaSekolahDashboardController::class, 'index'])->name('dashboard');
-
+    
+    Route::post('/disposisi/{siswa}', [KepalaSekolahDashboardController::class, 'storeDisposisi'])->name('disposisi.store');
     Route::get('/laporan/statistik', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'index'])
-    ->name('laporan.statistik');
-Route::get('/laporan/statistik/pdf', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'downloadPdf'])
-    ->name('laporan.statistik.pdf');
+        ->name('laporan.statistik');
+    Route::get('/laporan/statistik/pdf', [\App\Http\Controllers\Kepsek\LaporanStatistikController::class, 'downloadPdf'])
+        ->name('laporan.statistik.pdf');
 
     Route::get('/laporan/kinerja', [LaporanKinerjaController::class, 'index'])
         ->name('laporan.kinerja');
