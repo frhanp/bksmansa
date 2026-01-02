@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-12-22 22:50:17_
+_Generated: 2026-01-02 15:06:48_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -252,6 +252,9 @@ resources\views\walikelas\siswa
 resources\views\walikelas\dashboard.blade.php
 resources\views\walikelas\laporan\kelas.blade.php
 resources\views\walikelas\laporan\show.blade.php
+resources\views\walikelas\siswa\create.blade.php
+resources\views\walikelas\siswa\edit.blade.php
+resources\views\walikelas\siswa\index.blade.php
 resources\views\walikelas\siswa\show.blade.php
 routes\auth.php
 routes\console.php
@@ -273,6 +276,7 @@ storage\app\public\laporan_word\laporan_surat_peringatan_12350_1758545463.docx
 storage\app\public\laporan_word\laporan_surat_peringatan_12351_1758987027.docx
 storage\app\public\laporan_word\laporan_surat_peringatan_1_12349_1758072946.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12348_1758983584.docx
+storage\app\public\laporan_word\laporan_surat_perjanjian_12350_1766422840_694979388bdfb.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12352_1760770799_68f33aef13bb6.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12353_1758981834.docx
 storage\app\public\laporan_word\laporan_surat_perjanjian_12354_1758221198.docx
@@ -298,9 +302,12 @@ storage\framework\cache\data\.gitignore
 storage\framework\sessions\.gitignore
 storage\framework\testing\.gitignore
 storage\framework\views\.gitignore
+storage\framework\views\1141fac161bb8be72255b1790921a55b.php
+storage\framework\views\12d3ccd1af3ebab38a7dd5cba58544d4.php
 storage\framework\views\164c7a6ca366308143fea3bb70e17f1f.php
 storage\framework\views\17fb9cf1e87954de28566c40d22f26ee.php
 storage\framework\views\1e38150dd297bb96e856e2e5f69119a4.php
+storage\framework\views\1e4a9611b4303e797f986c20a91a1c4c.php
 storage\framework\views\1ec7ac2fc245a546c040d41324c32910.php
 storage\framework\views\238680ef6d89ce297e4812eac06467a3.php
 storage\framework\views\248781f88085781ab99d1cd5560cb1f6.php
@@ -313,9 +320,11 @@ storage\framework\views\3a5dfcedacf4e2f094da9c44ab18b46c.php
 storage\framework\views\3b0d6b3df6af4d74bc8d6de72d579393.php
 storage\framework\views\3bfa537db9ba3f19f65bb34d850867eb.php
 storage\framework\views\3e1858c803128c7c96b098d757eb5190.php
+storage\framework\views\3f49e61730507ad66700c2898830f438.php
 storage\framework\views\408fcd5a1aa0fe6d4ffc0c47a4471160.php
 storage\framework\views\418503ce4cb93b31023d91963decf3b2.php
 storage\framework\views\4453772a1dd2512ca04cd2249d58e79f.php
+storage\framework\views\47fdfeec924f345fb418ab6ace74620d.php
 storage\framework\views\49fb72c40cedac354609ff11f0170938.php
 storage\framework\views\4db4e5bbc258c612288d1d76c5417f9f.php
 storage\framework\views\4f36e5ac38ac9c2534daf4ffa4b7b8cd.php
@@ -328,7 +337,10 @@ storage\framework\views\763d51d7d26d107cd0732e82ccf74185.php
 storage\framework\views\793c78b37e30b68f3851e91f3d0ddc8a.php
 storage\framework\views\7d99483c6b72cda8cc6a4a204cad7e82.php
 storage\framework\views\811df368f84fb570c4315dc504beaf12.php
+storage\framework\views\83950d5769b0dee58cb3e04ddb1c1df6.php
 storage\framework\views\893166689e0ba16f0e1a581c0ee3513e.php
+storage\framework\views\89e2bf7b66be319250fa31eb20ec35cd.php
+storage\framework\views\8d65b7ecc4a014f42e3570d52b885acf.php
 storage\framework\views\9931b3eb46bfdb6e5ed46b04338ce657.php
 storage\framework\views\9b8d9e998b1de2e90989cf415ce89cac.php
 storage\framework\views\a1f285af821f7188d98d171ac7b66e74.php
@@ -346,13 +358,16 @@ storage\framework\views\c4b5b7ee15448ab5a655284d735f360b.php
 storage\framework\views\cce167fb70de6c0fd290f9dcfa5e57ab.php
 storage\framework\views\cd73a1c0b1a05cd03e8b25beed2de779.php
 storage\framework\views\d8c7f838e3f010ae0e296100809fda2c.php
+storage\framework\views\dc586ffb0fe71887ecbaf82922ed8423.php
 storage\framework\views\e183a6100543655415ce95f852cb2e45.php
 storage\framework\views\e25376c7f1b162396cf8ebe9f4daa266.php
 storage\framework\views\e51efba80bd9e3ca2623b406c2670d5f.php
 storage\framework\views\ea1f1ee78010b7be1da638324434ca31.php
 storage\framework\views\ec218957ad1d32931c59a3c9653830fb.php
+storage\framework\views\f45bf24c14cb80bfaf8c40101571da3c.php
 storage\framework\views\f53bd76725dad0ba27d4a3e45ca103af.php
 storage\framework\views\f5df848f0d3b8b9c6ab09c72dd26b192.php
+storage\framework\views\f8ac72214fff7afb1cf8f651143fb35c.php
 storage\framework\views\fa5a2ab5488cd21e1301977292b69c2e.php
 tests\Feature
 tests\Unit
@@ -380,11 +395,11 @@ Branch:
 main
 
 Last 5 commits:
+f519c86 add disposisi dari wakasek
 6eec5c4 add validasi dan pesan pesan error
 bf6c9e4 add laporan 6
 eaba5e1 add laporan 5
 3e42656 add laporan 4
-2e566c0 add laporan 2,3
 ```
 
 
@@ -550,7 +565,8 @@ Route::middleware(['auth', 'check.role:admin_bk'])->prefix('admin')->name('admin
 // --- GURU BK ---
 Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')->group(function () {
     Route::get('/dashboard', [GuruDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('siswa', SiswaController::class);
+    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::get('/siswa/{siswa}', [SiswaController::class, 'show'])->name('siswa.show');
     Route::resource('pelanggaran-siswa', PelanggaranSiswaController::class);
     Route::resource('jadwal-bimbingan', JadwalBimbinganController::class);
 
@@ -593,6 +609,7 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
 // --- WALI KELAS ---
 Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('siswa', WaliKelasSiswaController::class);
     Route::get('/siswa/{siswa}', [WaliKelasSiswaController::class, 'show'])->name('siswa.show');
 
     // === Awal Modifikasi: pindahkan route statis ke atas ===
@@ -639,116 +656,117 @@ require __DIR__ . '/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ...................................................................................................... 
-  GET|HEAD        _debugbar/assets/javascript ................ debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ............. debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} ....... debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
-  GET|HEAD        _debugbar/clockwork/{id} ...... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open ................. debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain ..... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
-  GET|HEAD        admin/dashboard ...................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/guru ............................................... admin.guru.index ΓÇ║ Admin\GuruController@index
-  POST            admin/guru ............................................... admin.guru.store ΓÇ║ Admin\GuruController@store
-  GET|HEAD        admin/guru/create ...................................... admin.guru.create ΓÇ║ Admin\GuruController@create
-  GET|HEAD        admin/guru/{guru} .......................................... admin.guru.show ΓÇ║ Admin\GuruController@show
-  PUT|PATCH       admin/guru/{guru} ...................................... admin.guru.update ΓÇ║ Admin\GuruController@update
-  DELETE          admin/guru/{guru} .................................... admin.guru.destroy ΓÇ║ Admin\GuruController@destroy
-  GET|HEAD        admin/guru/{guru}/edit ..................................... admin.guru.edit ΓÇ║ Admin\GuruController@edit
-  GET|HEAD        admin/jenis-pelanggaran ......... admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
-  POST            admin/jenis-pelanggaran ......... admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
-  GET|HEAD        admin/jenis-pelanggaran/create admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranControΓÇª
-  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranContΓÇª
-  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranConΓÇª
-  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranCΓÇª
-  GET|HEAD        admin/pengguna ................................... admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
-  POST            admin/pengguna ................................... admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
-  GET|HEAD        admin/pengguna/create .......................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
-  GET|HEAD        admin/pengguna/{pengguna} .......................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
-  PUT|PATCH       admin/pengguna/{pengguna} ...................... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
-  DELETE          admin/pengguna/{pengguna} .................... admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
-  GET|HEAD        admin/pengguna/{pengguna}/edit ..................... admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
-  GET|HEAD        admin/verifikasi-jadwal ..................... admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
-  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} . admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
-  GET|HEAD        confirm-password ............................ password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password .............................................. Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard .................................................................................... dashboard
-  POST            email/verification-notification . verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
-  GET|HEAD        forgot-password ............................. password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password ................................ password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        guru/dashboard ......................................... guru.dashboard ΓÇ║ Guru\DashboardController@index
-  GET|HEAD        guru/jadwal-bimbingan ............... guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
-  POST            guru/jadwal-bimbingan ............... guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
-  GET|HEAD        guru/jadwal-bimbingan/create ...... guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
-  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@stΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create guru.laporan.create ΓÇ║ Guru\LaporanBimbinganContrΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@shΓÇª
-  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@ΓÇª
-  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganControllerΓÇª
-  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganControllΓÇª
-  GET|HEAD        guru/laporan-bimbingan ............ guru.laporan-bimbingan.index ΓÇ║ Guru\LaporanBimbinganController@index
-  POST            guru/laporan-bimbingan ............ guru.laporan-bimbingan.store ΓÇ║ Guru\LaporanBimbinganController@store
-  GET|HEAD        guru/laporan-bimbingan/create ... guru.laporan-bimbingan.create ΓÇ║ Guru\LaporanBimbinganController@create
-  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.show ΓÇ║ Guru\LaporanBimbinganControlleΓÇª
-  PUT|PATCH       guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.update ΓÇ║ Guru\LaporanBimbinganControlΓÇª
-  DELETE          guru/laporan-bimbingan/{laporan_bimbingan} guru.laporan-bimbingan.destroy ΓÇ║ Guru\LaporanBimbinganControΓÇª
-  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan}/edit guru.laporan-bimbingan.edit ΓÇ║ Guru\LaporanBimbinganContΓÇª
-  GET|HEAD        guru/laporan/intervensi .... guru.laporan.intervensi ΓÇ║ Guru\LaporanBimbinganController@laporanIntervensi
-  GET|HEAD        guru/laporan/intervensi/pdf guru.laporan.intervensi.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanIntervΓÇª
-  GET|HEAD        guru/laporan/kolektif .......... guru.laporan.kolektif ΓÇ║ Guru\LaporanBimbinganController@laporanKolektif
-  GET|HEAD        guru/laporan/kolektif/pdf guru.laporan.kolektif.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanKolektifPdf
-  GET|HEAD        guru/laporan/siswa/{id} .............. guru.laporan.siswa ΓÇ║ Guru\LaporanBimbinganController@laporanSiswa
-  GET|HEAD        guru/laporan/siswa/{id}/pdf ... guru.laporan.siswa.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanSiswaPdf
-  GET|HEAD        guru/laporan/{laporanBimbingan} ............... guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
-  PUT             guru/laporan/{laporanBimbingan} ........... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
-  GET|HEAD        guru/laporan/{laporanBimbingan}/download guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloΓÇª
-  GET|HEAD        guru/laporan/{laporanBimbingan}/edit .......... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
-  GET|HEAD        guru/pelanggaran-siswa ............ guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
-  POST            guru/pelanggaran-siswa ............ guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
-  GET|HEAD        guru/pelanggaran-siswa/create ... guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaControlleΓÇª
-  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaControlΓÇª
-  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaControΓÇª
-  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaContΓÇª
-  GET|HEAD        guru/siswa ............................................... guru.siswa.index ΓÇ║ Guru\SiswaController@index
-  POST            guru/siswa ............................................... guru.siswa.store ΓÇ║ Guru\SiswaController@store
-  GET|HEAD        guru/siswa/create ...................................... guru.siswa.create ΓÇ║ Guru\SiswaController@create
-  GET|HEAD        guru/siswa/{siswa} ......................................... guru.siswa.show ΓÇ║ Guru\SiswaController@show
-  PUT|PATCH       guru/siswa/{siswa} ..................................... guru.siswa.update ΓÇ║ Guru\SiswaController@update
-  DELETE          guru/siswa/{siswa} ................................... guru.siswa.destroy ΓÇ║ Guru\SiswaController@destroy
-  GET|HEAD        guru/siswa/{siswa}/edit .................................... guru.siswa.edit ΓÇ║ Guru\SiswaController@edit
-  GET|HEAD        kepsek/dashboard ............................ kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
-  POST            kepsek/disposisi/{siswa} ..... kepsek.disposisi.store ΓÇ║ KepalaSekolah\DashboardController@storeDisposisi
-  GET|HEAD        kepsek/laporan ............................ kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
-  GET|HEAD        kepsek/laporan/kinerja .................. kepsek.laporan.kinerja ΓÇ║ Kepsek\LaporanKinerjaController@index
-  GET|HEAD        kepsek/laporan/kinerja/pdf .... kepsek.laporan.kinerja.pdf ΓÇ║ Kepsek\LaporanKinerjaController@downloadPdf
-  GET|HEAD        kepsek/laporan/statistik ............ kepsek.laporan.statistik ΓÇ║ Kepsek\LaporanStatistikController@index
-  GET|HEAD        kepsek/laporan/statistik/pdf kepsek.laporan.statistik.pdf ΓÇ║ Kepsek\LaporanStatistikController@downloadPΓÇª
-  GET|HEAD        kepsek/laporan/{laporanBimbingan} ........... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
-  GET|HEAD        login ............................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login ........................................................ Auth\AuthenticatedSessionController@store
-  POST            logout ............................................ logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        ortu/dashboard ..................................... ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
-  GET|HEAD        ortu/laporan/{laporanBimbingan} .................... ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
-  PUT             password .............................................. password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile .......................................................... profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ...................................................... profile.update ΓÇ║ ProfileController@update
-  DELETE          profile .................................................... profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ............................................... register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register ........................................................... Auth\RegisteredUserController@store
-  POST            reset-password ....................................... password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} .............................. password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} ........................................................................... storage.local
-  GET|HEAD        up ..................................................................................................... 
-  GET|HEAD        verify-email .............................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} .............................. verification.verify ΓÇ║ Auth\VerifyEmailController
-  GET|HEAD        walikelas/dashboard .......................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
-  GET|HEAD        walikelas/laporan/kelas ............... walikelas.laporan.kelas ΓÇ║ WaliKelas\LaporanKelasController@index
-  GET|HEAD        walikelas/laporan/kelas/pdf . walikelas.laporan.kelas.pdf ΓÇ║ WaliKelas\LaporanKelasController@downloadPdf
-  GET|HEAD        walikelas/laporan/{laporanBimbingan} ......... walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
-  GET|HEAD        walikelas/siswa/{siswa} .......................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  GET|HEAD        / ..................................................................................................................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript ............................................................................................... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ............................................................................................ debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} ...................................................................................... debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} ..................................................................................... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
+  GET|HEAD        _debugbar/open ................................................................................................ debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain .................................................................................... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
+  GET|HEAD        admin/dashboard ..................................................................................................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/guru .............................................................................................................................. admin.guru.index ΓÇ║ Admin\GuruController@index
+  POST            admin/guru .............................................................................................................................. admin.guru.store ΓÇ║ Admin\GuruController@store
+  GET|HEAD        admin/guru/create ..................................................................................................................... admin.guru.create ΓÇ║ Admin\GuruController@create
+  GET|HEAD        admin/guru/{guru} ......................................................................................................................... admin.guru.show ΓÇ║ Admin\GuruController@show
+  PUT|PATCH       admin/guru/{guru} ..................................................................................................................... admin.guru.update ΓÇ║ Admin\GuruController@update
+  DELETE          admin/guru/{guru} ................................................................................................................... admin.guru.destroy ΓÇ║ Admin\GuruController@destroy
+  GET|HEAD        admin/guru/{guru}/edit .................................................................................................................... admin.guru.edit ΓÇ║ Admin\GuruController@edit
+  GET|HEAD        admin/jenis-pelanggaran ........................................................................................ admin.jenis-pelanggaran.index ΓÇ║ Admin\JenisPelanggaranController@index
+  POST            admin/jenis-pelanggaran ........................................................................................ admin.jenis-pelanggaran.store ΓÇ║ Admin\JenisPelanggaranController@store
+  GET|HEAD        admin/jenis-pelanggaran/create ............................................................................... admin.jenis-pelanggaran.create ΓÇ║ Admin\JenisPelanggaranController@create
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran} ...................................................................... admin.jenis-pelanggaran.show ΓÇ║ Admin\JenisPelanggaranController@show
+  PUT|PATCH       admin/jenis-pelanggaran/{jenis_pelanggaran} .................................................................. admin.jenis-pelanggaran.update ΓÇ║ Admin\JenisPelanggaranController@update
+  DELETE          admin/jenis-pelanggaran/{jenis_pelanggaran} ................................................................ admin.jenis-pelanggaran.destroy ΓÇ║ Admin\JenisPelanggaranController@destroy
+  GET|HEAD        admin/jenis-pelanggaran/{jenis_pelanggaran}/edit ................................................................. admin.jenis-pelanggaran.edit ΓÇ║ Admin\JenisPelanggaranController@edit
+  GET|HEAD        admin/pengguna .................................................................................................................. admin.pengguna.index ΓÇ║ Admin\PenggunaController@index
+  POST            admin/pengguna .................................................................................................................. admin.pengguna.store ΓÇ║ Admin\PenggunaController@store
+  GET|HEAD        admin/pengguna/create ......................................................................................................... admin.pengguna.create ΓÇ║ Admin\PenggunaController@create
+  GET|HEAD        admin/pengguna/{pengguna} ......................................................................................................... admin.pengguna.show ΓÇ║ Admin\PenggunaController@show
+  PUT|PATCH       admin/pengguna/{pengguna} ..................................................................................................... admin.pengguna.update ΓÇ║ Admin\PenggunaController@update
+  DELETE          admin/pengguna/{pengguna} ................................................................................................... admin.pengguna.destroy ΓÇ║ Admin\PenggunaController@destroy
+  GET|HEAD        admin/pengguna/{pengguna}/edit .................................................................................................... admin.pengguna.edit ΓÇ║ Admin\PenggunaController@edit
+  GET|HEAD        admin/verifikasi-jadwal .................................................................................................... admin.jadwal.index ΓÇ║ Admin\JadwalBimbinganController@index
+  PATCH           admin/verifikasi-jadwal/{jadwalBimbingan} ................................................................................ admin.jadwal.update ΓÇ║ Admin\JadwalBimbinganController@update
+  GET|HEAD        confirm-password ........................................................................................................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password ............................................................................................................................. Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ................................................................................................................................................................... dashboard
+  POST            email/verification-notification ................................................................................ verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
+  GET|HEAD        forgot-password ............................................................................................................ password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password ............................................................................................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        guru/dashboard ........................................................................................................................ guru.dashboard ΓÇ║ Guru\DashboardController@index
+  GET|HEAD        guru/jadwal-bimbingan .............................................................................................. guru.jadwal-bimbingan.index ΓÇ║ Guru\JadwalBimbinganController@index
+  POST            guru/jadwal-bimbingan .............................................................................................. guru.jadwal-bimbingan.store ΓÇ║ Guru\JadwalBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/create ..................................................................................... guru.jadwal-bimbingan.create ΓÇ║ Guru\JadwalBimbinganController@create
+  POST            guru/jadwal-bimbingan/{jadwalBimbingan}/laporan ............................................................................ guru.laporan.store ΓÇ║ Guru\LaporanBimbinganController@store
+  GET|HEAD        guru/jadwal-bimbingan/{jadwalBimbingan}/laporan/create ................................................................... guru.laporan.create ΓÇ║ Guru\LaporanBimbinganController@create
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan} ............................................................................. guru.jadwal-bimbingan.show ΓÇ║ Guru\JadwalBimbinganController@show
+  PUT|PATCH       guru/jadwal-bimbingan/{jadwal_bimbingan} ......................................................................... guru.jadwal-bimbingan.update ΓÇ║ Guru\JadwalBimbinganController@update
+  DELETE          guru/jadwal-bimbingan/{jadwal_bimbingan} ....................................................................... guru.jadwal-bimbingan.destroy ΓÇ║ Guru\JadwalBimbinganController@destroy
+  GET|HEAD        guru/jadwal-bimbingan/{jadwal_bimbingan}/edit ........................................................................ guru.jadwal-bimbingan.edit ΓÇ║ Guru\JadwalBimbinganController@edit
+  GET|HEAD        guru/laporan-bimbingan ........................................................................................... guru.laporan-bimbingan.index ΓÇ║ Guru\LaporanBimbinganController@index
+  POST            guru/laporan-bimbingan ........................................................................................... guru.laporan-bimbingan.store ΓÇ║ Guru\LaporanBimbinganController@store
+  GET|HEAD        guru/laporan-bimbingan/create .................................................................................. guru.laporan-bimbingan.create ΓÇ║ Guru\LaporanBimbinganController@create
+  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan} ......................................................................... guru.laporan-bimbingan.show ΓÇ║ Guru\LaporanBimbinganController@show
+  PUT|PATCH       guru/laporan-bimbingan/{laporan_bimbingan} ..................................................................... guru.laporan-bimbingan.update ΓÇ║ Guru\LaporanBimbinganController@update
+  DELETE          guru/laporan-bimbingan/{laporan_bimbingan} ................................................................... guru.laporan-bimbingan.destroy ΓÇ║ Guru\LaporanBimbinganController@destroy
+  GET|HEAD        guru/laporan-bimbingan/{laporan_bimbingan}/edit .................................................................... guru.laporan-bimbingan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
+  GET|HEAD        guru/laporan/intervensi ................................................................................... guru.laporan.intervensi ΓÇ║ Guru\LaporanBimbinganController@laporanIntervensi
+  GET|HEAD        guru/laporan/intervensi/pdf ........................................................................ guru.laporan.intervensi.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanIntervensiPdf
+  GET|HEAD        guru/laporan/kolektif ......................................................................................... guru.laporan.kolektif ΓÇ║ Guru\LaporanBimbinganController@laporanKolektif
+  GET|HEAD        guru/laporan/kolektif/pdf .............................................................................. guru.laporan.kolektif.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanKolektifPdf
+  GET|HEAD        guru/laporan/siswa/{id} ............................................................................................. guru.laporan.siswa ΓÇ║ Guru\LaporanBimbinganController@laporanSiswa
+  GET|HEAD        guru/laporan/siswa/{id}/pdf .................................................................................. guru.laporan.siswa.pdf ΓÇ║ Guru\LaporanBimbinganController@laporanSiswaPdf
+  GET|HEAD        guru/laporan/{laporanBimbingan} .............................................................................................. guru.laporan.show ΓÇ║ Guru\LaporanBimbinganController@show
+  PUT             guru/laporan/{laporanBimbingan} .......................................................................................... guru.laporan.update ΓÇ║ Guru\LaporanBimbinganController@update
+  GET|HEAD        guru/laporan/{laporanBimbingan}/download .......................................................................... guru.laporan.download ΓÇ║ Guru\LaporanBimbinganController@downloadPdf
+  GET|HEAD        guru/laporan/{laporanBimbingan}/edit ......................................................................................... guru.laporan.edit ΓÇ║ Guru\LaporanBimbinganController@edit
+  GET|HEAD        guru/pelanggaran-siswa ........................................................................................... guru.pelanggaran-siswa.index ΓÇ║ Guru\PelanggaranSiswaController@index
+  POST            guru/pelanggaran-siswa ........................................................................................... guru.pelanggaran-siswa.store ΓÇ║ Guru\PelanggaranSiswaController@store
+  GET|HEAD        guru/pelanggaran-siswa/create .................................................................................. guru.pelanggaran-siswa.create ΓÇ║ Guru\PelanggaranSiswaController@create
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa} ......................................................................... guru.pelanggaran-siswa.show ΓÇ║ Guru\PelanggaranSiswaController@show
+  PUT|PATCH       guru/pelanggaran-siswa/{pelanggaran_siswa} ..................................................................... guru.pelanggaran-siswa.update ΓÇ║ Guru\PelanggaranSiswaController@update
+  DELETE          guru/pelanggaran-siswa/{pelanggaran_siswa} ................................................................... guru.pelanggaran-siswa.destroy ΓÇ║ Guru\PelanggaranSiswaController@destroy
+  GET|HEAD        guru/pelanggaran-siswa/{pelanggaran_siswa}/edit .................................................................... guru.pelanggaran-siswa.edit ΓÇ║ Guru\PelanggaranSiswaController@edit
+  GET|HEAD        guru/siswa .............................................................................................................................. guru.siswa.index ΓÇ║ Guru\SiswaController@index
+  GET|HEAD        guru/siswa/{siswa} ........................................................................................................................ guru.siswa.show ΓÇ║ Guru\SiswaController@show
+  GET|HEAD        kepsek/dashboard ........................................................................................................... kepsek.dashboard ΓÇ║ KepalaSekolah\DashboardController@index
+  POST            kepsek/disposisi/{siswa} .................................................................................... kepsek.disposisi.store ΓÇ║ KepalaSekolah\DashboardController@storeDisposisi
+  GET|HEAD        kepsek/laporan ........................................................................................................... kepsek.laporan.index ΓÇ║ KepalaSekolah\LaporanController@index
+  GET|HEAD        kepsek/laporan/kinerja ................................................................................................. kepsek.laporan.kinerja ΓÇ║ Kepsek\LaporanKinerjaController@index
+  GET|HEAD        kepsek/laporan/kinerja/pdf ................................................................................... kepsek.laporan.kinerja.pdf ΓÇ║ Kepsek\LaporanKinerjaController@downloadPdf
+  GET|HEAD        kepsek/laporan/statistik ........................................................................................... kepsek.laporan.statistik ΓÇ║ Kepsek\LaporanStatistikController@index
+  GET|HEAD        kepsek/laporan/statistik/pdf ............................................................................. kepsek.laporan.statistik.pdf ΓÇ║ Kepsek\LaporanStatistikController@downloadPdf
+  GET|HEAD        kepsek/laporan/{laporanBimbingan} .......................................................................................... kepsek.laporan.show ΓÇ║ KepalaSekolah\LaporanController@show
+  GET|HEAD        login .............................................................................................................................. login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ....................................................................................................................................... Auth\AuthenticatedSessionController@store
+  POST            logout ........................................................................................................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        ortu/dashboard .................................................................................................................... ortu.dashboard ΓÇ║ OrangTua\DashboardController@index
+  GET|HEAD        ortu/laporan/{laporanBimbingan} ................................................................................................... ortu.laporan.show ΓÇ║ OrangTua\LaporanController@show
+  PUT             password ............................................................................................................................. password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile ......................................................................................................................................... profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile ..................................................................................................................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ................................................................................................................................... profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register .............................................................................................................................. register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register .......................................................................................................................................... Auth\RegisteredUserController@store
+  POST            reset-password ...................................................................................................................... password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ............................................................................................................. password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} .......................................................................................................................................................... storage.local
+  GET|HEAD        up .................................................................................................................................................................................... 
+  GET|HEAD        verify-email ............................................................................................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} ............................................................................................................. verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        walikelas/dashboard ......................................................................................................... walikelas.dashboard ΓÇ║ WaliKelas\DashboardController@index
+  GET|HEAD        walikelas/laporan/kelas .............................................................................................. walikelas.laporan.kelas ΓÇ║ WaliKelas\LaporanKelasController@index
+  GET|HEAD        walikelas/laporan/kelas/pdf ................................................................................ walikelas.laporan.kelas.pdf ΓÇ║ WaliKelas\LaporanKelasController@downloadPdf
+  GET|HEAD        walikelas/laporan/{laporanBimbingan} ........................................................................................ walikelas.laporan.show ΓÇ║ WaliKelas\LaporanController@show
+  GET|HEAD        walikelas/siswa ............................................................................................................... walikelas.siswa.index ΓÇ║ WaliKelas\SiswaController@index
+  POST            walikelas/siswa ............................................................................................................... walikelas.siswa.store ΓÇ║ WaliKelas\SiswaController@store
+  GET|HEAD        walikelas/siswa/create ...................................................................................................... walikelas.siswa.create ΓÇ║ WaliKelas\SiswaController@create
+  GET|HEAD        walikelas/siswa/{siswa} ......................................................................................................... walikelas.siswa.show ΓÇ║ WaliKelas\SiswaController@show
+  PUT|PATCH       walikelas/siswa/{siswa} ..................................................................................................... walikelas.siswa.update ΓÇ║ WaliKelas\SiswaController@update
+  DELETE          walikelas/siswa/{siswa} ................................................................................................... walikelas.siswa.destroy ΓÇ║ WaliKelas\SiswaController@destroy
+  GET|HEAD        walikelas/siswa/{siswa}/edit .................................................................................................... walikelas.siswa.edit ΓÇ║ WaliKelas\SiswaController@edit
 
-                                                                                                      Showing [108] routes
+                                                                                                                                                                                     Showing [109] routes
 
 ```
 
@@ -2393,106 +2411,12 @@ class SiswaController extends Controller
     }
 
 
-    public function create()
-    {
-        $waliKelasList = User::where('role', 'wali_kelas')->with('guru')->get();
-        return view('guru.siswa.create', compact('waliKelasList'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nis' => 'required|string|max:50|unique:siswa,nis',
-            'kelas' => 'required|string|max:50',
-            'wali_kelas_id' => 'required|exists:guru,id',
-            'nama_wali' => 'required|string|max:255',
-            'email_wali' => 'required|email|max:255|unique:users,email',
-            'nomor_telepon_wali' => 'nullable|string|max:20',
-        ], [
-            // Tambahkan pesan kustom ini
-            'nis.unique' => 'NIS ini sudah terdaftar untuk siswa lain.',
-            'email_wali.unique' => 'Email ini sudah digunakan oleh akun lain.',
-        ]);
-
-        $siswa = Siswa::create($request->only('nama', 'nis', 'kelas', 'wali_kelas_id'));
-
-        $wali = WaliMurid::create([
-            'siswa_id' => $siswa->id,
-            'nama' => $request->nama_wali,
-            'nomor_telepon' => $request->nomor_telepon_wali,
-        ]);
-
-        User::create([
-            'name' => $wali->nama,
-            'email' => $request->email_wali,
-            'password' => Hash::make('password'),
-            'role' => 'orang_tua',
-            'wali_id' => $wali->id,
-        ]);
-
-        return redirect()->route('guru.siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
-    }
+   
 
     public function show(Siswa $siswa)
     {
-        // Logika ini sama seperti yang kita buat untuk Wali Kelas,
-        // namun akan diarahkan ke view yang berbeda dengan aksi yang lebih lengkap.
-        $siswa->load(['pelanggaran.jenisPelanggaran', 'jadwalBimbingan.konselor']);
+        $siswa->load(['pelanggaran.jenisPelanggaran', 'jadwalBimbingan.konselor', 'waliMurid.user']);
         return view('guru.siswa.show', compact('siswa'));
-    }
-
-    public function edit(Siswa $siswa)
-    {
-        $waliKelasList = User::where('role', 'wali_kelas')->with('guru')->get();
-        $siswa->load('waliMurid.user');
-        return view('guru.siswa.edit', compact('siswa', 'waliKelasList'));
-    }
-
-    public function update(Request $request, Siswa $siswa)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nis' => 'required|string|max:50|unique:siswa,nis,' . $siswa->id,
-            'kelas' => 'required|string|max:50',
-            'wali_kelas_id' => 'required|exists:guru,id',
-            'nama_wali' => 'required|string|max:255',
-            'email_wali' => 'required|email|max:255|unique:users,email,' . $siswa->waliMurid->user->id,
-            'nomor_telepon_wali' => 'nullable|string|max:20',
-            'password' => 'nullable|string|min:8|confirmed',
-        ], [
-            // Tambahkan pesan kustom ini
-            'nis.unique' => 'NIS ini sudah terdaftar untuk siswa lain.',
-            'email_wali.unique' => 'Email ini sudah digunakan oleh akun lain.',
-        ]);
-
-        $siswa->update($request->only('nama', 'nis', 'kelas', 'wali_kelas_id'));
-        $siswa->waliMurid->update([
-            'nama' => $request->nama_wali,
-            'nomor_telepon' => $request->nomor_telepon_wali,
-        ]);
-
-        // Ambil user wali
-        $userWali = $siswa->waliMurid->user;
-        $userWali->name = $request->nama_wali;
-        $userWali->email = $request->email_wali;
-
-        // --- LOGIKA BARU UNTUK UPDATE PASSWORD ---
-        // Update password hanya jika kolomnya diisi
-        if ($request->filled('password')) {
-            $userWali->password = Hash::make($request->password);
-        }
-        $userWali->save();
-        // --- AKHIR LOGIKA BARU ---
-
-        return redirect()->route('guru.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
-    }
-
-    public function destroy(Siswa $siswa)
-    {
-        // cascade on delete akan menghapus wali_murid, user, pelanggaran, dll.
-        $siswa->delete();
-        return redirect()->route('guru.siswa.index')->with('success', 'Data siswa berhasil dihapus.');
     }
 }
 
@@ -2530,11 +2454,15 @@ class DashboardController extends Controller
 
         // --- 2. Logika WAKASEK (Fokus: Siswa Kritis) ---
         if ($user->role == 'wakasek') {
-            $siswaKritis = Siswa::withCount(['pelanggaran as total_poin' => function ($query) {
-                $query->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
-                      ->select(DB::raw('sum(jenis_pelanggaran.poin)'));
-            }])->having('total_poin', '>=', 50)->orderByDesc('total_poin')->get();
-
+            $siswaKritis = Siswa::with(['activeDisposisi.pemberi']) // Tambahkan eager loading ini
+                ->withCount(['pelanggaran as total_poin' => function ($query) {
+                    $query->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
+                          ->select(DB::raw('sum(jenis_pelanggaran.poin)'));
+                }])
+                ->having('total_poin', '>=', 50)
+                ->orderByDesc('total_poin')
+                ->get();
+        
             return view('kepsek.dashboard', compact('stats', 'siswaKritis'));
         }
 
@@ -3011,23 +2939,121 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\Models\WaliMurid;
+use App\Models\User;
 
 class SiswaController extends Controller
 {
-    /**
-     * Menampilkan halaman detail siswa untuk Wali Kelas.
-     */
+    public function index()
+    {
+        // Hanya menampilkan siswa yang dibina oleh wali kelas ini
+        $siswa = Siswa::where('wali_kelas_id', Auth::user()->guru_id)
+            ->latest()
+            ->paginate(10);
+
+        return view('walikelas.siswa.index', compact('siswa'));
+    }
+
+    public function create()
+    {
+        return view('walikelas.siswa.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nis' => 'required|string|max:50|unique:siswa,nis',
+            'kelas' => 'required|string|max:50',
+            'nama_wali' => 'required|string|max:255',
+            'email_wali' => 'required|email|max:255|unique:users,email',
+            'nomor_telepon_wali' => 'nullable|string|max:20',
+        ]);
+
+        DB::transaction(function () use ($request) {
+            $siswa = Siswa::create([
+                'nama' => $request->nama,
+                'nis' => $request->nis,
+                'kelas' => $request->kelas,
+                'wali_kelas_id' => Auth::user()->guru_id, // Auto-set ke wali kelas yang login
+            ]);
+
+            $wali = WaliMurid::create([
+                'siswa_id' => $siswa->id,
+                'nama' => $request->nama_wali,
+                'nomor_telepon' => $request->nomor_telepon_wali,
+            ]);
+
+            User::create([
+                'name' => $wali->nama,
+                'email' => $request->email_wali,
+                'password' => Hash::make('password'), // Default password
+                'role' => 'orang_tua',
+                'wali_id' => $wali->id,
+            ]);
+        });
+
+        return redirect()->route('walikelas.siswa.index')->with('success', 'Data siswa dan akun orang tua berhasil ditambahkan.');
+    }
+
     public function show(Siswa $siswa)
     {
-        // Keamanan: Pastikan wali kelas hanya bisa melihat siswa di kelasnya.
-        if ($siswa->wali_kelas_id !== Auth::user()->guru_id) {
-            abort(403, 'Anda tidak memiliki hak akses untuk melihat data siswa ini.');
-        }
-
-        // Muat semua relasi yang dibutuhkan untuk ditampilkan di view
-        $siswa->load(['pelanggaran.jenisPelanggaran', 'jadwalBimbingan.konselor']);
-
+        if ($siswa->wali_kelas_id !== Auth::user()->guru_id) abort(403);
+        
+        $siswa->load(['pelanggaran.jenisPelanggaran', 'jadwalBimbingan.konselor', 'waliMurid.user']);
         return view('walikelas.siswa.show', compact('siswa'));
+    }
+
+    public function edit(Siswa $siswa)
+    {
+        if ($siswa->wali_kelas_id !== Auth::user()->guru_id) abort(403);
+
+        $siswa->load('waliMurid.user');
+        return view('walikelas.siswa.edit', compact('siswa'));
+    }
+
+    public function update(Request $request, Siswa $siswa)
+    {
+        if ($siswa->wali_kelas_id !== Auth::user()->guru_id) abort(403);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nis' => 'required|string|max:50|unique:siswa,nis,' . $siswa->id,
+            'kelas' => 'required|string|max:50',
+            'nama_wali' => 'required|string|max:255',
+            'email_wali' => 'required|email|max:255|unique:users,email,' . $siswa->waliMurid->user->id,
+            'nomor_telepon_wali' => 'nullable|string|max:20',
+        ]);
+
+        DB::transaction(function () use ($request, $siswa) {
+            $siswa->update([
+                'nama' => $request->nama,
+                'nis' => $request->nis,
+                'kelas' => $request->kelas,
+            ]);
+
+            $siswa->waliMurid->update([
+                'nama' => $request->nama_wali,
+                'nomor_telepon' => $request->nomor_telepon_wali,
+            ]);
+
+            $siswa->waliMurid->user->update([
+                'name' => $request->nama_wali,
+                'email' => $request->email_wali,
+            ]);
+        });
+
+        return redirect()->route('walikelas.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
+    }
+
+    public function destroy(Siswa $siswa)
+    {
+        if ($siswa->wali_kelas_id !== Auth::user()->guru_id) abort(403);
+        
+        $siswa->delete();
+        return redirect()->route('walikelas.siswa.index')->with('success', 'Data siswa berhasil dihapus.');
     }
 }
 
@@ -3414,6 +3440,11 @@ class Siswa extends Model
             'id',            // PK di tabel siswa
             'id'             // PK di tabel jadwal_bimbingan
         );
+    }
+
+    public function activeDisposisi()
+    {
+        return $this->hasOne(Disposisi::class)->where('status_selesai', false)->latest();
     }
 }
 
@@ -6350,58 +6381,109 @@ $classes = ($active ?? false)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-800 leading-tight">
-            {{ __('Dasbor Guru BK') }}
+            {{ __('Dashboard Guru BK') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
-                    <div class="p-6">
-                        <h3 class="text-lg font-medium text-slate-900 mb-4">Jadwal Bimbingan Terdekat</h3>
-                        <div class="space-y-4">
-                            @forelse ($jadwalAkanDatang as $jadwal)
-                                <div class="p-4 bg-slate-50 rounded-lg">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <p class="font-semibold text-teal-700">{{ $jadwal->siswa->nama }}</p>
-                                            <p class="text-sm text-slate-500">{{ $jadwal->siswa->kelas }}</p>
+            
+            {{-- 1. BOX TUPOKSI (Penyempurnaan Revisi 3) --}}
+            <div class="mb-8 p-6 bg-teal-50 border-l-4 border-teal-500 rounded-r-xl shadow-sm">
+                <div class="flex items-center gap-3 mb-2">
+                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="font-bold text-teal-900">Tugas Pokok & Fungsi (Tupoksi)</h3>
+                </div>
+                <p class="text-sm text-teal-800 leading-relaxed">
+                    Fokus utama Anda adalah <strong>Eksekusi Pembinaan</strong>. Gunakan sistem ini untuk mencatat pelanggaran harian, mengelola jadwal bimbingan siswa, dan menindaklanjuti instruksi (disposisi) dari pimpinan untuk kasus-kasus kritis.
+                </p>
+            </div>
+
+            {{-- 2. NOTIFIKASI INSTRUKSI WAKASEK (Fitur Disposisi) --}}
+            @if($instruksiWakasek->count() > 0)
+                <div class="mb-8 space-y-4">
+                    <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                        </span>
+                        Instruksi Pimpinan Perlu Tindak Lanjut
+                    </h3>
+                    @foreach($instruksiWakasek as $disposisi)
+                        <div class="bg-white border-l-4 border-amber-500 p-5 shadow-sm rounded-r-xl border border-slate-200">
+                            <div class="flex justify-between items-start">
+                                <div class="flex gap-4">
+                                    <div class="bg-amber-100 p-2 rounded-lg h-fit">
+                                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h4 class="text-sm font-bold text-slate-900 uppercase">Dari: {{ $disposisi->pemberi->name }}</h4>
+                                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">{{ $disposisi->created_at->diffForHumans() }}</span>
                                         </div>
-                                        <div class="text-right">
-                                            <p class="text-sm font-medium text-slate-800">{{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('dddd, D MMM') }}</p>
-                                            <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('HH:mm') }}</p>
+                                        <p class="text-sm text-slate-600">Siswa: <span class="font-bold text-teal-700">{{ $disposisi->siswa->nama }} ({{ $disposisi->siswa->kelas }})</span></p>
+                                        <div class="mt-2 p-3 bg-slate-50 rounded-lg border border-slate-100 italic text-sm text-slate-700">
+                                            "{{ $disposisi->pesan }}"
                                         </div>
                                     </div>
                                 </div>
+                                <a href="{{ route('guru.siswa.show', $disposisi->siswa->id) }}" class="text-xs font-bold text-teal-600 hover:text-teal-700 bg-teal-50 px-3 py-2 rounded-lg transition-colors">
+                                    Proses Sekarang &rarr;
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {{-- 3. JADWAL AKAN DATANG --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                    <div class="p-6">
+                        <h3 class="text-lg font-medium text-slate-900 mb-4">Jadwal Terverifikasi yang Akan Datang</h3>
+                        <div class="space-y-4">
+                            @forelse ($jadwalAkanDatang as $jadwal)
+                                <div class="flex items-center p-4 bg-slate-50 rounded-lg border border-slate-100 group hover:border-teal-300 transition-colors">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-teal-700">{{ $jadwal->siswa->nama }}</p>
+                                        <p class="text-sm text-slate-500">{{ $jadwal->siswa->kelas }}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-slate-800">{{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('dddd, D MMM') }}</p>
+                                        <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($jadwal->tanggal_jadwal)->isoFormat('HH:mm') }}</p>
+                                    </div>
+                                </div>
                             @empty
-                                <p class="text-center text-sm text-slate-500 py-4">Tidak ada jadwal terverifikasi yang akan datang.</p>
+                                <p class="text-center text-sm text-slate-500 py-4 italic">Tidak ada jadwal bimbingan aktif.</p>
                             @endforelse
                         </div>
                     </div>
                 </div>
 
+                {{-- 4. SISWA POIN TERTINGGI --}}
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                     <div class="p-6">
                         <h3 class="text-lg font-medium text-slate-900 mb-4">Siswa dengan Poin Pelanggaran Tertinggi</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full">
-                                <thead class="border-b border-slate-200">
+                                <thead class="border-b border-slate-200 text-slate-500 uppercase text-[10px] font-bold">
                                     <tr>
-                                        <th class="py-2 text-left text-xs font-semibold text-slate-500 uppercase">Nama Siswa</th>
-                                        <th class="py-2 text-left text-xs font-semibold text-slate-500 uppercase">Kelas</th>
-                                        <th class="py-2 text-center text-xs font-semibold text-slate-500 uppercase">Total Poin</th>
+                                        <th class="py-2 text-left">Nama Siswa</th>
+                                        <th class="py-2 text-left">Kelas</th>
+                                        <th class="py-2 text-center">Total Poin</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="divide-y divide-slate-100">
                                     @forelse ($siswaPoinTertinggi as $siswa)
-                                        <tr class="border-b border-slate-100">
+                                        <tr class="hover:bg-slate-50 transition-colors">
                                             <td class="py-3 text-sm font-medium text-slate-800">{{ $siswa->nama }}</td>
                                             <td class="py-3 text-sm text-slate-500">{{ $siswa->kelas }}</td>
-                                            <td class="py-3 text-sm font-bold text-center {{ $siswa->total_poin > 50 ? 'text-red-500' : 'text-slate-800' }}">{{ $siswa->total_poin }}</td>
+                                            <td class="py-3 text-sm font-bold text-center {{ $siswa->total_poin > 50 ? 'text-red-500' : 'text-slate-800' }}">
+                                                {{ $siswa->total_poin }}
+                                            </td>
                                         </tr>
                                     @empty
-                                        <tr><td colspan="3" class="py-3 text-center text-sm text-slate-500">Data pelanggaran masih kosong.</td></tr>
+                                        <tr><td colspan="3" class="py-10 text-center text-sm text-slate-400 italic">Data pelanggaran masih kosong.</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -6802,69 +6884,110 @@ $classes = ($active ?? false)
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+
             {{-- BOX TUPOKSI (Penjelasan Tugas) --}}
             <div class="mb-8 p-6 bg-teal-50 border-l-4 border-teal-500 rounded-r-xl shadow-sm">
                 <div class="flex items-center gap-3 mb-2">
-                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                     <h3 class="font-bold text-teal-900">Tugas Pokok & Fungsi (Tupoksi)</h3>
                 </div>
                 <p class="text-sm text-teal-800 leading-relaxed">
-                    @if(Auth::user()->role == 'wakasek')
-                        Sebagai <strong>Wakasek Kesiswaan</strong>, fokus utama Anda adalah pengawasan kedisiplinan harian. Gunakan dashboard ini untuk memantau siswa dengan akumulasi poin tinggi dan berikan <strong>Disposisi</strong> (instruksi langsung) kepada Guru BK untuk tindakan lebih lanjut.
+                    @if (Auth::user()->role == 'wakasek')
+                        Sebagai <strong>Wakasek Kesiswaan</strong>, fokus utama Anda adalah pengawasan kedisiplinan
+                        harian. Gunakan dashboard ini untuk memantau siswa dengan akumulasi poin tinggi dan berikan
+                        <strong>Disposisi</strong> (instruksi langsung) kepada Guru BK untuk tindakan lebih lanjut.
                     @else
-                        Sebagai <strong>Kepala Sekolah</strong>, fokus Anda adalah pemantauan strategis. Gunakan grafik tren untuk mengevaluasi efektivitas program bimbingan konseling dan pastikan kinerja staf BK berjalan optimal sesuai target sekolah.
+                        Sebagai <strong>Kepala Sekolah</strong>, fokus Anda adalah pemantauan strategis. Gunakan grafik
+                        tren untuk mengevaluasi efektivitas program bimbingan konseling dan pastikan kinerja staf BK
+                        berjalan optimal sesuai target sekolah.
                     @endif
                 </p>
             </div>
 
             {{-- CARD STATISTIK UMUM --}}
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                @foreach([
-                    ['Total Siswa', $stats['total_siswa'], 'bg-blue-500'],
-                    ['Pelanggaran', $stats['total_pelanggaran'], 'bg-red-500'],
-                    ['Laporan Selesai', $stats['total_laporan'], 'bg-green-500'],
-                    ['Jadwal Aktif', $stats['jadwal_aktif'], 'bg-amber-500']
-                ] as $item)
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center">
-                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">{{ $item[0] }}</p>
-                    <p class="text-3xl font-bold text-slate-800">{{ $item[1] }}</p>
-                </div>
+                @foreach ([['Total Siswa', $stats['total_siswa'], 'bg-blue-500'], ['Pelanggaran', $stats['total_pelanggaran'], 'bg-red-500'], ['Laporan Selesai', $stats['total_laporan'], 'bg-green-500'], ['Jadwal Aktif', $stats['jadwal_aktif'], 'bg-amber-500']] as $item)
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 text-center">
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">{{ $item[0] }}
+                        </p>
+                        <p class="text-3xl font-bold text-slate-800">{{ $item[1] }}</p>
+                    </div>
                 @endforeach
             </div>
 
             <div class="grid grid-cols-1 gap-8">
-                @if(Auth::user()->role == 'wakasek')
+                @if (Auth::user()->role == 'wakasek')
                     {{-- TAMPILAN KHUSUS WAKASEK: DAFTAR SISWA KRITIS --}}
                     <div class="bg-white shadow-sm sm:rounded-xl overflow-hidden border border-slate-200">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                            <h3 class="font-bold text-red-700 uppercase text-sm tracking-widest">Siswa Butuh Penanganan Segera (>50 Poin)</h3>
-                            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Zona Merah</span>
+                            <h3 class="font-bold text-red-700 uppercase text-sm tracking-widest">Siswa Butuh Penanganan
+                                Segera (>50 Poin)</h3>
+                            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Zona
+                                Merah</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-slate-200">
                                 <thead class="bg-white">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Siswa</th>
-                                        <th class="px-6 py-3 text-center text-xs font-semibold text-slate-500 uppercase">Total Poin</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Berikan Instruksi (Disposisi)</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                                            Siswa</th>
+                                        <th
+                                            class="px-6 py-3 text-center text-xs font-semibold text-slate-500 uppercase">
+                                            Total Poin</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                                            Berikan Instruksi (Disposisi)</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-slate-100">
                                     @forelse($siswaKritis as $s)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $s->nama }} ({{ $s->kelas }})</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center text-lg font-bold text-red-600">{{ $s->total_poin }}</td>
-                                        <td class="px-6 py-4">
-                                            <form action="{{ route('kepsek.disposisi.store', $s->id) }}" method="POST" class="flex gap-2">
-                                                @csrf
-                                                <input type="text" name="pesan" placeholder="Contoh: Segera panggil orang tua..." required class="text-sm w-full border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
-                                                <x-primary-button class="text-[10px]">Kirim</x-primary-button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                                {{ $s->nama }} ({{ $s->kelas }})</td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-center text-lg font-bold text-red-600">
+                                                {{ $s->total_poin }}</td>
+                                            <td class="px-6 py-4">
+                                                @if ($s->activeDisposisi)
+                                                    {{-- Jika ada instruksi yang sedang berjalan --}}
+                                                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                                                        <div
+                                                            class="flex items-center gap-2 mb-1 text-[10px] font-bold text-amber-700 uppercase">
+                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                                </path>
+                                                            </svg>
+                                                            Sedang Diproses Guru BK
+                                                        </div>
+                                                        <p class="text-xs text-slate-600 italic">
+                                                            "{{ $s->activeDisposisi->pesan }}"</p>
+                                                        <p class="text-[9px] text-slate-400 mt-1 italic">Dikirim:
+                                                            {{ $s->activeDisposisi->created_at->diffForHumans() }}</p>
+                                                    </div>
+                                                @else
+                                                    {{-- Jika tidak ada instruksi aktif, tampilkan form input --}}
+                                                    <form action="{{ route('kepsek.disposisi.store', $s->id) }}"
+                                                        method="POST" class="flex gap-2">
+                                                        @csrf
+                                                        <input type="text" name="pesan"
+                                                            placeholder="Beri instruksi baru..." required
+                                                            class="text-sm w-full border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500">
+                                                        <x-primary-button
+                                                            class="text-[10px] whitespace-nowrap">Kirim</x-primary-button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @empty
-                                    <tr><td colspan="3" class="px-6 py-10 text-center text-slate-400 italic">Alhamdulillah, tidak ada siswa di zona merah.</td></tr>
+                                        <tr>
+                                            <td colspan="3" class="px-6 py-10 text-center text-slate-400 italic">
+                                                Alhamdulillah, tidak ada siswa di zona merah.</td>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -6876,9 +6999,11 @@ $classes = ($active ?? false)
                         <div class="flex justify-between items-center mb-8">
                             <h3 class="font-bold text-slate-800">Analisis Tren Kedisiplinan</h3>
                             <form action="{{ route('kepsek.dashboard') }}" method="GET">
-                                <select name="tahun" onchange="this.form.submit()" class="border-slate-300 rounded-lg text-sm">
-                                    @foreach($availableYears as $y)
-                                        <option value="{{ $y }}" @selected($y == $selectedYear)>Tahun {{ $y }}</option>
+                                <select name="tahun" onchange="this.form.submit()"
+                                    class="border-slate-300 rounded-lg text-sm">
+                                    @foreach ($availableYears as $y)
+                                        <option value="{{ $y }}" @selected($y == $selectedYear)>Tahun
+                                            {{ $y }}</option>
                                     @endforeach
                                 </select>
                             </form>
@@ -6890,22 +7015,42 @@ $classes = ($active ?? false)
         </div>
     </div>
 
-    @if(Auth::user()->role == 'kepala_sekolah')
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new ApexCharts(document.querySelector("#chart"), {
-                series: [{ name: 'Pelanggaran', data: @json($chartValues) }],
-                chart: { type: 'area', height: 350, toolbar: {show:false} },
-                colors: ['#0d9488'],
-                stroke: { curve: 'smooth' },
-                xaxis: { categories: @json($labels) },
-                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.3 } }
-            }).render();
-        });
-    </script>
-    @endpush
+    @if (Auth::user()->role == 'kepala_sekolah')
+        @push('scripts')
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    new ApexCharts(document.querySelector("#chart"), {
+                        series: [{
+                            name: 'Pelanggaran',
+                            data: @json($chartValues)
+                        }],
+                        chart: {
+                            type: 'area',
+                            height: 350,
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: ['#0d9488'],
+                        stroke: {
+                            curve: 'smooth'
+                        },
+                        xaxis: {
+                            categories: @json($labels)
+                        },
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                shadeIntensity: 1,
+                                opacityFrom: 0.7,
+                                opacityTo: 0.3
+                            }
+                        }
+                    }).render();
+                });
+            </script>
+        @endpush
     @endif
 </x-app-layout>
 
@@ -7155,10 +7300,23 @@ $classes = ($active ?? false)
                 {{ __('Jadwal Bimbingan') }}
             </x-nav-link>
         @endif
-
+        {{-- MENU KHUSUS WALI KELAS --}}
         @if (Auth::user()->role === 'wali_kelas')
+            <div class="pt-4 pb-2">
+                <p class="text-[10px] font-bold text-gray-400 uppercase px-4 tracking-widest">Manajemen Kelas</p>
+            </div>
+            {{-- REVISI 2: Link Kelola Siswa --}}
+            <x-nav-link :href="route('walikelas.siswa.index')" :active="request()->routeIs('walikelas.siswa.*')">
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a5.97 5.97 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                </svg>
+                {{ __('Kelola Siswa') }}
+            </x-nav-link>
             <x-nav-link href="{{ route('walikelas.laporan.kelas') }}" :active="request()->routeIs('walikelas.laporan.kelas*')">
-                Laporan Kelas
+                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                {{ __('Laporan Kelas') }}
             </x-nav-link>
         @endif
 
@@ -8224,6 +8382,354 @@ $classes = ($active ?? false)
     </div>
 </x-app-layout>
 
+===== resources\views\walikelas\siswa\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+            {{ __('Tambah Siswa Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-slate-200">
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 uppercase tracking-wider">Form Registrasi Siswa
+                            </h3>
+                            <p class="text-sm text-slate-500">Silakan lengkapi data siswa dan data wali murid di bawah
+                                ini.</p>
+                        </div>
+                        <a href="{{ route('walikelas.siswa.index') }}"
+                            class="text-sm font-semibold text-slate-600 hover:text-slate-800 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Kembali
+                        </a>
+                    </div>
+
+                    <form action="{{ route('walikelas.siswa.store') }}" method="POST" class="space-y-8">
+                        @csrf
+
+                        {{-- BAGIAN 1: DATA SISWA --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-2 pb-2 border-b border-slate-100">
+                                <h4 class="text-sm font-bold text-teal-600 uppercase tracking-widest">I. Data Identitas
+                                    Siswa</h4>
+                            </div>
+
+                            <div>
+                                <x-input-label for="nama" :value="__('Nama Lengkap Siswa')" />
+                                <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama"
+                                    :value="old('nama')" required autofocus placeholder="Masukkan nama lengkap siswa" />
+                                <x-input-error :messages="$errors->get('nama')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="nis" :value="__('Nomor Induk Siswa (NIS)')" />
+                                <x-text-input id="nis" class="block mt-1 w-full" type="text" name="nis"
+                                    :value="old('nis')" required placeholder="Masukkan NIS" />
+                                <x-input-error :messages="$errors->get('nis')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="kelas" :value="__('Kelas')" />
+                                <x-text-input id="kelas" class="block mt-1 w-full" type="text" name="kelas"
+                                    :value="old('kelas')" required placeholder="Contoh: X MIPA 1" />
+                                <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
+                            </div>
+                        </div>
+
+                        {{-- BAGIAN 2: DATA WALI MURID --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-2 pb-2 border-b border-slate-100">
+                                <h4 class="text-sm font-bold text-teal-600 uppercase tracking-widest">II. Data Wali
+                                    Murid & Akun Sistem</h4>
+                                <p class="text-[11px] text-slate-400 mt-1 italic">*Data ini akan digunakan otomatis
+                                    sebagai akun login orang tua.</p>
+                            </div>
+
+                            <div>
+                                <x-input-label for="nama_wali" :value="__('Nama Wali Murid')" />
+                                <x-text-input id="nama_wali" class="block mt-1 w-full" type="text" name="nama_wali"
+                                    :value="old('nama_wali')" required placeholder="Masukkan nama orang tua/wali" />
+                                <x-input-error :messages="$errors->get('nama_wali')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="email_wali" :value="__('Email Wali (Untuk Login)')" />
+                                <x-text-input id="email_wali" class="block mt-1 w-full" type="email" name="email_wali"
+                                    :value="old('email_wali')" required placeholder="Contoh: wali@email.com" />
+                                <x-input-error :messages="$errors->get('email_wali')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="nomor_telepon_wali" :value="__('Nomor WhatsApp Wali')" />
+                                <x-text-input id="nomor_telepon_wali" class="block mt-1 w-full" type="text"
+                                    name="nomor_telepon_wali" :value="old('nomor_telepon_wali')" placeholder="Contoh: 08123456789" />
+                                <x-input-error :messages="$errors->get('nomor_telepon_wali')" class="mt-2" />
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-start gap-3">
+                                <svg class="w-5 h-5 text-slate-400 mt-0.5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p class="text-xs text-slate-500 leading-relaxed">
+                                    <strong>Catatan:</strong> Password default untuk akun orang tua adalah <span
+                                        class="font-mono font-bold text-slate-700 underline">password</span>. Silakan
+                                    informasikan kepada orang tua untuk segera mengganti password setelah login pertama
+                                    kali.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-6 border-t border-slate-100">
+                            <x-primary-button class="px-8 py-3 bg-teal-600 hover:bg-teal-700">
+                                {{ __('Simpan Data Siswa') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\walikelas\siswa\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+            {{ __('Edit Data Siswa') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-slate-200">
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 uppercase tracking-wider">Form Edit Siswa</h3>
+                            <p class="text-sm text-slate-500">Perbarui informasi siswa dan data akun orang tua di bawah
+                                ini.</p>
+                        </div>
+                        <a href="{{ route('walikelas.siswa.index') }}"
+                            class="text-sm font-semibold text-slate-600 hover:text-slate-800 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Kembali
+                        </a>
+                    </div>
+
+                    <form action="{{ route('walikelas.siswa.update', $siswa->id) }}" method="POST" class="space-y-8">
+                        @csrf
+                        @method('PUT')
+
+                        {{-- BAGIAN 1: DATA SISWA --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-2 pb-2 border-b border-slate-100">
+                                <h4 class="text-sm font-bold text-teal-600 uppercase tracking-widest">I. Data Identitas
+                                    Siswa</h4>
+                            </div>
+
+                            <div>
+                                <x-input-label for="nama" :value="__('Nama Lengkap Siswa')" />
+                                <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama"
+                                    :value="old('nama', $siswa->nama)" required autofocus />
+                                <x-input-error :messages="$errors->get('nama')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="nis" :value="__('Nomor Induk Siswa (NIS)')" />
+                                <x-text-input id="nis" class="block mt-1 w-full" type="text" name="nis"
+                                    :value="old('nis', $siswa->nis)" required />
+                                <x-input-error :messages="$errors->get('nis')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="kelas" :value="__('Kelas')" />
+                                <x-text-input id="kelas" class="block mt-1 w-full" type="text" name="kelas"
+                                    :value="old('kelas', $siswa->kelas)" required />
+                                <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
+                            </div>
+                        </div>
+
+                        {{-- BAGIAN 2: DATA WALI MURID --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-2 pb-2 border-b border-slate-100">
+                                <h4 class="text-sm font-bold text-teal-600 uppercase tracking-widest">II. Data Wali
+                                    Murid & Akun Sistem</h4>
+                            </div>
+
+                            <div>
+                                <x-input-label for="nama_wali" :value="__('Nama Wali Murid')" />
+                                <x-text-input id="nama_wali" class="block mt-1 w-full" type="text" name="nama_wali"
+                                    :value="old('nama_wali', $siswa->waliMurid->nama)" required />
+                                <x-input-error :messages="$errors->get('nama_wali')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="email_wali" :value="__('Email Wali (Username Login)')" />
+                                <x-text-input id="email_wali" class="block mt-1 w-full" type="email" name="email_wali"
+                                    :value="old('email_wali', $siswa->waliMurid->user->email)" required />
+                                <x-input-error :messages="$errors->get('email_wali')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="nomor_telepon_wali" :value="__('Nomor WhatsApp Wali')" />
+                                <x-text-input id="nomor_telepon_wali" class="block mt-1 w-full" type="text"
+                                    name="nomor_telepon_wali" :value="old('nomor_telepon_wali', $siswa->waliMurid->nomor_telepon)" />
+                                <x-input-error :messages="$errors->get('nomor_telepon_wali')" class="mt-2" />
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-6 border-t border-slate-100 gap-4">
+                            <x-secondary-button onclick="window.location.href='{{ route('walikelas.siswa.index') }}'">
+                                {{ __('Batal') }}
+                            </x-secondary-button>
+                            <x-primary-button class="px-8 bg-teal-600 hover:bg-teal-700">
+                                {{ __('Simpan Perubahan') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\walikelas\siswa\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+            {{ __('Manajemen Siswa Perwalian') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
+                <div class="p-6 text-slate-900">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                        <h3 class="text-lg font-bold text-slate-700 uppercase tracking-wider">Daftar Siswa Kelas
+                            {{ Auth::user()->guru->siswaWalian->first()->kelas ?? '-' }}</h3>
+                        <a href="{{ route('walikelas.siswa.create') }}"
+                            class="inline-flex items-center px-4 py-2 bg-teal-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-700 transition ease-in-out duration-150">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Tambah Siswa Baru
+                        </a>
+                    </div>
+
+                    @if (session('success'))
+                        <div
+                            class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm rounded-r-lg">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <div class="overflow-x-auto border border-slate-100 rounded-xl">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase">No</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase">NIS</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase">Nama
+                                        Siswa</th>
+                                    <th class="px-6 py-3 text-center text-xs font-bold text-slate-500 uppercase">Total
+                                        Poin</th>
+                                    <th class="px-6 py-3 text-right text-xs font-bold text-slate-500 uppercase">Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-100">
+                                @forelse ($siswa as $s)
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                            {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-700">
+                                            {{ $s->nis }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                                            {{ $s->nama }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <span
+                                                class="px-3 py-1 rounded-full text-xs font-bold {{ $s->totalPoin() > 50 ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-600' }}">
+                                                {{ $s->totalPoin() }} Poin
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div class="flex justify-end gap-2">
+                                                <a href="{{ route('walikelas.siswa.show', $s->id) }}"
+                                                    class="p-2 text-teal-600 bg-teal-50 rounded-lg hover:bg-teal-100"
+                                                    title="Detail">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                                                        </path>
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <a href="{{ route('walikelas.siswa.edit', $s->id) }}"
+                                                    class="p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100"
+                                                    title="Edit">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <form action="{{ route('walikelas.siswa.destroy', $s->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Hapus siswa ini? Data pelanggaran & akun orang tua juga akan terhapus.')"
+                                                    class="inline">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit"
+                                                        class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                            </path>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="px-6 py-10 text-center text-slate-400 italic text-sm">
+                                            Belum ada siswa yang ditambahkan ke kelas ini.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-6">
+                        {{ $siswa->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
 ===== resources\views\walikelas\siswa\show.blade.php =====
 <x-app-layout>
     <x-slot name="header">
@@ -8365,15 +8871,38 @@ $classes = ($active ?? false)
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
+            {{-- BOX TUPOKSI (Penyempurnaan Revisi 3) --}}
+            <div class="mb-8 p-6 bg-teal-50 border-l-4 border-teal-500 rounded-r-xl shadow-sm">
+                <div class="flex items-center gap-3 mb-2">
+                    <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3 class="font-bold text-teal-900">Tugas Pokok & Fungsi (Tupoksi)</h3>
+                </div>
+                <p class="text-sm text-teal-800 leading-relaxed">
+                    Sebagai <strong>Wali Kelas</strong>, Anda adalah penanggung jawab utama data siswa di kelas Anda. Tugas Anda meliputi <strong>pendaftaran siswa baru</strong> ke dalam sistem, pemantauan poin pelanggaran, serta koordinasi dengan Guru BK jika terdapat siswa yang membutuhkan bimbingan intensif.
+                </p>
+            </div>
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl">
                 <div class="p-6">
-                    <div class="border-b border-slate-200 pb-4 mb-6">
-                        <h3 class="text-lg font-medium text-slate-900">
-                            Daftar Siswa Perwalian
-                        </h3>
-                        <p class="mt-1 text-sm text-slate-500">
-                            Berikut adalah daftar siswa yang berada di bawah perwalian Anda beserta rekapitulasi poin pelanggarannya.
-                        </p>
+                    <div class="border-b border-slate-200 pb-4 mb-6 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-lg font-medium text-slate-900">
+                                Daftar Siswa Perwalian
+                            </h3>
+                            <p class="mt-1 text-sm text-slate-500">
+                                Berikut adalah daftar siswa yang berada di bawah perwalian Anda.
+                            </p>
+                        </div>
+                        {{-- Tombol Kelola Siswa (Revisi 2: Akses Input) --}}
+                        <a href="{{ route('walikelas.siswa.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-800 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-slate-700 active:bg-slate-900 focus:outline-none focus:border-slate-900 focus:ring ring-slate-300 disabled:opacity-25 transition ease-in-out duration-150">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Kelola & Tambah Siswa
+                        </a>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -8389,7 +8918,7 @@ $classes = ($active ?? false)
                             </thead>
                             <tbody class="bg-white divide-y divide-slate-200">
                                 @forelse ($siswaDiampu as $siswa)
-                                    <tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{{ $loop->iteration }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $siswa->nama }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ $siswa->nis }}</td>
@@ -8402,8 +8931,9 @@ $classes = ($active ?? false)
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-6 py-4 text-center text-slate-500">
-                                            Tidak ada siswa yang terdaftar di bawah perwalian Anda.
+                                        <td colspan="5" class="px-6 py-10 text-center text-slate-500 italic">
+                                            Tidak ada siswa yang terdaftar di bawah perwalian Anda. <br>
+                                            <a href="{{ route('walikelas.siswa.create') }}" class="text-teal-600 font-bold hover:underline">Tambah Siswa Sekarang</a>
                                         </td>
                                     </tr>
                                 @endforelse

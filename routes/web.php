@@ -72,7 +72,8 @@ Route::middleware(['auth', 'check.role:admin_bk'])->prefix('admin')->name('admin
 // --- GURU BK ---
 Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')->group(function () {
     Route::get('/dashboard', [GuruDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('siswa', SiswaController::class);
+    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::get('/siswa/{siswa}', [SiswaController::class, 'show'])->name('siswa.show');
     Route::resource('pelanggaran-siswa', PelanggaranSiswaController::class);
     Route::resource('jadwal-bimbingan', JadwalBimbinganController::class);
 
@@ -115,6 +116,7 @@ Route::middleware(['auth', 'check.role:guru_bk'])->prefix('guru')->name('guru.')
 // --- WALI KELAS ---
 Route::middleware(['auth', 'check.role:wali_kelas'])->prefix('walikelas')->name('walikelas.')->group(function () {
     Route::get('/dashboard', [WaliKelasDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('siswa', WaliKelasSiswaController::class);
     Route::get('/siswa/{siswa}', [WaliKelasSiswaController::class, 'show'])->name('siswa.show');
 
     // === Awal Modifikasi: pindahkan route statis ke atas ===
