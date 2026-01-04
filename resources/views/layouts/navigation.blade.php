@@ -57,14 +57,6 @@
 
         {{-- MENU KHUSUS GURU BK --}}
         @if (Auth::user()->role == 'guru_bk')
-            <x-nav-link :href="route('guru.siswa.index')" :active="request()->routeIs('guru.siswa.*')">
-                <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-                {{ __('Data Siswa') }}
-            </x-nav-link>
 
             <x-nav-link :href="route('guru.pelanggaran-siswa.index')" :active="request()->routeIs('guru.pelanggaran-siswa.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -74,13 +66,6 @@
                 </svg>
                 {{ __('Catat Pelanggaran') }}
             </x-nav-link>
-            <x-nav-link href="{{ route('guru.laporan.kolektif') }}" :active="request()->routeIs('guru.laporan.kolektif*')">
-                Laporan Kolektif
-            </x-nav-link>
-            <x-nav-link href="{{ route('guru.laporan.intervensi') }}" :active="request()->routeIs('guru.laporan.intervensi*')">
-                Laporan Intervensi & Tindak Lanjut
-            </x-nav-link>
-
             <x-nav-link :href="route('guru.jadwal-bimbingan.index')" :active="request()->routeIs('guru.jadwal-bimbingan.*')">
                 <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor">
@@ -89,6 +74,14 @@
                 </svg>
                 {{ __('Jadwal Bimbingan') }}
             </x-nav-link>
+            <x-nav-link href="{{ route('guru.laporan.kolektif') }}" :active="request()->routeIs('guru.laporan.kolektif*')">
+                Laporan Kolektif
+            </x-nav-link>
+            <x-nav-link href="{{ route('guru.laporan.intervensi') }}" :active="request()->routeIs('guru.laporan.intervensi*')">
+                Laporan Intervensi & Tindak Lanjut
+            </x-nav-link>
+
+            
         @endif
         {{-- MENU KHUSUS WALI KELAS --}}
         @if (Auth::user()->role === 'wali_kelas')
@@ -107,6 +100,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
                 {{ __('Laporan Kelas') }}
+
             </x-nav-link>
         @endif
 

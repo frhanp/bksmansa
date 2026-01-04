@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2026-01-02 15:06:48_
+_Generated: 2026-01-02 15:15:27_
 **Root:** D:\Laragon\www\bksmansa
 
 
@@ -395,11 +395,11 @@ Branch:
 main
 
 Last 5 commits:
+ecd39dd pindah kelola siswa ke walas
 f519c86 add disposisi dari wakasek
 6eec5c4 add validasi dan pesan pesan error
 bf6c9e4 add laporan 6
 eaba5e1 add laporan 5
-3e42656 add laporan 4
 ```
 
 
@@ -8897,12 +8897,12 @@ $classes = ($active ?? false)
                             </p>
                         </div>
                         {{-- Tombol Kelola Siswa (Revisi 2: Akses Input) --}}
-                        <a href="{{ route('walikelas.siswa.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-800 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-slate-700 active:bg-slate-900 focus:outline-none focus:border-slate-900 focus:ring ring-slate-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        {{-- <a href="{{ route('walikelas.siswa.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-800 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-slate-700 active:bg-slate-900 focus:outline-none focus:border-slate-900 focus:ring ring-slate-300 disabled:opacity-25 transition ease-in-out duration-150">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
                             Kelola & Tambah Siswa
-                        </a>
+                        </a> --}}
                     </div>
 
                     <div class="overflow-x-auto">

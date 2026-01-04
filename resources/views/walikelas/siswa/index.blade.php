@@ -47,7 +47,8 @@
                                 @forelse ($siswa as $s)
                                     <tr class="hover:bg-slate-50 transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                                            {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}</td>
+                                            {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-700">
                                             {{ $s->nis }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
