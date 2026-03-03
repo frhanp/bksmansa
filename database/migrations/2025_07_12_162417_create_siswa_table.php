@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nis', 50)->unique();
             $table->string('kelas', 50);
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->foreignId('wali_kelas_id')->constrained('guru')->onDelete('cascade');
             $table->timestamps();
         });

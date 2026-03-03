@@ -56,6 +56,28 @@
                                     :value="old('kelas', $siswa->kelas)" required />
                                 <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="tempat_lahir" :value="__('Tempat Lahir')" />
+                                <x-text-input id="tempat_lahir" class="block mt-1 w-full" type="text"
+                                    name="tempat_lahir" :value="old('tempat_lahir', $siswa->tempat_lahir)" required />
+                                <x-input-error :messages="$errors->get('tempat_lahir')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="tanggal_lahir" :value="__('Tanggal Lahir')" />
+                                <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date"
+                                    name="tanggal_lahir" :value="old('tanggal_lahir', $siswa->tanggal_lahir)" required />
+                                <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+                                <select id="jenis_kelamin" name="jenis_kelamin"
+                                    class="block mt-1 w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500 rounded-md shadow-sm"
+                                    required>
+                                    <option value="Laki-laki" @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'Laki-laki')>Laki-laki</option>
+                                    <option value="Perempuan" @selected(old('jenis_kelamin', $siswa->jenis_kelamin) == 'Perempuan')>Perempuan</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2" />
+                            </div>
                         </div>
 
                         {{-- BAGIAN 2: DATA WALI MURID --}}

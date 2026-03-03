@@ -18,6 +18,9 @@ class Siswa extends Model
         'nama',
         'nis',
         'kelas',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
         'wali_kelas_id',
     ];
 

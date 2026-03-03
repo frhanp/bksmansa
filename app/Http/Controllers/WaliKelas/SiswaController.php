@@ -34,6 +34,9 @@ class SiswaController extends Controller
             'nama' => 'required|string|max:255',
             'nis' => 'required|string|max:50|unique:siswa,nis',
             'kelas' => 'required|string|max:50',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'nama_wali' => 'required|string|max:255',
             'email_wali' => 'required|email|max:255|unique:users,email',
             'nomor_telepon_wali' => 'nullable|string|max:20',
@@ -44,6 +47,9 @@ class SiswaController extends Controller
                 'nama' => $request->nama,
                 'nis' => $request->nis,
                 'kelas' => $request->kelas,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
                 'wali_kelas_id' => Auth::user()->guru_id, // Auto-set ke wali kelas yang login
             ]);
 
@@ -89,6 +95,9 @@ class SiswaController extends Controller
             'nama' => 'required|string|max:255',
             'nis' => 'required|string|max:50|unique:siswa,nis,' . $siswa->id,
             'kelas' => 'required|string|max:50',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'nama_wali' => 'required|string|max:255',
             'email_wali' => 'required|email|max:255|unique:users,email,' . $siswa->waliMurid->user->id,
             'nomor_telepon_wali' => 'nullable|string|max:20',
@@ -99,6 +108,9 @@ class SiswaController extends Controller
                 'nama' => $request->nama,
                 'nis' => $request->nis,
                 'kelas' => $request->kelas,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
             ]);
 
             $siswa->waliMurid->update([

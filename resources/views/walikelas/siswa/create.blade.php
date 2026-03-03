@@ -56,6 +56,27 @@
                                     :value="old('kelas')" required placeholder="Contoh: X MIPA 1" />
                                 <x-input-error :messages="$errors->get('kelas')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="tempat_lahir" :value="__('Tempat Lahir')" />
+                                <x-text-input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir"
+                                    :value="old('tempat_lahir')" required placeholder="Masukkan tempat lahir" />
+                                <x-input-error :messages="$errors->get('tempat_lahir')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="tanggal_lahir" :value="__('Tanggal Lahir')" />
+                                <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir"
+                                    :value="old('tanggal_lahir')" required placeholder="Masukkan tanggal lahir" />
+                                <x-input-error :messages="$errors->get('tanggal_lahir')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+                                <select id="jenis_kelamin" class="block mt-1 w-full" name="jenis_kelamin"
+                                    :value="old('jenis_kelamin')" required>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                <x-input-error :messages="$errors->get('jenis_kelamin')" class="mt-2" />
+                            </div>
                         </div>
 
                         {{-- BAGIAN 2: DATA WALI MURID --}}

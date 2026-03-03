@@ -33,11 +33,7 @@ class LaporanBimbinganController extends Controller
             ],
             'surat_penyerahan_ortu' => [
                 'label' => 'Surat Penyerahan Kembali ke Orang Tua',
-                'fields' => [
-                    'tempat_lahir' => ['label' => 'Tempat Lahir Siswa', 'type' => 'text', 'required' => true],
-                    'tanggal_lahir' => ['label' => 'Tanggal Lahir Siswa', 'type' => 'date', 'required' => true],
-                    'jenis_kelamin' => ['label' => 'Jenis Kelamin Siswa', 'type' => 'select', 'required' => true, 'options' => ['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan']],
-                ]
+                'fields' => []
             ],
             'surat_peringatan' => [
                 'label' => 'Surat Peringatan',
@@ -125,10 +121,19 @@ class LaporanBimbinganController extends Controller
 
         // Siapkan data statis sekali saja
         $siswa = $jadwal->siswa->load(['waliMurid', 'waliKelas']);
+        // LOGIKA PENGGABUNGAN TEMPAT & TANGGAL LAHIR
+        $tanggalLahirFormatted = $siswa->tanggal_lahir
+            ? Carbon::parse($siswa->tanggal_lahir)->isoFormat('D MMMM YYYY')
+            : '-';
+        $ttlGabungan = $siswa->tempat_lahir . ', ' . $tanggalLahirFormatted;
+
+
         $staticData = [
             'nama_siswa' => $siswa->nama,
             'nis' => $siswa->nis,
             'kelas' => $siswa->kelas,
+            'jenis_kelamin' => $siswa->jenis_kelamin, // Otomatis dari DB
+            'tempat_lahir' => $ttlGabungan, // Mengisi ${tempat_lahir} di Word dengan satu baris
             'nama_ortu' => $siswa->waliMurid->nama ?? 'N/A',
             'nama_walas' => $siswa->waliKelas->nama ?? 'N/A',
             'nama_konselor' => Auth::user()->name,
