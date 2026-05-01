@@ -25,12 +25,12 @@ class DashboardController extends Controller
         $siswaPoinTertinggi = Siswa::select('siswa.*', DB::raw('SUM(jenis_pelanggaran.poin) as total_poin'))
             ->join('pelanggaran_siswa', 'siswa.id', '=', 'pelanggaran_siswa.siswa_id')
             ->join('jenis_pelanggaran', 'pelanggaran_siswa.jenis_pelanggaran_id', '=', 'jenis_pelanggaran.id')
-            ->groupBy('siswa.id', 'siswa.nama', 'siswa.nis', 'siswa.kelas', 'siswa.wali_kelas_id', 'siswa.created_at', 'siswa.updated_at')
+            ->groupBy('siswa.id', 'siswa.nama', 'siswa.nis', 'siswa.kelas', 'siswa.tempat_lahir', 'siswa.tanggal_lahir', 'siswa.jenis_kelamin', 'siswa.wali_kelas_id', 'siswa.created_at', 'siswa.updated_at')
             ->orderBy('total_poin', 'desc')
             ->take(5)
             ->get();
 
-            $instruksiWakasek = Disposisi::with(['siswa', 'pemberi'])
+        $instruksiWakasek = Disposisi::with(['siswa', 'pemberi'])
             ->where('status_selesai', false)
             ->latest()
             ->get();
