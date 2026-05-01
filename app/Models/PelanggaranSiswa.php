@@ -20,6 +20,7 @@ class PelanggaranSiswa extends Model
         'siswa_id',
         'jenis_pelanggaran_id',
         'catatan',
+        'bukti_pelanggaran',
         'dilaporkan_oleh',
     ];
 

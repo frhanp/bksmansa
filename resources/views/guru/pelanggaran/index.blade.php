@@ -66,7 +66,6 @@
                         </div>
                     </form>
 
-                    {{-- Sisa kode tabel tidak berubah --}}
                     @if (session('success'))
                         <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">{{ session('success') }}</div>
                     @endif
@@ -78,6 +77,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Kelas</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Jenis Pelanggaran</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Tanggal</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Bukti</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Aksi</th>
                                 </tr>
                             </thead>
@@ -88,6 +88,15 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ $item->siswa->kelas }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ $item->jenisPelanggaran->nama_pelanggaran }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">{{ \Carbon\Carbon::parse($item->tanggal_pelanggaran)->isoFormat('D MMM YYYY, HH:mm') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                                            @if($item->bukti_pelanggaran)
+                                                <a href="{{ Storage::url($item->bukti_pelanggaran) }}" target="_blank" class="inline-flex items-center px-2 py-1 bg-slate-100 text-slate-600 rounded hover:bg-slate-200 transition text-xs font-semibold">
+                                                    Lihat
+                                                </a>
+                                            @else
+                                                <span class="text-slate-400 italic">-</span>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <a href="{{ route('guru.pelanggaran-siswa.edit', $item->id) }}" class="inline-block px-3 py-1 text-sm font-semibold text-teal-600 bg-teal-50 rounded-md hover:bg-teal-100">Edit</a>
                                             <form action="{{ route('guru.pelanggaran-siswa.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus catatan pelanggaran ini?');">
@@ -99,7 +108,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-6 py-4 text-center text-slate-500">Tidak ada data yang cocok dengan filter.</td>
+                                        <td colspan="6" class="px-6 py-4 text-center text-slate-500">Tidak ada data yang cocok dengan filter.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -123,7 +132,6 @@
 
             filters.forEach(function (element) {
                 element.addEventListener('change', function () {
-                    // Hanya submit jika value tidak kosong (untuk tanggal)
                     if (this.value !== '') {
                         form.submit();
                     }
